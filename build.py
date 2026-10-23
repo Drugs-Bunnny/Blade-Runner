@@ -6,6 +6,8 @@ src = (SRC / "origins.html").read_text()
 css = re.search(r"<style>(.*?)</style>", src, re.S).group(1)
 score_js = (SRC / "score.js").read_text()
 art_js = (SRC / "art.js").read_text()
+reader_js = (SRC / "reader.js").read_text()
+reader_css = (SRC / "reader.css").read_text()
 js = re.search(r"<script>(.*?)</script>", src, re.S).group(1).replace("for (var i = 0; i < 48; i++) {", "for (var i = 0; g && i < 48; i++) {")
 main = re.search(r'<main id="top">(.*?)</main>', src, re.S).group(1)
 # drop the old reading-order block from the Origins themes section
@@ -170,8 +172,10 @@ def pager(prev, nxt):
     return f'<div class="wrap pager">{a}{b}</div>'
 
 def page(title, body, full):
+    global css
+    if reader_css not in css: css += reader_css
     head = f"<title>{title}</title>\n<meta name=\"claude:viewport-fit-sides\" content=\"cover\">\n{FONTS}\n<style>{css}{EXTRA_ROOT if full else ''}</style>"
-    content = f'{head}\n<canvas id="rain" aria-hidden="true"></canvas>\n<div class="scan" aria-hidden="true"></div>\n<div id="score" role="region" aria-label="Ambient score player"><button id="scoreprev" class="sb" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="2" height="10"/><polygon points="14,3 5,8 14,13"/></svg></button><button id="scorebtn" class="sb main" type="button" aria-pressed="false" aria-label="Play score"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">▶</span></button><button id="scorenext" class="sb" type="button" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="12" y="3" width="2" height="10"/><polygon points="2,3 11,8 2,13"/></svg></button><div class="meta"><span id="scoretitle">01 / 05</span><div class="row"><input id="scorevol" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Volume"><button id="scorerain" class="chip" type="button" aria-pressed="true">Rain</button></div><span id="scorehint">Original score</span></div></div>\n{body}\n<script>{js}\n{score_js}\n{art_js}</script>'
+    content = f'{head}\n<canvas id="rain" aria-hidden="true"></canvas>\n<div class="scan" aria-hidden="true"></div>\n<div id="score" role="region" aria-label="Ambient score player"><button id="scoreprev" class="sb" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="2" height="10"/><polygon points="14,3 5,8 14,13"/></svg></button><button id="scorebtn" class="sb main" type="button" aria-pressed="false" aria-label="Play score"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">▶</span></button><button id="scorenext" class="sb" type="button" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="12" y="3" width="2" height="10"/><polygon points="2,3 11,8 2,13"/></svg></button><div class="meta"><span id="scoretitle">01 / 05</span><div class="row"><input id="scorevol" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Volume"><button id="scorerain" class="chip" type="button" aria-pressed="true">Rain</button></div><span id="scorehint">Original score</span></div></div>\n{body}\n<script>{js}\n{score_js}\n{art_js}\n{reader_js}</script>'
     if full:
         return f'<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n{content.replace("<canvas id=\"rain\"", "</head><body><canvas id=\"rain\"", 1)}\n</body></html>'
     return content
@@ -204,6 +208,7 @@ origins_banner = '''<section id="origins" style="padding-block-end:0">
 era1_sources = (origins_sources
     + "".join(wiki(f"Blade_Runner_2019_{i}", f"2019 #{i}") for i in (1, 3, 4, 8, 12))
     + wiki("Blade_Runner:_Tokyo_Nexus_3", "Tokyo Nexus #3") + wiki("Blade_Runner:_Tokyo_Nexus_4", "Tokyo Nexus #4")
+    + L("https://en.wikipedia.org/wiki/Blade_Runner", "Wikipedia: Blade Runner (1982), plot")
     + L("https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/", "Comical Opinions: Tokyo Nexus #1 review")
     + L("https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/", "Popverse: To Lose Is to Win announced"))
 era1 = (nav("era1.html", [("origins", "Origins · 2009"), ("board", "Origins case board"), ("files", "Origins case files"), ("empathy", "Origins themes"), ("tokyo", "Tokyo Nexus · 2015"), ("film82", "Blade Runner · 1982"), ("br2019", "2019 · comic")])
@@ -214,7 +219,10 @@ era1 = (nav("era1.html", [("origins", "Origins · 2009"), ("board", "Origins cas
         + pager(("index.html", "Archive"), ("era2.html", "Era II")) + footer(era1_sources))
 
 # ---------- era 2
-era2_sources = ("".join(wiki(f"Blade_Runner_2029_{i}", f"2029 #{i}") for i in (1, 4, 8, 12))
+era2_sources = (L("https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022", "Wikipedia: Blade Runner Black Out 2022")
+    + wiki("Blade_Runner_Black_Out_2022", "Black Out 2022")
+    + L("https://en.wikipedia.org/wiki/2036:_Nexus_Dawn", "Wikipedia: 2036: Nexus Dawn")
+    + "".join(wiki(f"Blade_Runner_2029_{i}", f"2029 #{i}") for i in (1, 4, 8, 12))
     + "".join(wiki(f"Blade_Runner_2039_{i}", f"2039 #{i}") for i in (1, 4, 9, 12))
     + L("https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus", "Wikipedia: Blade Runner: Black Lotus")
     + L("https://comicalopinions.com/blade-runner-black-lotus-1-review/", "Comical Opinions: Black Lotus #1 review")
@@ -231,7 +239,9 @@ era2 = (nav("era2.html", [("blackout", "Black Out · 2022"), ("br2029", "2029 ·
         + pager(("era1.html", "Era I"), ("era3.html", "Era III")) + footer(era2_sources))
 
 # ---------- era 3
-era3_sources = (L("https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724", "BroadwayWorld: Blade Runner 2099 premiere date and cast")
+era3_sources = (L("https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run", "Wikipedia: 2048: Nowhere to Run")
+    + L("https://en.wikipedia.org/wiki/Blade_Runner_2049", "Wikipedia: Blade Runner 2049, plot")
+    + L("https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724", "BroadwayWorld: Blade Runner 2099 premiere date and cast")
     + L("https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/", "Popverse: Blade Runner 2099 release date"))
 era3 = (nav("era3.html", [("nowhere", "Nowhere to Run · 2048"), ("film49", "Blade Runner 2049"), ("br2099", "Blade Runner 2099")])
         + hero("Era III · 2048 – 2099 · The Wallace Age", "ERA III", "2048 — 2099",

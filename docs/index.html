@@ -317,6 +317,54 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   #score .sb { width: 38px; height: 38px; }
   #score .sb.main { width: 44px; height: 44px; }
 }
+/* ---------- reading tracker ---------- */
+.readerbar { padding-block: 22px 0; }
+.readerbar .rb { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; padding: 14px 16px; border: 1px solid var(--line); background: rgba(12,17,30,.92); }
+.rb-prog { flex: 1 1 220px; min-width: 0; }
+.rb-next { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: var(--night); background: var(--amber); padding: 9px 14px; box-shadow: 0 0 18px -6px var(--glow-amber); }
+.rb-next:hover { filter: brightness(1.1); }
+.rb-shield, .rb-reset { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--ink); border: 1px solid var(--line); padding: 8px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+.rb-shield .sw { width: 30px; height: 16px; border-radius: 999px; background: var(--line); position: relative; flex: none; transition: background .2s; }
+.rb-shield .sw i { position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--dim); transition: transform .2s, background .2s; }
+.rb-shield[aria-pressed="true"] { border-color: var(--pink); color: var(--pink); }
+.rb-shield[aria-pressed="true"] .sw { background: rgba(255,46,136,.35); }
+.rb-shield[aria-pressed="true"] .sw i { transform: translateX(14px); background: var(--pink); box-shadow: 0 0 8px var(--glow-pink); }
+.rb-reset { color: var(--dim); }
+.rb-reset.armed { color: var(--rust); border-color: var(--rust); }
+.rb-note { margin: 8px 2px 0; font-size: .86rem; color: var(--dim); }
+.prog { display: grid; gap: 6px; margin-top: 14px; max-width: 420px; }
+.rb-meter { margin-top: 0; max-width: none; }
+.prog-row { display: flex; justify-content: space-between; gap: 10px; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); font-variant-numeric: tabular-nums; }
+.prog-bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.prog-bar i { display: block; height: 100%; width: 0; background: var(--c, var(--amber)); box-shadow: 0 0 10px var(--c, var(--amber)); transition: width .4s; }
+.prog.done .prog-n { color: var(--c, var(--amber)); }
+.arcprog { margin: -6px 0 18px; }
+.era-card .prog.on-card { margin-top: 12px; }
+.chip-prog { margin-left: 10px; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; color: var(--c); border: 1px solid var(--c); padding: 1px 7px; vertical-align: middle; white-space: nowrap; }
+.chip-prog.done { background: var(--c); color: var(--night); }
+.poster.done span::after { content: "  ✓"; color: var(--amber); }
+.issue { position: relative; }
+.issue .rd { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.rd button { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--dim); border: 1px solid var(--line); padding: 6px 10px; cursor: pointer; min-height: 32px; }
+.rd button:hover { color: var(--ink); border-color: var(--dim); }
+.rd .rd-mark[aria-pressed="true"] { color: var(--night); background: var(--c); border-color: var(--c); }
+.issue.is-read { border-color: rgba(149,162,196,.18); }
+.issue.is-read .no { opacity: .55; }
+/* ---------- spoiler shield ---------- */
+.rd-reveal { display: none; }
+.veiled { overflow: hidden; }
+.issue.veiled .ib, .sp-panel.veiled > :not(.rd-reveal) { filter: blur(9px); opacity: .55; user-select: none; pointer-events: none; }
+.veiled > .rd-reveal { display: grid; gap: 2px; place-items: center; position: absolute; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 12px 18px; background: rgba(7,9,16,.92); border: 1px solid var(--pink); color: var(--pink); cursor: pointer; box-shadow: 0 0 22px -8px var(--glow-pink); font-family: var(--font-display); font-size: 1rem; letter-spacing: .06em; text-align: center; max-width: calc(100% - 32px); }
+.veiled > .rd-reveal small { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.issue.veiled > .rd-reveal { top: calc(50% - 22px); }
+.sp-panel { position: relative; }
+.broadcast.sp-panel.veiled > .rd-reveal { top: 50%; }
+@media (max-width: 640px) {
+  .issue .rd { grid-column: 1; }
+  .readerbar .rb { padding: 12px; gap: 10px; }
+  .rb-next { flex: 1 1 100%; text-align: center; }
+  .rb-shield, .rb-reset { flex: 1 1 auto; justify-content: center; }
+}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} img{max-width:100%} [hidden]{display:none!important}</style>
 </head><body><canvas id="rain" aria-hidden="true"></canvas>
 <div class="scan" aria-hidden="true"></div>
@@ -392,7 +440,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       <li style="--c:var(--cyan)"><b>2015+</b><div><h3><a href="#tokyo">Tokyo Nexus: To Lose Is to Win</a></h3><p>Comic · 4 issues, from May 2026. Their old commander wants them dead.</p></div></li>
       <li style="--c:var(--amber)"><b>2019</b><div><h3><a href="#film82">Blade Runner</a></h3><p>Film · 1982. Deckard hunts Roy Batty's group.</p></div></li>
       <li style="--c:var(--cyan)"><b>2019</b><div><h3><a href="#br2019">Blade Runner 2019</a></h3><p>Comic · 12 issues. Ash, Cleo and the two Isobels.</p></div></li>
-      <li style="--c:var(--dim)"><b>2022</b><div><h3><a href="#blackout">Black Out 2022</a></h3><p>Anime short. The blackout that wipes the records.</p></div></li>
+      <li style="--c:var(--dim)"><b>2022</b><div><h3><a href="#blackout">Black Out 2022</a></h3><p>Anime short. The missile strike that wipes every replicant record.</p></div></li>
       <li style="--c:var(--cyan)"><b>2029</b><div><h3><a href="#br2029">Blade Runner 2029</a></h3><p>Comic · 12 issues. Ash against Yotun.</p></div></li>
       <li style="--c:var(--pink)"><b>2032</b><div><h3><a href="#lotus">Blade Runner: Black Lotus</a></h3><p>Anime · 13 episodes. Elle hunts her hunters.</p></div></li>
       <li style="--c:var(--cyan)"><b>2032</b><div><h3><a href="#ll1">Black Lotus: Leaving L.A.</a></h3><p>Comic · 4 issues. Elle in the desert, between Fracktown and the co-op.</p></div></li>
@@ -646,23 +694,23 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     <div class="issues">
       <article class="issue" id="f1" style="--c:var(--amber)"><div class="no">I<small>THE ARRIVAL</small></div><div>
         <h3>Four come home</h3>
-        <p>A group of Nexus-6 replicants kill the crew of an off-world shuttle and come to Earth, where replicants are banned on pain of death. One dies trying to break into the Tyrell Corporation. Another, <strong>Leon</strong>, shoots Blade Runner Holden in the middle of a Voight-Kampff test.</p>
-        <p>Captain Bryant pulls <strong>Rick Deckard</strong> out of retirement, with the origami-folding Gaff tagging along. Four remain: the leader <strong>Roy Batty</strong>, Leon, <strong>Zhora</strong> and <strong>Pris</strong>. Nexus-6s are built with a four-year lifespan. At Tyrell, Deckard tests Eldon Tyrell's assistant <strong>Rachael</strong>. It takes over a hundred questions to show she's a replicant who doesn't know it, carrying implanted memories from Tyrell's niece.</p>
+        <p>A group of Nexus-6 replicants kill the crew of an off-world shuttle and come to Earth, where replicants are banned on pain of death. One of them, <strong>Leon</strong>, has got himself hired at Tyrell, and shoots Blade Runner Holden on the second question of a Voight-Kampff test.</p>
+        <p>Captain Bryant pulls <strong>Rick Deckard</strong> out of retirement, with the origami-folding Gaff tagging along. Four are loose in the city: the leader <strong>Roy Batty</strong>, Leon, <strong>Zhora</strong> and <strong>Pris</strong>. Nexus-6s are built with a four-year lifespan. At Tyrell, Deckard tests Eldon Tyrell's assistant <strong>Rachael</strong>. It takes over a hundred questions to show she's a replicant who doesn't know it, carrying implanted memories from Tyrell's niece.</p>
       </div></article>
       <article class="issue" id="f2" style="--c:var(--amber)"><div class="no">II<small>THE HUNT</small></div><div>
         <h3>Snake scales and photographs</h3>
-        <p>In Leon's hotel room Deckard finds photographs and an artificial snake scale. The scale leads him to Zhora, dancing at a club with a snake. He chases her through crowded streets and retires her through a shop window. Leon ambushes Deckard and nearly kills him until Rachael shoots Leon.</p>
+        <p>In Leon's hotel room Deckard finds photographs and an artificial snake scale. The scale and a photograph lead him to Zhora, working as a snake dancer at a strip club. He chases her through the crowded streets and retires her. Leon ambushes Deckard and nearly kills him until Rachael shoots Leon.</p>
         <p>Rachael has learned what she is. In Deckard's apartment the two begin an uneasy, troubling relationship, and he has to ask himself whether she is on his list.</p>
       </div></article>
       <article class="issue" id="f3" style="--c:var(--amber)"><div class="no">III<small>THE MAKER</small></div><div>
         <h3>More life</h3>
-        <p>Pris befriends J.F. Sebastian, a lonely genetic designer with a body that ages too fast. Through him, Roy reaches Eldon Tyrell. Roy asks his maker for more life. Tyrell explains it can't be done, and praises him as the brightest thing he has made. Roy kills Tyrell, and later Sebastian.</p>
+        <p>Pris wins the trust of J.F. Sebastian, a lonely genetic designer with a body that ages too fast. Through him, Roy reaches Eldon Tyrell. Roy asks his maker for more life. Tyrell explains it can't be done, and praises him as the brightest thing he has made. Roy kills Tyrell. Sebastian is later reported dead.</p>
       </div></article>
       <article class="issue key" id="f4" style="--c:var(--amber)"><div class="no">IV<small>TEARS IN RAIN</small></div><div>
         <span class="flag">FINALE</span>
         <h3>The rooftop</h3>
         <p>In the derelict Bradbury Building, Deckard retires Pris. Roy hunts him through the rooms, breaks his fingers, and chases him onto the roof, where Deckard ends up hanging over the street. With his time running out, Roy pulls him up and saves him. He speaks of the things he has seen that no human would believe, and dies in the rain.</p>
-        <p>Gaff lets Deckard know he could have killed Rachael and didn't. At Deckard's apartment, Deckard finds an origami unicorn on the floor and leaves with Rachael, not knowing how long she has.</p>
+        <p>Gaff tells Deckard it's too bad Rachael won't live, "but then again, who does?" At his apartment Deckard finds a small origami unicorn on the floor, a sign that Gaff was there and let her be. He leaves with Rachael, not knowing how long she has.</p>
       </div></article>
     </div>
   </div>
@@ -739,7 +787,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
         <span class="flag">FINALE</span>
         <h3>The family</h3>
         <p>Ash kills two Hythes and the lion, but Selwyn shuts down her brace remotely. Cleo and Isobel arrive. Selwyn begs them to be a family again, and Isobel snaps his neck. When one Hythe moves to kill her, a defective Hythe shoots it, and asks for the mansion and to be left alone as payment.</p>
-        <p>Cleo and Isobel head back to Arcadia. Ash stays on Earth to help the Nexus-8s, alongside Freysa.</p>
+        <p>Cleo and Isobel head back to Arcadia. Ash stays on Earth to help the Nexus-8s.</p>
       </div></article>
     </div>
   </div>
@@ -760,16 +808,17 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       <li><a href="https://www.nerdly.co.uk/2022/04/22/blade-runner-origins-11-review/" target="_blank" rel="noopener">Nerdly: #11 review</a></li>
       <li><a href="https://www.nerdly.co.uk/2022/06/01/blade-runner-origins-12-review-titan-comics/" target="_blank" rel="noopener">Nerdly: #12 review</a></li>
       <li><a href="https://scifibulletin.com/comics/blade-runner-review-blade-runner-origins-8/" target="_blank" rel="noopener">SciFi Bulletin: #8 review</a></li>
-    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div><div class="view" id="era2" data-view="era2" hidden><section id="blackout">
+    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner" target="_blank" rel="noopener">Wikipedia: Blade Runner (1982), plot</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div><div class="view" id="era2" data-view="era2" hidden><section id="blackout">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">停電</span><div class="num">2022</div><h2>Black Out 2022</h2>
       <div class="chips"><span>Anime short · 2017</span><span>Shinichiro Watanabe</span><span>About 15 minutes</span></div>
-      <p>The event every later story hangs on. Nexus-8 replicants, built with open-ended lifespans, are being hunted down by humans who want them gone. A combat veteran, Iggy, and a young Nexus-8, Trixie, join a plan with a human ally, Ren, to make sure no one can find them again.</p></div>
+      <p>The event every later story hangs on. Three years after the first film, Tyrell's Nexus-8 replicants have open-ended lifespans, and a human supremacist movement is hunting them down. Two replicants and a human insider set out to make sure no one can find them again.</p></div>
     <div class="issues">
       <article class="issue key" id="bo" style="--c:var(--dim)"><div class="no">—<small>THE BLACKOUT</small></div><div>
         <h3>The night the records died</h3>
-        <p>Trixie is attacked by anti-replicant thugs and rescued by Iggy. The underground's plan is to destroy the registry that lets anyone trace a replicant. A warhead is detonated high above Los Angeles, and the electromagnetic pulse wipes out the city's data and power. Trixie gives her life buying time for the strike.</p>
-        <p>The fallout shapes the next twenty years. The records of every living replicant are gone, Tyrell goes bankrupt, and replicant production is banned outright.</p>
+        <p>Human thugs attack the replicant <strong>Trixie</strong>, and she is rescued by <strong>Iggy</strong>, a replicant soldier who deserted when he realised the enemy he was fighting were replicants too. He brings her into an underground movement that plans to destroy Tyrell's database of registered replicants. Trixie befriends <strong>Ren</strong>, a human technician in charge of missile launches.</p>
+        <p>Ren redirects a test missile to detonate over Los Angeles. The pulse blacks out the city and wipes its electronic records, while Iggy and Trixie drive a fuel truck into Tyrell's servers to finish the job. Trixie is killed by security. Iggy escapes and removes his right eye, the only thing that could identify him.</p>
+        <p>The fallout shapes the next twenty years. The records of every living replicant are gone, replicant production is banned, and Tyrell goes bankrupt. It takes over a decade for Wallace to win approval for a new line.</p>
       </div></article>
     </div>
   </div>
@@ -927,7 +976,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       <article class="issue key" id="ll4" style="--c:var(--pink)"><div class="no">#04<small>THE SHOWDOWN</small></div><div>
         <span class="flag">FINALE</span>
         <h3>Kozlov</h3>
-        <p>Nyoko and Kaja come home. Preston, a survivor of an ambush on the freed workers, confesses his love for Nyoko and admits he worked with Barnes to get Miguel out of the way. Barnes is dead by Elle's hand, and his cousin <strong>Kozlov</strong> takes over, telling the town the co-op are eco-terrorists. It ends with Elle facing Kozlov in a showdown in Fracktown, and with a choice about whether to kill.</p>
+        <p>Nyoko and Kaja come home. Preston, a survivor of an ambush on the freed workers, confesses his love for Nyoko and admits he worked with Barnes to get Miguel out of the way. <strong>Kozlov</strong>, Fracktown's security chief, takes over his cousin's operation and tells the town the co-op are eco-terrorists who blew up the plant. It ends with Elle facing Kozlov in a showdown in Fracktown, and with a choice about whether to kill.</p>
       </div></article>
     </div>
 
@@ -958,7 +1007,14 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">夜明け</span><div class="num">2036</div><h2>2036: Nexus Dawn</h2>
       <div class="chips"><span>Short film · 2017</span><span>Luke Scott</span><span>Jared Leto as Niander Wallace</span></div>
-      <p>Niander Wallace walks into a closed hearing of lawmakers to get the replicant ban lifted. He brings a new model, the Nexus-9, and proves it will obey without limits by ordering it to harm itself in front of them. The ban falls, and the Wallace era begins.</p></div>
+      <p>Niander Wallace comes before a panel of lawmakers to get the replicant ban lifted, with a new model at his side.</p></div>
+    <div class="issues">
+      <article class="issue" id="dawn1" style="--c:var(--dim)"><div class="no">—<small>THE HEARING</small></div><div>
+        <h3>Will you die for me?</h3>
+        <p>Wallace argues that Earth's collapsing ecosystem can only be kept alive with cheap replicant labour, and that his new replicants are no danger to anyone. The lawmakers aren't convinced. So he turns to his assistant, a Nexus-9. He orders it to cut itself, then makes it choose between his life and its own. It cuts its own throat in front of them. Wallace asks again whether they will approve production.</p>
+        <p>The answer comes later in the timeline: the ban is lifted, and Wallace's obedient Nexus-9s go into production.</p>
+      </div></article>
+    </div>
   </div>
 </section>
 
@@ -980,7 +1036,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       </div></article>
       <article class="issue" id="d3" style="--c:var(--amber)"><div class="no">#03<small>THE DISK</small></div><div>
         <h3>Cleo returns</h3>
-        <p>Ash visits the dying Lydia Wojciech, who warns her to stay away from Luv and from Wallace. At a noodle bar, Cleo finds Ash and tells her Isobel has vanished. Hythe hands Ash a disk of Selwyn's research before gunmen open fire. Luv calls Cleo's hotel room, gun drawn.</p>
+        <p>Ash visits the elderly Lydia Wojciech in her care home, who warns her to stay away from Luv and from Wallace. At a noodle bar, Cleo finds Ash and tells her Isobel has vanished. Hythe hands Ash a disk of Selwyn's research before gunmen open fire. Luv calls Cleo's hotel room, gun drawn.</p>
       </div></article>
       <article class="issue" id="d4" style="--c:var(--amber)"><div class="no">#04<small>THE BLUFF</small></div><div>
         <h3>An empty disk</h3>
@@ -1032,11 +1088,18 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div><div class="view" id="era3" data-view="era3" hidden><section id="nowhere">
+<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Wikipedia: Blade Runner Black Out 2022</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Off-world Wiki: Black Out 2022</a></li><li><a href="https://en.wikipedia.org/wiki/2036:_Nexus_Dawn" target="_blank" rel="noopener">Wikipedia: 2036: Nexus Dawn</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div><div class="view" id="era3" data-view="era3" hidden><section id="nowhere">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">逃げ場なし</span><div class="num">2048</div><h2>2048: Nowhere to Run</h2>
       <div class="chips"><span>Short film · 2017</span><span>Luke Scott</span><span>Dave Bautista as Sapper Morton</span></div>
-      <p>Sapper Morton, an old Nexus-8 hiding as a protein farmer, comes into the city to sell his produce. When thugs go after a mother and her young daughter he has befriended, he steps in and kills them with a soldier's skill. Someone sees him do it. The report that follows leads a Blade Runner to his farm, and opens <em>2049</em>.</p></div>
+      <p>Sapper Morton, an old Nexus-8 combat model, lives quietly as a farmer outside Los Angeles. One trip into the city ends his hiding.</p></div>
+    <div class="issues">
+      <article class="issue" id="run1" style="--c:var(--dim)"><div class="no">—<small>THE MARKET</small></div><div>
+        <h3>Ella</h3>
+        <p>In the city, Sapper stops to talk with a girl, <strong>Ella</strong>, and gives her a book he likes, <em>The Power and the Glory</em>. He sells his harvest at the market, still short of the money he needs, and walks past a gang of thugs who try to provoke him.</p>
+        <p>Later the same gang turns on Ella and her mother. Sapper steps in and beats them with a soldier's strength, killing most of them. Shaken by what he has done, he leaves, dropping his identity papers. A bystander who saw him earlier calls the LAPD to report a rogue replicant. That call is what sends K to his farm at the start of <em>2049</em>.</p>
+      </div></article>
+    </div>
   </div>
 </section>
 
@@ -1052,13 +1115,13 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       </div></article>
       <article class="issue" id="g2" style="--c:var(--amber)"><div class="no">II<small>THE HORSE</small></div><div>
         <h3>A memory that might be real</h3>
-        <p>At the Wallace Corporation, archives identify the bones as <strong>Rachael</strong>. Niander Wallace wants the child, the key to replicants who can breed, and sends his enforcer <strong>Luv</strong> to follow K. A date carved into the tree matches a childhood memory of K's: a wooden horse he hid in a furnace. At an orphanage in San Diego he finds the horse exactly where he remembered it.</p>
-        <p>The memory designer <strong>Dr. Ana Stelline</strong> tells him the memory is real, someone lived it. K begins to believe he's the child. He fails his baseline test badly, and Joshi gives him time to disappear before she reports him. Luv kills Joshi.</p>
+        <p>At the Wallace Corporation, archives identify the bones as an experimental Nexus-7: <strong>Rachael</strong>, who vanished with Deckard thirty years earlier. Niander Wallace wants the child, the key to replicants who can breed, and sends his enforcer <strong>Luv</strong> to follow K. A date carved into the tree matches a childhood memory of K's: a wooden horse he hid in a furnace. At an orphanage in the wastelands he finds the horse in the furnace, exactly where he remembered hiding it.</p>
+        <p>The memory designer <strong>Dr. Ana Stelline</strong> tells him the memory is real, someone lived it. K begins to believe he's the child. He fails his baseline test badly. Joshi gives him 48 hours to pass it, or be retired himself. Luv kills Joshi.</p>
       </div></article>
       <article class="issue key" id="g3" style="--c:var(--amber)"><div class="no">III<small>LAS VEGAS</small></div><div>
         <span class="flag">TURNING POINT</span>
         <h3>Deckard</h3>
-        <p>Traces of radiation on the horse lead K to the ruins of Las Vegas and <strong>Rick Deckard</strong>, hiding there for thirty years. Luv attacks, destroys Joi and takes Deckard to Wallace, who offers him a copy of Rachael. Deckard refuses. Rescued by <strong>Freysa</strong>'s replicant resistance, K learns the truth: the child was a girl. He isn't special. His memory was hers.</p>
+        <p>Traces of radiation on the horse lead K to the ruins of Las Vegas and <strong>Rick Deckard</strong>, hiding there for thirty years. Luv attacks, destroys Joi and takes Deckard to Wallace, who offers him a copy of Rachael in exchange for the child. Deckard refuses, and Luv kills the copy. Rescued by <strong>Freysa</strong>'s replicant resistance, K learns the truth: the child was a girl. He isn't special. His memory was hers.</p>
       </div></article>
       <article class="issue key" id="g4" style="--c:var(--amber)"><div class="no">IV<small>SNOW</small></div><div>
         <span class="flag">FINALE</span>
@@ -1081,7 +1144,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div></main>
+<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run" target="_blank" rel="noopener">Wikipedia: 2048: Nowhere to Run</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_2049" target="_blank" rel="noopener">Wikipedia: Blade Runner 2049, plot</a></li><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div></main>
 <script>
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1507,6 +1570,175 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   });
   function all() { Array.prototype.forEach.call(document.querySelectorAll('canvas[data-art]'), paint); }
   all(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+})();
+
+/* Reading tracker and spoiler shield.
+   Progress is kept in this browser only (localStorage), and the page works without it. */
+(function () {
+  var STORIES = {
+    i:    { name: 'Origins',            anchor: '#origins',  verb: 'read' },
+    tn:   { name: 'Tokyo Nexus',        anchor: '#tokyo',    verb: 'read' },
+    f:    { name: 'Blade Runner',       anchor: '#film82',   verb: 'watched' },
+    b:    { name: 'Blade Runner 2019',  anchor: '#br2019',   verb: 'read' },
+    bo:   { name: 'Black Out 2022',     anchor: '#blackout', verb: 'watched' },
+    c:    { name: 'Blade Runner 2029',  anchor: '#br2029',   verb: 'read' },
+    l:    { name: 'Black Lotus',        anchor: '#lotus',    verb: 'watched' },
+    ll:   { name: 'Leaving L.A.',       anchor: '#ll1',      verb: 'read', arc: true },
+    lv:   { name: 'Las Vegas',          anchor: '#lv1',      verb: 'read', arc: true },
+    dawn: { name: 'Nexus Dawn',         anchor: '#dawn',     verb: 'watched' },
+    d:    { name: 'Blade Runner 2039',  anchor: '#br2039',   verb: 'read' },
+    run:  { name: 'Nowhere to Run',     anchor: '#nowhere',  verb: 'watched' },
+    g:    { name: 'Blade Runner 2049',  anchor: '#film49',   verb: 'watched' }
+  };
+  // story-wide panels that give away an ending, unlocked when that story is finished
+  var PANELS = [['#board', 'i'], ['#files', 'i'], ['.broadcast', 'i'], ['#empathy', 'i']];
+
+  var KEY = 'br-read', SKEY = 'br-shield';
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: keep going in memory */ } }
+  var read = {};
+  try { (JSON.parse(load(KEY) || '[]') || []).forEach(function (id) { read[id] = true; }); } catch (e) { read = {}; }
+  var shield = load(SKEY) === '1';
+  var revealed = {};
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('article.issue[id]'));
+  var byStory = {};
+  cards.forEach(function (a) {
+    var key = (a.id.match(/^[a-z]+/) || [''])[0];
+    if (!STORIES[key]) return;
+    a._story = key; (byStory[key] = byStory[key] || []).push(a);
+    var body = a.querySelector(':scope > div:not(.no)'); if (body) body.classList.add('ib'); a._body = body;
+    var verb = STORIES[key].verb;
+    var bar = document.createElement('div'); bar.className = 'rd';
+    bar.innerHTML = '<button type="button" class="rd-mark" aria-pressed="false"></button>' +
+      '<button type="button" class="rd-upto">' + (verb === 'watched' ? 'Watched up to here' : 'Read up to here') + '</button>';
+    a.appendChild(bar);
+    bar.querySelector('.rd-mark').addEventListener('click', function () { set([a.id], !read[a.id]); });
+    bar.querySelector('.rd-upto').addEventListener('click', function () {
+      var list = byStory[key], ids = [], on = true;
+      for (var i = 0; i < list.length; i++) { ids.push(list[i].id); if (list[i] === a) break; }
+      set(ids, on);
+    });
+    var rv = document.createElement('button'); rv.type = 'button'; rv.className = 'rd-reveal';
+    rv.innerHTML = '<span>Spoilers hidden</span><small>Tap to reveal</small>';
+    rv.addEventListener('click', function () { revealed[a.id] = true; paint(); });
+    a.appendChild(rv);
+  });
+
+  // spoiler panels
+  PANELS.forEach(function (p) {
+    var el = document.querySelector(p[0]); if (!el) return;
+    var inner = el.querySelector(':scope > .wrap') || el; inner.classList.add('sp-panel'); inner._story = p[1];
+    var rv = document.createElement('button'); rv.type = 'button'; rv.className = 'rd-reveal';
+    rv.innerHTML = '<span>Ending spoilers</span><small>Finish ' + STORIES[p[1]].name + ' or tap to reveal</small>';
+    rv.addEventListener('click', function () { revealed['panel:' + p[0]] = true; paint(); });
+    inner.appendChild(rv); inner._key = 'panel:' + p[0];
+  });
+
+  // progress meters on each story header
+  function meter(cls) { var m = document.createElement('div'); m.className = 'prog ' + (cls || ''); m.innerHTML = '<div class="prog-row"><span class="prog-l"></span><span class="prog-n"></span></div><div class="prog-bar"><i></i></div>'; return m; }
+  var meters = [];
+  Object.keys(STORIES).forEach(function (k) {
+    if (!byStory[k]) return;
+    var s = STORIES[k], host = null, m = meter();
+    if (s.arc) { var first = document.querySelector(s.anchor), group = first && first.parentElement, h = group && group.previousElementSibling;
+      if (h && h.classList.contains('arc')) { m.classList.add('arcprog'); h.parentNode.insertBefore(m, group); host = m; } }
+    else { var b = document.querySelector(s.anchor + ' .vol-banner'); if (b) { (b.querySelector('.bt') || b).appendChild(m); host = m; } }
+    if (host) meters.push({ el: m, ids: byStory[k].map(function (a) { return a.id; }), label: s.verb === 'watched' ? 'Watched' : 'Read' });
+  });
+
+  // era cards and the reading-order list on the hub
+  Array.prototype.forEach.call(document.querySelectorAll('a.era-card[href^="#"]'), function (card) {
+    var view = document.getElementById(card.getAttribute('href').slice(1)); if (!view) return;
+    var m = meter('on-card'); var go = card.querySelector('.go'); card.insertBefore(m, go);
+    meters.push({ el: m, ids: cards.filter(function (a) { return view.contains(a); }).map(function (a) { return a.id; }), label: 'Progress' });
+  });
+  var seen = {};
+  Array.prototype.forEach.call(document.querySelectorAll('.chrono li'), function (li) {
+    var a = li.querySelector('h3 a'); if (!a) return;
+    var target = a.getAttribute('href').slice(1), key = null;
+    Object.keys(STORIES).forEach(function (k) { if (STORIES[k].anchor === '#' + target) key = k; });
+    if (!key || seen[key] || /To Lose/.test(a.textContent)) return; seen[key] = true;
+    var tag = document.createElement('span'); tag.className = 'chip-prog'; li.querySelector('h3').appendChild(tag);
+    meters.push({ el: tag, ids: (byStory[key] || []).map(function (x) { return x.id; }), chip: true });
+  });
+  var posters = Array.prototype.map.call(document.querySelectorAll('a.poster[href^="#"]'), function (p) {
+    var target = p.getAttribute('href').slice(1), key = null;
+    Object.keys(STORIES).forEach(function (k) { if (STORIES[k].anchor === '#' + target) key = k; });
+    return { el: p, ids: key && byStory[key] ? byStory[key].map(function (x) { return x.id; }) : [] };
+  });
+
+  // reader bar at the top of each view
+  var bars = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.view'), function (view) {
+    var scope = cards.filter(function (a) { return view.contains(a); });
+    var all = view.id === 'archive'; if (all) scope = cards;
+    var bar = document.createElement('section'); bar.className = 'readerbar';
+    bar.innerHTML = '<div class="wrap"><div class="rb">' +
+      '<div class="rb-prog"></div>' +
+      '<a class="rb-next" href="#">Continue</a>' +
+      '<button type="button" class="rb-shield" aria-pressed="false"><span class="sw" aria-hidden="true"><i></i></span>Spoiler shield</button>' +
+      (all ? '<button type="button" class="rb-reset">Reset progress</button>' : '') +
+      '</div><p class="rb-note"></p></div>';
+    view.insertBefore(bar, view.firstChild);
+    var m = meter('rb-meter'); bar.querySelector('.rb-prog').appendChild(m);
+    meters.push({ el: m, ids: scope.map(function (a) { return a.id; }), label: all ? 'Whole archive' : 'This era' });
+    bars.push({ el: bar, scope: scope, all: all });
+    bar.querySelector('.rb-shield').addEventListener('click', function () { shield = !shield; save(SKEY, shield ? '1' : '0'); revealed = {}; paint(); });
+    var reset = bar.querySelector('.rb-reset');
+    if (reset) { var armed = null;
+      reset.addEventListener('click', function () {
+        if (!armed) { reset.textContent = 'Tap again to clear'; reset.classList.add('armed'); armed = setTimeout(function () { reset.textContent = 'Reset progress'; reset.classList.remove('armed'); armed = null; }, 4000); return; }
+        clearTimeout(armed); armed = null; read = {}; revealed = {}; save(KEY, '[]'); reset.textContent = 'Progress cleared'; reset.classList.remove('armed');
+        setTimeout(function () { reset.textContent = 'Reset progress'; }, 2000); paint(); });
+    }
+  });
+
+  function set(ids, on) {
+    ids.forEach(function (id) { if (on) read[id] = true; else delete read[id]; });
+    save(KEY, JSON.stringify(Object.keys(read))); paint();
+  }
+  function count(ids) { var n = 0; ids.forEach(function (id) { if (read[id]) n++; }); return n; }
+  function storyDone(key) { var l = byStory[key] || []; return l.length && count(l.map(function (a) { return a.id; })) === l.length; }
+
+  function paint() {
+    document.documentElement.classList.toggle('shield-on', shield);
+    cards.forEach(function (a) {
+      var r = !!read[a.id], verb = STORIES[a._story].verb, btn = a.querySelector('.rd-mark');
+      a.classList.toggle('is-read', r);
+      btn.setAttribute('aria-pressed', r ? 'true' : 'false');
+      btn.textContent = r ? (verb === 'watched' ? '✓ Watched' : '✓ Read') : (verb === 'watched' ? 'Mark watched' : 'Mark read');
+      var veiled = shield && !r && !revealed[a.id];
+      a.classList.toggle('veiled', veiled);
+      if (a._body) { if (veiled) a._body.setAttribute('inert', ''); else a._body.removeAttribute('inert'); }
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.sp-panel'), function (p) {
+      var veiled = shield && !storyDone(p._story) && !revealed[p._key];
+      p.classList.toggle('veiled', veiled);
+      Array.prototype.forEach.call(p.children, function (ch) { if (ch.classList.contains('rd-reveal')) return; if (veiled) ch.setAttribute('inert', ''); else ch.removeAttribute('inert'); });
+    });
+    meters.forEach(function (m) {
+      var n = count(m.ids), t = m.ids.length;
+      if (m.chip) { m.el.textContent = t ? (n === t ? '✓ Done' : n + ' / ' + t) : ''; m.el.classList.toggle('done', t > 0 && n === t); m.el.hidden = !t || n === 0; return; }
+      m.el.querySelector('.prog-l').textContent = m.label;
+      m.el.querySelector('.prog-n').textContent = n + ' / ' + t + (n === t && t ? ' · complete' : '');
+      m.el.querySelector('.prog-bar i').style.width = (t ? (n / t * 100) : 0) + '%';
+      m.el.classList.toggle('done', t > 0 && n === t);
+    });
+    posters.forEach(function (p) { var t = p.ids.length; p.el.classList.toggle('done', t > 0 && count(p.ids) === t); });
+    bars.forEach(function (b) {
+      var next = null; for (var i = 0; i < b.scope.length; i++) if (!read[b.scope[i].id]) { next = b.scope[i]; break; }
+      var link = b.el.querySelector('.rb-next'), note = b.el.querySelector('.rb-note');
+      if (next) { link.hidden = false; link.setAttribute('href', '#' + next.id);
+        var s = STORIES[next._story], no = next.querySelector('.no');
+        var label = no ? no.childNodes[0].nodeValue.trim() : '';
+        link.textContent = (count(b.scope.map(function (a) { return a.id; })) ? 'Continue: ' : 'Start: ') + s.name + (label && label !== '—' ? ' ' + label : '');
+      } else { link.hidden = true; }
+      b.el.querySelector('.rb-shield').setAttribute('aria-pressed', shield ? 'true' : 'false');
+      note.textContent = shield ? 'Shield is on: anything you haven’t marked as read is blurred.' : 'Mark issues as you read them. Saved in this browser.';
+    });
+  }
+  paint();
 })();
 
 

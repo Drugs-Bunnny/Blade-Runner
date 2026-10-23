@@ -2,6 +2,8 @@
 
 An unofficial fan archive of the Blade Runner saga, from 2009 to 2099. It covers every comic, film, short and anime in story order, with full-spoiler synopses: comics issue by issue, *Black Lotus* episode by episode, and the films act by act.
 
+You can mark issues and episodes as read or watched, track progress for each story and era, and turn on a spoiler shield that blurs anything you haven't read yet.
+
 The site is a single page in a neon-noir style. It has original poster art for each story, an original generative ambient score with five tracks, and city-street rain. Switching between eras swaps the content in place, so the music keeps playing.
 
 ## Eras
@@ -21,6 +23,7 @@ The site is a single page in a neon-noir style. It has original poster art for e
 | `src/era1_more.html`, `src/era2_body.html`, `src/era3_body.html` | The synopses for each era |
 | `src/score.js` | The music player and rain, generated with Web Audio |
 | `src/art.js` | The poster art, drawn on canvas |
+| `src/reader.js`, `src/reader.css` | The reading tracker and spoiler shield. Progress is saved in the visitor's own browser |
 | `build.py` | Assembles everything into one page |
 | `docs/index.html` | The built site, served by GitHub Pages |
 | `tools/rain-sampler.html` | A page for auditioning rain styles |

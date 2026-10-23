@@ -1,0 +1,48 @@
+/* ---------- reading tracker ---------- */
+.readerbar { padding-block: 22px 0; }
+.readerbar .rb { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; padding: 14px 16px; border: 1px solid var(--line); background: rgba(12,17,30,.92); }
+.rb-prog { flex: 1 1 220px; min-width: 0; }
+.rb-next { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: var(--night); background: var(--amber); padding: 9px 14px; box-shadow: 0 0 18px -6px var(--glow-amber); }
+.rb-next:hover { filter: brightness(1.1); }
+.rb-shield, .rb-reset { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--ink); border: 1px solid var(--line); padding: 8px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+.rb-shield .sw { width: 30px; height: 16px; border-radius: 999px; background: var(--line); position: relative; flex: none; transition: background .2s; }
+.rb-shield .sw i { position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--dim); transition: transform .2s, background .2s; }
+.rb-shield[aria-pressed="true"] { border-color: var(--pink); color: var(--pink); }
+.rb-shield[aria-pressed="true"] .sw { background: rgba(255,46,136,.35); }
+.rb-shield[aria-pressed="true"] .sw i { transform: translateX(14px); background: var(--pink); box-shadow: 0 0 8px var(--glow-pink); }
+.rb-reset { color: var(--dim); }
+.rb-reset.armed { color: var(--rust); border-color: var(--rust); }
+.rb-note { margin: 8px 2px 0; font-size: .86rem; color: var(--dim); }
+.prog { display: grid; gap: 6px; margin-top: 14px; max-width: 420px; }
+.rb-meter { margin-top: 0; max-width: none; }
+.prog-row { display: flex; justify-content: space-between; gap: 10px; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); font-variant-numeric: tabular-nums; }
+.prog-bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.prog-bar i { display: block; height: 100%; width: 0; background: var(--c, var(--amber)); box-shadow: 0 0 10px var(--c, var(--amber)); transition: width .4s; }
+.prog.done .prog-n { color: var(--c, var(--amber)); }
+.arcprog { margin: -6px 0 18px; }
+.era-card .prog.on-card { margin-top: 12px; }
+.chip-prog { margin-left: 10px; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; color: var(--c); border: 1px solid var(--c); padding: 1px 7px; vertical-align: middle; white-space: nowrap; }
+.chip-prog.done { background: var(--c); color: var(--night); }
+.poster.done span::after { content: "  ✓"; color: var(--amber); }
+.issue { position: relative; }
+.issue .rd { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.rd button { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--dim); border: 1px solid var(--line); padding: 6px 10px; cursor: pointer; min-height: 32px; }
+.rd button:hover { color: var(--ink); border-color: var(--dim); }
+.rd .rd-mark[aria-pressed="true"] { color: var(--night); background: var(--c); border-color: var(--c); }
+.issue.is-read { border-color: rgba(149,162,196,.18); }
+.issue.is-read .no { opacity: .55; }
+/* ---------- spoiler shield ---------- */
+.rd-reveal { display: none; }
+.veiled { overflow: hidden; }
+.issue.veiled .ib, .sp-panel.veiled > :not(.rd-reveal) { filter: blur(9px); opacity: .55; user-select: none; pointer-events: none; }
+.veiled > .rd-reveal { display: grid; gap: 2px; place-items: center; position: absolute; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 12px 18px; background: rgba(7,9,16,.92); border: 1px solid var(--pink); color: var(--pink); cursor: pointer; box-shadow: 0 0 22px -8px var(--glow-pink); font-family: var(--font-display); font-size: 1rem; letter-spacing: .06em; text-align: center; max-width: calc(100% - 32px); }
+.veiled > .rd-reveal small { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.issue.veiled > .rd-reveal { top: calc(50% - 22px); }
+.sp-panel { position: relative; }
+.broadcast.sp-panel.veiled > .rd-reveal { top: 50%; }
+@media (max-width: 640px) {
+  .issue .rd { grid-column: 1; }
+  .readerbar .rb { padding: 12px; gap: 10px; }
+  .rb-next { flex: 1 1 100%; text-align: center; }
+  .rb-shield, .rb-reset { flex: 1 1 auto; justify-content: center; }
+}
