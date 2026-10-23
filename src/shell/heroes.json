@@ -1,0 +1,42 @@
+{
+  "archive": [
+    "Los Angeles · 2009 – 2099 · Case archive",
+    "BLADE RUNNER",
+    "ARCHIVE",
+    "Every comic, film, short and anime in the Blade Runner saga, told in story order across three eras. From the first Blade Runner to the city fifty years after K.",
+    [
+      "レプリカント",
+      "ロサンゼルス"
+    ]
+  ],
+  "era1": [
+    "Era I · 2009 – 2019 · Before the Blackout",
+    "ERA I",
+    "2009 — 2019",
+    "The first Blade Runner, two war veterans in Tokyo, Deckard's hunt and Ash's first case. Four stories, from the birth of the unit to the year of the film.",
+    [
+      "起源",
+      "東京"
+    ]
+  ],
+  "era2": [
+    "Era II · 2022 – 2039 · After the Blackout",
+    "ERA II",
+    "2022 — 2039",
+    "The records burn and Tyrell falls. Ash fights a replicant who refuses to die, Elle hunts the men who hunted her, and Wallace rises to take Tyrell's place.",
+    [
+      "黒蓮",
+      "停電"
+    ]
+  ],
+  "era3": [
+    "Era III · 2048 – 2099 · The Wallace Age",
+    "ERA III",
+    "2048 — 2099",
+    "A replicant Blade Runner finds bones under a dead tree, and the world that follows fifty years on.",
+    [
+      "奇跡",
+      "二〇九九"
+    ]
+  ]
+}
