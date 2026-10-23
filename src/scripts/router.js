@@ -29,6 +29,15 @@
     var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
     var id = a.getAttribute('href').slice(1); e.preventDefault(); route(id, true);
   });
+  // fade the edge of a sideways-scrolling sub-menu when there are more links that way
+  function edges() {
+    Array.prototype.forEach.call(document.querySelectorAll('nav.bar .sub'), function (el) {
+      el.classList.toggle('more-l', el.scrollLeft > 4);
+      el.classList.toggle('more-r', el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('nav.bar .sub'), function (el) { el.addEventListener('scroll', edges, { passive: true }); });
+  window.addEventListener('resize', edges); window.addEventListener('br:view', function () { setTimeout(edges, 0); });
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   route(location.hash.slice(1), false);
   window.addEventListener('load', function () { if (location.hash) route(location.hash.slice(1), false); });
