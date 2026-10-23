@@ -55,6 +55,8 @@ python3 build.py
 
 This writes `docs/index.html` for GitHub Pages and `build/archive.html` for the Claude artifact copy. Commit `docs/` along with your source changes.
 
+Each build is stamped with a build number and date, shown at the foot of every page and on the start-up screen. The number is the commit the build belongs to: the commit count so far, plus one if there are uncommitted source changes. So build and commit together, and the number on the live site matches the commit that published it.
+
 To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 
 ```sh

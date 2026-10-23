@@ -46,3 +46,6 @@ canvas.cover { cursor: zoom-in; }
 @media (prefers-reduced-motion: reduce) {
   .buzz, .origami.fold svg, .origami.fold span, .boot-lines div::after { animation: none; }
 }
+
+/* ---------- build stamp ---------- */
+footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #5d6a8c; }

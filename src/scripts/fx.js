@@ -16,7 +16,7 @@
     if (store('br-booted') || location.hash || document.hidden || navigator.webdriver) { el.remove(); return; }
     store('br-booted', '1');
     var issues = document.querySelectorAll('article.issue[id]').length, files = document.querySelectorAll('.dossier').length;
-    var lines = ['LAPD · BLADE RUNNER UNIT', 'RECORDS TERMINAL · LOS ANGELES', 'CONNECTING TO ARCHIVE ............ OK',
+    var lines = ['LAPD · BLADE RUNNER UNIT', 'RECORDS TERMINAL · LOS ANGELES', 'ARCHIVE BUILD ' + (el.getAttribute('data-build') || '—') + ' ............ OK',
       'INDEXING ' + issues + ' ENTRIES · ' + files + ' CASE FILES', 'VOIGHT-KAMPFF CALIBRATION ........ OK', 'ACCESS GRANTED'];
     var out = el.querySelector('.boot-lines'), done = false, timers = [];
     function finish() { if (done) return; done = true; timers.forEach(clearTimeout); el.classList.add('out'); setTimeout(function () { el.remove(); }, 450); }

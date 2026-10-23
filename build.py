@@ -6,8 +6,11 @@ Writes two copies:
 
 Usage: python3 build.py
 """
+import datetime
 import json
 import pathlib
+import subprocess
+from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "src"
@@ -31,6 +34,18 @@ NAV = [("era1", 'Era I<span class="yrs"> · 2009–2019</span>'),
 
 STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css", "styles/fx.css"]
 SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/search.js", "scripts/fx.js", "scripts/sfx.js"]
+
+
+def build_number():
+    """The build number is the commit this build will be part of: the number of commits so far,
+    plus one when there are uncommitted source changes (the built files in docs/ and build/ don't count)."""
+    try:
+        git = lambda *a: subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True, check=True).stdout
+        count = int(git("rev-list", "--count", "HEAD").strip())
+        dirty = [l for l in git("status", "--porcelain").splitlines() if not l[3:].startswith(("docs/", "build/"))]
+        return count + (1 if dirty else 0)
+    except (OSError, subprocess.CalledProcessError, ValueError):
+        return 0
 
 
 def read(rel):
@@ -73,22 +88,29 @@ def build():
     scripts = "\n".join(read(s) for s in SCRIPTS)
     router = read("scripts/router.js").replace("__HEROES__", json.dumps(heroes, ensure_ascii=False))
 
+    number = build_number()
+    today = datetime.datetime.now(ZoneInfo("Europe/Oslo"))
+    build_label = f"Build {number:03d} · {today.day} {today:%b %Y}"
+    stamp = f'<p class="build">{build_label}</p>'
+
     views = "".join(
         f'<div class="view" id="{v}" data-view="{v}"{"" if i == 0 else " hidden"}>{read(f"pages/{v}.html")}</div>'
         for i, v in enumerate(VIEWS))
+    views = views.replace("</div></footer>", stamp + "</div></footer>")
     body = (nav_html(subnav)
             + hero_html(*heroes[VIEWS[0]])
             + f'<main id="top">{views}</main>')
 
     page = (f'<title>{TITLE}</title>\n'
             f'<meta name="claude:viewport-fit-sides" content="cover">\n'
+            f'<meta name="build" content="{build_label}">\n'
             f'{read("shell/head.html")}'
             f'{FONTS}\n'
             f'<style>{css}</style>\n'
             f'<canvas id="rain" aria-hidden="true"></canvas>\n'
             f'<div class="scan" aria-hidden="true"></div>\n'
             f'{read("shell/player.html")}'
-            f'{read("shell/fx.html")}'
+            f'{read("shell/fx.html").replace("__BUILD__", f"{number:03d}")}'
             f'{body}\n'
             f'<script>{scripts}\n{router}</script>')
 
@@ -108,6 +130,7 @@ def build():
     (ROOT / "docs").mkdir(exist_ok=True)
     (ROOT / "docs" / "index.html").write_text(standalone)
     (ROOT / "docs" / ".nojekyll").write_text("")
+    print(build_label)
     print(f"build/archive.html {len(page):,} bytes")
     print(f"docs/index.html    {len(standalone):,} bytes")
 
