@@ -1,0 +1,1545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="An unofficial fan archive of the Blade Runner saga, 2009 to 2099: every comic, film, short and anime, in story order.">
+<style>:root{color-scheme:dark}html,body{background:#070910}body{font-family:system-ui,sans-serif}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blade Runner Archive</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: a rainy night-city scroll — skyline hero, case board, dossiers, three volumes of issue "case reports", a broadcast climax, then the empathy thread. Single committed dark look. */
+:root {
+  --night: #070910;
+  --deep: #0c111e;
+  --panel: #10172a;
+  --line: #243050;
+  --ink: #e6eaf4;
+  --dim: #95a2c4;
+  --amber: #ffb347;
+  --cyan: #22e5ff;
+  --pink: #ff2e88;
+  --rust: #ff5a4d;
+  --glow-amber: rgba(255, 179, 71, .45);
+  --glow-cyan: rgba(34, 229, 255, .4);
+  --glow-pink: rgba(255, 46, 136, .45);
+  --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-jp: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", "Noto Sans CJK JP", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; } [hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night); }
+#rain { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: .55; }
+.scan { position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.018) 0 1px, transparent 1px 3px); }
+main, header.hero, nav.bar, footer { position: relative; z-index: 2; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.prose { max-width: 68ch; }
+a { color: var(--cyan); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+.label { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+
+/* HERO */
+.hero { overflow: hidden; border-bottom: 1px solid var(--line); background: linear-gradient(to bottom, #0a0e1c 0%, #120f1f 55%, #2a1410 100%); }
+#city { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero .wrap { position: relative; padding-block: clamp(72px, 12vw, 140px) clamp(150px, 20vw, 230px); }
+.hero .kicker { color: var(--cyan); }
+.hero h1 { font-size: clamp(2.6rem, 8.5vw, 6.4rem); font-weight: 700; letter-spacing: .08em; color: var(--amber);
+  text-shadow: 0 0 6px var(--glow-amber), 0 0 28px var(--glow-amber), 0 0 70px rgba(255,120,40,.35); margin-top: 14px; }
+.hero h1 span { display: block; font-size: .42em; letter-spacing: .55em; color: var(--cyan); text-shadow: 0 0 8px var(--glow-cyan), 0 0 30px var(--glow-cyan); margin-top: .35em; }
+.hero p.lede { font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--ink); max-width: 46ch; margin: 26px 0 0; }
+.flicker { animation: flicker 4.5s 1 .3s both; }
+@keyframes flicker { 0%,4%,8%,100% { opacity: 1 } 2% { opacity: .35 } 6% { opacity: .55 } 7% { opacity: .2 } }
+.signs { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: 48px; display: flex; gap: 14px; }
+.sign { writing-mode: vertical-rl; font-family: var(--font-jp); font-weight: 700; font-size: 1.05rem; letter-spacing: .25em;
+  padding: 12px 6px; border: 1.5px solid currentColor; border-radius: 4px; background: rgba(7,9,16,.75); }
+.sign.p { color: var(--pink); box-shadow: 0 0 14px var(--glow-pink), inset 0 0 10px var(--glow-pink); text-shadow: 0 0 8px var(--glow-pink); }
+.sign.c { color: var(--cyan); box-shadow: 0 0 14px var(--glow-cyan), inset 0 0 10px var(--glow-cyan); text-shadow: 0 0 8px var(--glow-cyan); margin-top: 60px; }
+@media (max-width: 720px) { .signs { display: none; } }
+.spoiler { display: inline-flex; gap: 10px; align-items: center; margin-top: 28px; font-family: var(--font-mono); font-size: .82rem; letter-spacing: .12em; color: var(--rust);
+  border: 1px solid var(--rust); padding: 6px 12px; border-radius: 3px; background: rgba(7,9,16,.7); }
+.spoiler::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--rust); box-shadow: 0 0 10px var(--rust); animation: blink 1.4s infinite; }
+@keyframes blink { 50% { opacity: .2 } }
+
+/* NAV */
+nav.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(7,9,16,.88); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+nav.bar .wrap { display: flex; gap: 6px 22px; flex-wrap: wrap; padding-block: 10px; align-items: center; }
+nav.bar a { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); text-decoration: none; }
+nav.bar a:hover { color: var(--amber); }
+nav.bar .brand { color: var(--amber); margin-right: auto; }
+
+section { padding-block: clamp(56px, 8vw, 96px); }
+.sec-head { display: grid; gap: 10px; margin-bottom: 34px; }
+.sec-head h2 { font-size: clamp(1.8rem, 4.4vw, 2.8rem); letter-spacing: .04em; }
+
+/* OVERVIEW */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 34px; }
+.facts div { background: var(--deep); padding: 18px; }
+.facts b { display: block; font-family: var(--font-display); font-size: 2rem; color: var(--amber); font-variant-numeric: tabular-nums; }
+.facts span { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+@media (max-width: 640px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* CASE BOARD */
+.board-scroll { overflow-x: auto; padding-bottom: 8px; }
+.board { position: relative; min-width: 900px; height: 280px; }
+.board .track { position: absolute; left: 0; right: 0; top: 136px; height: 6px; display: grid; grid-template-columns: 4fr 4fr 4fr; }
+.board .track i:nth-child(1) { background: var(--cyan); box-shadow: 0 0 12px var(--glow-cyan); }
+.board .track i:nth-child(2) { background: var(--pink); box-shadow: 0 0 12px var(--glow-pink); }
+.board .track i:nth-child(3) { background: var(--amber); box-shadow: 0 0 12px var(--glow-amber); }
+.pin { position: absolute; width: 8.33%; text-align: center; text-decoration: none; color: var(--ink); }
+.pin .dot { position: absolute; left: 50%; top: 129px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; background: var(--night); border: 2px solid var(--c); transition: transform .2s; }
+.pin.key .dot { background: var(--c); box-shadow: 0 0 16px var(--c); }
+.pin:hover .dot { transform: scale(1.3); }
+.pin .stem { position: absolute; left: 50%; width: 1px; background: var(--c); opacity: .5; }
+.pin .txt { position: absolute; left: -10%; right: -10%; font-size: .82rem; line-height: 1.3; }
+.pin .txt b { display: block; font-family: var(--font-display); font-size: 1.05rem; color: var(--c); }
+.pin .txt em { font-style: normal; color: var(--dim); display: block; }
+.pin.up .txt { top: 30px; } .pin.up .stem { top: 100px; height: 28px; }
+.pin.down .txt { top: 178px; } .pin.down .stem { top: 149px; height: 26px; }
+
+/* DOSSIERS */
+.files { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.file { display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 16px; padding: 16px; background: var(--deep); border: 1px solid var(--line); border-top: 3px solid var(--c); position: relative; }
+.file::after { content: attr(data-case); position: absolute; top: 10px; right: 12px; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .12em; color: var(--dim); }
+.photo { width: 86px; height: 108px; border: 1px solid var(--c); background: repeating-linear-gradient(to bottom, rgba(255,255,255,.035) 0 1px, transparent 1px 4px), #0e1424; display: grid; place-items: end center; overflow: hidden; position: relative; }
+.photo svg { width: 70px; height: 84px; }
+.photo svg path, .photo svg circle { fill: var(--line); }
+.photo small { position: absolute; top: 6px; font-family: var(--font-mono); font-size: .58rem; letter-spacing: .14em; color: var(--dim); }
+.file h3 { font-size: 1.15rem; margin-top: 18px; }
+.file .kind { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .12em; color: var(--c); text-transform: uppercase; }
+.status { display: inline-block; margin: 8px 0 6px; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em; padding: 2px 8px; border: 1px solid var(--s); color: var(--s); border-radius: 2px; }
+.file p { margin: 0; font-size: .92rem; line-height: 1.45; color: var(--ink); }
+
+/* VOLUMES */
+.vol-banner { position: relative; overflow: hidden; border: 1.5px solid var(--c); border-radius: 6px; padding: 34px clamp(18px, 4vw, 40px); margin-bottom: 40px;
+  background: radial-gradient(ellipse at 80% 120%, var(--g), transparent 60%), var(--deep); box-shadow: 0 0 30px -6px var(--g); }
+.vol-banner .num { font-family: var(--font-display); font-size: clamp(2.6rem, 7vw, 4.2rem); font-weight: 700; color: var(--c); letter-spacing: .06em; line-height: 1; text-shadow: 0 0 18px var(--g); }
+.vol-banner h2 { font-size: clamp(1.4rem, 3.4vw, 2rem); letter-spacing: .4em; text-transform: uppercase; margin-top: 8px; }
+.vol-banner p { max-width: 60ch; color: var(--dim); margin: 14px 0 0; }
+.vol-banner .jp { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-family: var(--font-jp); font-size: clamp(2.4rem, 8vw, 5.5rem); font-weight: 700; color: var(--c); opacity: .14; white-space: nowrap; pointer-events: none; }
+.issues { display: grid; gap: 22px; }
+.issue { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 26px clamp(16px, 3vw, 30px); background: rgba(12,17,30,.88); border: 1px solid var(--line); border-left: 2px solid var(--c); scroll-margin-top: 70px; }
+.issue .no { font-family: var(--font-display); font-weight: 700; font-size: 3.2rem; line-height: 1; color: var(--c); opacity: .9; }
+.issue .no small { display: block; font-family: var(--font-mono); font-size: .7rem; font-weight: 400; letter-spacing: .16em; color: var(--dim); margin-top: 8px; }
+.issue h3 { font-size: 1.5rem; margin-bottom: 10px; }
+.issue p { margin: 0 0 12px; max-width: 68ch; }
+.issue p:last-child { margin-bottom: 0; }
+.issue strong { color: var(--amber); font-weight: 600; }
+.issue.key { box-shadow: 0 0 0 1px var(--c), 0 0 26px -8px var(--c); }
+.issue .flag { display: inline-block; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .14em; color: var(--night); background: var(--c); padding: 1px 7px; margin-bottom: 10px; }
+@media (max-width: 640px) { .issue { grid-template-columns: minmax(0,1fr); gap: 8px; } .issue .no { font-size: 2.4rem; } }
+
+/* BROADCAST */
+.broadcast { position: relative; border: 1.5px solid var(--rust); border-radius: 6px; padding: clamp(24px, 5vw, 48px); margin-top: 40px; background: #120c12; overflow: hidden; }
+.broadcast::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(255,90,77,.06) 0 2px, transparent 2px 5px); pointer-events: none; }
+.broadcast .live { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); letter-spacing: .2em; color: var(--rust); font-size: .85rem; }
+.broadcast .live::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--rust); box-shadow: 0 0 12px var(--rust); animation: blink 1s infinite; }
+.broadcast blockquote { margin: 18px 0 0; font-family: var(--font-display); font-size: clamp(1.3rem, 3.2vw, 2rem); line-height: 1.35; color: var(--ink); max-width: 34ch; }
+.broadcast p { color: var(--dim); max-width: 60ch; position: relative; }
+
+/* THEMES */
+.empathy { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: clamp(24px, 5vw, 56px); align-items: center; }
+.eye { width: 100%; max-width: 340px; }
+.eye .lid { fill: var(--deep); stroke: var(--cyan); stroke-width: 2; }
+.eye .iris { fill: none; stroke: var(--pink); stroke-width: 2; }
+.eye .fibre { stroke: var(--pink); stroke-opacity: .5; }
+.eye .pupil { fill: var(--night); stroke: var(--amber); stroke-width: 2; transform-origin: 170px 110px; animation: dilate 6s ease-in-out infinite; }
+.eye .shine { fill: var(--ink); }
+.eye .reticle { stroke: var(--amber); stroke-opacity: .5; stroke-dasharray: 4 5; }
+@keyframes dilate { 50% { transform: scale(1.25); } }
+.readout { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.readout li { display: grid; grid-template-columns: 16px minmax(0,1fr) auto; gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.readout li::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.readout span { font-family: var(--font-mono); font-size: .8rem; color: var(--dim); }
+.themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; margin-top: 48px; }
+.theme { padding: 20px; border: 1px solid var(--line); background: var(--deep); }
+.theme h3 { font-size: 1.1rem; color: var(--amber); margin-bottom: 8px; letter-spacing: .03em; }
+.theme p { margin: 0; font-size: .95rem; color: var(--ink); }
+
+/* ORDER */
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 18px; font-family: var(--font-mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend span::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.chrono { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; display: grid; gap: 10px; }
+.chrono::before { content: ""; position: absolute; left: 76px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(var(--cyan), var(--pink), var(--amber), var(--rust)); opacity: .6; }
+.chrono li { display: grid; grid-template-columns: 62px 28px minmax(0, 1fr); align-items: start; position: relative; }
+.chrono li::after { content: ""; position: absolute; left: 66px; top: 12px; width: 13px; height: 13px; border-radius: 50%; background: var(--night); border: 2px solid var(--c); }
+.chrono li.here::after { background: var(--c); box-shadow: 0 0 14px var(--c); }
+.chrono b { grid-column: 1; font-family: var(--font-display); font-size: 1.05rem; color: var(--c); font-variant-numeric: tabular-nums; padding-top: 6px; }
+.chrono li > div { grid-column: 3; padding: 8px 14px; border: 1px solid var(--line); border-left: 2px solid var(--c); background: rgba(12,17,30,.88); }
+.chrono li.here > div { box-shadow: 0 0 22px -8px var(--c); border-color: var(--c); }
+.chrono h3 { font-size: 1.05rem; letter-spacing: .02em; }
+.chrono p { margin: 2px 0 0; font-size: .92rem; color: var(--dim); }
+.chrono em { color: var(--amber); font-style: normal; }
+.order { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; padding: 0; list-style: none; }
+.order li { font-family: var(--font-mono); font-size: .85rem; letter-spacing: .06em; padding: 8px 12px; border: 1px solid var(--line); background: var(--deep); }
+.order li.here { border-color: var(--amber); color: var(--amber); box-shadow: 0 0 14px -4px var(--glow-amber); }
+.order li:not(:last-child)::after { content: "→"; margin-left: 12px; color: var(--dim); }
+
+footer { border-top: 1px solid var(--line); padding-block: 40px 60px; color: var(--dim); font-size: .9rem; }
+footer ul { padding-left: 18px; columns: 2 280px; column-gap: 32px; }
+footer li { margin-bottom: 4px; break-inside: avoid; }
+@media (prefers-reduced-motion: reduce) { .flicker, .spoiler::before, .broadcast .live::before, .eye .pupil { animation: none; } }
+
+body { margin: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chips span { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); border: 1px solid var(--line); background: rgba(7,9,16,.6); padding: 3px 9px; }
+.arc { font-family: var(--font-display); font-size: clamp(1rem, 2.4vw, 1.2rem); color: var(--c); letter-spacing: .1em; text-transform: uppercase; margin: 44px 0 18px; padding-left: 12px; border-left: 3px solid var(--c); }
+.arc:first-of-type { margin-top: 8px; }
+.note { border: 1px dashed var(--c); padding: 20px clamp(16px, 3vw, 28px); margin-top: 22px; background: var(--deep); }
+.note p { margin: 10px 0 0; max-width: 68ch; }
+.note strong { color: var(--amber); font-weight: 600; }
+.dimline { color: var(--dim); font-size: .9rem; }
+.issue em { font-style: italic; }
+nav.bar .sub { border-top: 1px solid var(--line); flex-wrap: nowrap; overflow-x: auto; padding-block: 8px; scrollbar-width: none; }
+nav.bar .sub a { white-space: nowrap; font-size: .74rem; }
+nav.bar a[aria-current="page"] { color: var(--amber); text-shadow: 0 0 10px var(--glow-amber); }
+.eras { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 860px) { .eras { grid-template-columns: minmax(0, 1fr); } }
+.era-card { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 26px 22px 22px; text-decoration: none; color: var(--ink); background: radial-gradient(ellipse at 100% 0%, var(--g), transparent 60%), var(--deep); border: 1.5px solid var(--c); border-radius: 6px; box-shadow: 0 0 26px -10px var(--g); transition: transform .2s, box-shadow .2s; overflow: hidden; }
+.era-card:hover { transform: translateY(-3px); box-shadow: 0 0 40px -6px var(--g); }
+.era-card .roman { position: absolute; right: 16px; top: 2px; font-family: var(--font-display); font-weight: 700; font-size: 5.5rem; line-height: 1; color: var(--c); opacity: .18; }
+.era-card .years { font-family: var(--font-mono); letter-spacing: .16em; color: var(--c); font-size: .85rem; }
+.era-card h3 { font-size: 1.6rem; letter-spacing: .03em; }
+.era-card p { margin: 0; color: var(--dim); font-size: .95rem; }
+.era-card ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 4px; font-size: .92rem; }
+.era-card li::before { content: "▸ "; color: var(--c); }
+.era-card .go { margin-top: auto; padding-top: 16px; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--c); }
+.chrono h3 a { color: var(--ink); text-decoration: none; }
+.chrono h3 a:hover { color: var(--amber); }
+.pager { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-block: 0 60px; }
+.pager a { font-family: var(--font-mono); letter-spacing: .12em; text-transform: uppercase; font-size: .85rem; text-decoration: none; border: 1px solid var(--line); padding: 12px 16px; background: var(--deep); color: var(--ink); }
+.pager a:hover { border-color: var(--amber); color: var(--amber); }
+
+#score { position: fixed; z-index: 20; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 6px; padding: 8px 14px 8px 8px; max-width: calc(100vw - 32px); background: rgba(7,9,16,.92); border: 1px solid var(--line); border-radius: 14px; backdrop-filter: blur(8px); box-shadow: 0 6px 30px rgba(0,0,0,.5); }
+#score.playing { border-color: var(--amber); box-shadow: 0 0 24px -6px var(--glow-amber), 0 6px 30px rgba(0,0,0,.5); }
+#score .sb { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--deep); color: var(--ink); cursor: pointer; padding: 0; }
+#score .sb svg { width: 13px; height: 13px; fill: currentColor; }
+#score .sb:hover { color: var(--amber); border-color: var(--amber); }
+#score .sb.main { width: 46px; height: 46px; position: relative; border-color: var(--amber); color: var(--amber); }
+#score .sb.main .t { font-size: .95rem; position: relative; z-index: 1; }
+#score .eq { position: absolute; inset: 9px; display: none; align-items: flex-end; gap: 2px; opacity: .35; }
+#score.playing .eq { display: flex; }
+#score .eq i { flex: 1; height: 30%; background: var(--amber); border-radius: 1px; animation: eq 1.6s ease-in-out infinite; }
+#score .eq i:nth-child(2) { animation-delay: -.5s; } #score .eq i:nth-child(3) { animation-delay: -1s; } #score .eq i:nth-child(4) { animation-delay: -.25s; }
+@keyframes eq { 0%,100% { height: 25%; } 50% { height: 100%; } }
+#score .meta { display: grid; gap: 4px; margin-left: 6px; min-width: 0; }
+#scoretitle { font-family: var(--font-display); font-size: .86rem; color: var(--amber); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+#score .row { display: flex; align-items: center; gap: 8px; }
+#scorevol { width: 96px; accent-color: var(--amber); }
+#score .chip { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: none; color: var(--dim); cursor: pointer; }
+#score .chip[aria-pressed="true"] { color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 8px -2px var(--glow-cyan); }
+#scorehint { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; color: var(--dim); }
+@media (max-width: 520px) { #scorevol, #scorehint { display: none; } #scoretitle { max-width: 120px; } }
+@media (prefers-reduced-motion: reduce) { #score .eq i { animation: none; height: 70%; } }
+
+.vol-banner.has-cover { display: grid; grid-template-columns: minmax(0, 1fr) clamp(150px, 22vw, 210px); gap: 28px; align-items: center; }
+.vol-banner .bt { min-width: 0; position: relative; }
+.vol-banner.has-cover .jp { right: auto; left: 46%; }
+canvas.cover { width: 100%; height: auto; aspect-ratio: 3 / 4; max-width: 100%; display: block; border-radius: 3px; box-shadow: 0 10px 40px -12px var(--g), 0 0 0 1px rgba(255,255,255,.04); transform: rotate(1.2deg); }
+.posters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 16px; }
+.poster { text-decoration: none; color: var(--ink); display: grid; gap: 8px; }
+.poster canvas { width: 100%; height: auto; aspect-ratio: 3 / 4; display: block; border-radius: 3px; box-shadow: 0 8px 28px -14px rgba(0,0,0,.9); transition: transform .25s, box-shadow .25s; }
+.poster:hover canvas, .poster:focus-visible canvas { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 14px 34px -10px rgba(255,179,71,.45); }
+.poster span { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+@media (max-width: 640px) {
+  .vol-banner.has-cover { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  canvas.cover { order: -1; width: 62%; max-width: 220px; transform: none; }
+  .posters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+.hero p.lede { text-shadow: 0 1px 12px rgba(7,9,16,.9), 0 0 2px rgba(7,9,16,.9); }
+@media (max-width: 640px) {
+  body { font-size: 17.5px; line-height: 1.7; padding-bottom: 96px; }
+  #rain { opacity: .22; }
+  .scan { display: none; }
+  .hero .wrap { padding-block: 56px 120px; }
+  .hero h1 { font-size: clamp(2.3rem, 13vw, 3.4rem); letter-spacing: .05em; }
+  .hero h1 span { letter-spacing: .3em; }
+  .hero p.lede { font-size: 1.05rem; background: rgba(7,9,16,.55); padding: 10px 12px; margin-left: -12px; margin-right: -12px; border-radius: 4px; }
+  #city { opacity: .7; }
+  nav.bar .wrap { gap: 4px 14px; padding-block: 8px; }
+  nav.bar a { letter-spacing: .08em; font-size: .78rem; padding-block: 4px; }
+  nav.bar .yrs { display: none; }
+  section { padding-block: 44px; }
+  .sec-head h2 { font-size: 1.7rem; }
+  .vol-banner { padding: 22px 16px; margin-bottom: 24px; }
+  .vol-banner .jp { display: none; }
+  .vol-banner .num { font-size: 2.4rem; }
+  .vol-banner h2 { letter-spacing: .14em; font-size: 1.35rem; }
+  .vol-banner p { color: var(--ink); font-size: 1rem; }
+  .chips span { font-size: .68rem; letter-spacing: .06em; }
+  .issues { gap: 14px; }
+  .issue { padding: 18px 16px; background: var(--deep); gap: 6px; }
+  .issue .no { display: flex; align-items: baseline; gap: 10px; font-size: 1.6rem; }
+  .issue .no small { margin-top: 0; font-size: .68rem; }
+  .issue h3 { font-size: 1.3rem; }
+  .issue p { margin-bottom: 14px; }
+  .arc { margin: 32px 0 14px; font-size: .95rem; letter-spacing: .06em; }
+  .file { grid-template-columns: 64px minmax(0,1fr); gap: 12px; padding: 14px; }
+  .photo { width: 64px; height: 82px; } .photo svg { width: 52px; height: 64px; }
+  .file::after { position: static; display: block; grid-column: 1 / -1; order: -1; margin-bottom: -4px; }
+  .file h3 { margin-top: 0; }
+  .broadcast blockquote { font-size: 1.2rem; }
+  .theme { padding: 16px; }
+  .empathy { grid-template-columns: minmax(0, 1fr); }
+  .eye { max-width: 260px; margin: 0 auto; display: block; }
+  .readout li { grid-template-columns: 16px minmax(0,1fr); }
+  .readout li span { grid-column: 2; }
+  .chrono::before { left: 60px; }
+  .chrono li { grid-template-columns: 48px 24px minmax(0, 1fr); }
+  .chrono li::after { left: 54px; }
+  .chrono b { font-size: .95rem; }
+  .era-card { padding: 20px 16px; }
+  .era-card .roman { font-size: 4rem; }
+  .pager a { flex: 1 1 140px; text-align: center; }
+  footer ul { columns: 1; }
+  #score { left: calc(10px + env(safe-area-inset-left, 0px)); right: calc(10px + env(safe-area-inset-right, 0px)); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); max-width: none; padding: 6px 10px 6px 6px; }
+  #score .meta { flex: 1; }
+  #scoretitle { max-width: none; font-size: .8rem; }
+  #score .sb { width: 38px; height: 38px; }
+  #score .sb.main { width: 44px; height: 44px; }
+}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} img{max-width:100%} [hidden]{display:none!important}</style>
+</head><body><canvas id="rain" aria-hidden="true"></canvas>
+<div class="scan" aria-hidden="true"></div>
+<div id="score" role="region" aria-label="Ambient score player"><button id="scoreprev" class="sb" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="2" height="10"/><polygon points="14,3 5,8 14,13"/></svg></button><button id="scorebtn" class="sb main" type="button" aria-pressed="false" aria-label="Play score"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">▶</span></button><button id="scorenext" class="sb" type="button" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="12" y="3" width="2" height="10"/><polygon points="2,3 11,8 2,13"/></svg></button><div class="meta"><span id="scoretitle">01 / 05</span><div class="row"><input id="scorevol" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Volume"><button id="scorerain" class="chip" type="button" aria-pressed="true">Rain</button></div><span id="scorehint">Original score</span></div></div>
+<nav class="bar" aria-label="Archive"><div class="wrap"><a class="brand" href="#archive">BR · ARCHIVE</a><a href="#era1" data-nav="era1">Era I<span class="yrs"> · 2009–2019</span></a><a href="#era2" data-nav="era2">Era II<span class="yrs"> · 2022–2039</span></a><a href="#era3" data-nav="era3">Era III<span class="yrs"> · 2048–2099</span></a></div><div class="wrap sub" data-for="era1" hidden><a href="#origins">Origins · 2009</a><a href="#board">Origins case board</a><a href="#files">Origins case files</a><a href="#empathy">Origins themes</a><a href="#tokyo">Tokyo Nexus · 2015</a><a href="#film82">Blade Runner · 1982</a><a href="#br2019">2019 · comic</a></div><div class="wrap sub" data-for="era2" hidden><a href="#blackout">Black Out · 2022</a><a href="#br2029">2029 · comic</a><a href="#lotus">Black Lotus · anime</a><a href="#ll1">Leaving L.A.</a><a href="#lv1">Las Vegas</a><a href="#dawn">Nexus Dawn · 2036</a><a href="#br2039">2039 · comic</a></div><div class="wrap sub" data-for="era3" hidden><a href="#nowhere">Nowhere to Run · 2048</a><a href="#film49">Blade Runner 2049</a><a href="#br2099">Blade Runner 2099</a></div></nav><header class="hero">
+  <canvas id="city" aria-hidden="true"></canvas>
+  <div class="signs" aria-hidden="true"><div class="sign p">レプリカント</div><div class="sign c">ロサンゼルス</div></div>
+  <div class="wrap">
+    <div class="label kicker">Los Angeles · 2009 – 2099 · Case archive</div>
+    <h1 class="flicker">BLADE RUNNER<span>ARCHIVE</span></h1>
+    <p class="lede">Every comic, film, short and anime in the Blade Runner saga, told in story order across three eras. From the first Blade Runner to the city fifty years after K.</p>
+    <div class="spoiler">FULL SPOILERS</div>
+  </div>
+</header><main id="top"><div class="view" id="archive" data-view="archive"><section id="eras">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Three eras · one city</div><h2>Choose an era</h2><p class="prose" style="color:var(--dim);margin:0">Each era has its own page, with every comic told issue by issue, the anime episode by episode and the films act by act. Full spoilers throughout.</p></div>
+    <div class="eras">
+      <a class="era-card" href="#era1" style="--c:var(--amber);--g:var(--glow-amber)">
+        <span class="roman">I</span>
+        <span class="years">2009 – 2019</span>
+        <h3>Before the Blackout</h3>
+        <p>How the Blade Runners began, and the hunt that made them famous.</p>
+        <ul><li>Blade Runner: Origins</li><li>Tokyo Nexus</li><li>Blade Runner (1982)</li><li>Blade Runner 2019</li></ul>
+        <span class="go">Open Era I →</span>
+      </a>
+      <a class="era-card" href="#era2" style="--c:var(--pink);--g:var(--glow-pink)">
+        <span class="roman">II</span>
+        <span class="years">2022 – 2039</span>
+        <h3>After the Blackout</h3>
+        <p>The records burn, Tyrell falls, and Wallace rises from the ashes.</p>
+        <ul><li>Black Out 2022</li><li>Blade Runner 2029</li><li>Black Lotus (anime and comics)</li><li>2036: Nexus Dawn</li><li>Blade Runner 2039</li></ul>
+        <span class="go">Open Era II →</span>
+      </a>
+      <a class="era-card" href="#era3" style="--c:var(--cyan);--g:var(--glow-cyan)">
+        <span class="roman">III</span>
+        <span class="years">2048 – 2099</span>
+        <h3>The Wallace Age</h3>
+        <p>A miracle under a dead tree, and the world fifty years on.</p>
+        <ul><li>2048: Nowhere to Run</li><li>Blade Runner 2049</li><li>Blade Runner 2099</li></ul>
+        <span class="go">Open Era III →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="posters">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Original art · one poster per story</div><h2>Poster wall</h2></div>
+    <div class="posters">
+      <a class="poster" href="#origins"><canvas data-art="origins"></canvas><span>Origins · 2009</span></a>
+      <a class="poster" href="#tokyo"><canvas data-art="tokyo"></canvas><span>Tokyo Nexus · 2015</span></a>
+      <a class="poster" href="#film82"><canvas data-art="film82"></canvas><span>Blade Runner · 2019</span></a>
+      <a class="poster" href="#br2019"><canvas data-art="br2019"></canvas><span>2019 · comic</span></a>
+      <a class="poster" href="#blackout"><canvas data-art="blackout"></canvas><span>Black Out · 2022</span></a>
+      <a class="poster" href="#br2029"><canvas data-art="br2029"></canvas><span>2029 · comic</span></a>
+      <a class="poster" href="#lotus"><canvas data-art="lotus"></canvas><span>Black Lotus · 2032</span></a>
+      <a class="poster" href="#dawn"><canvas data-art="dawn"></canvas><span>Nexus Dawn · 2036</span></a>
+      <a class="poster" href="#br2039"><canvas data-art="br2039"></canvas><span>2039 · comic</span></a>
+      <a class="poster" href="#nowhere"><canvas data-art="nowhere"></canvas><span>Nowhere to Run · 2048</span></a>
+      <a class="poster" href="#film49"><canvas data-art="film49"></canvas><span>2049 · film</span></a>
+      <a class="poster" href="#br2099"><canvas data-art="br2099"></canvas><span>2099 · series</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="order">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Story order · comics, films, anime and series</div><h2>Reading and watch order</h2></div>
+    <div class="legend"><span style="--c:var(--cyan)">Comic</span><span style="--c:var(--amber)">Film</span><span style="--c:var(--pink)">Anime</span><span style="--c:var(--dim)">Short film</span><span style="--c:var(--rust)">TV series</span></div>
+    <ol class="chrono">
+      <li style="--c:var(--cyan)"><b>2009</b><div><h3><a href="#origins">Blade Runner: Origins</a></h3><p>Comic · 12 issues. How Cal Moreaux became the first Blade Runner.</p></div></li>
+      <li style="--c:var(--cyan)"><b>2015</b><div><h3><a href="#tokyo">Tokyo Nexus: Die in Peace</a></h3><p>Comic · 4 issues. Kalanthia survivors Mead and Stix take a case in Tokyo.</p></div></li>
+      <li style="--c:var(--cyan)"><b>2015+</b><div><h3><a href="#tokyo">Tokyo Nexus: To Lose Is to Win</a></h3><p>Comic · 4 issues, from May 2026. Their old commander wants them dead.</p></div></li>
+      <li style="--c:var(--amber)"><b>2019</b><div><h3><a href="#film82">Blade Runner</a></h3><p>Film · 1982. Deckard hunts Roy Batty's group.</p></div></li>
+      <li style="--c:var(--cyan)"><b>2019</b><div><h3><a href="#br2019">Blade Runner 2019</a></h3><p>Comic · 12 issues. Ash, Cleo and the two Isobels.</p></div></li>
+      <li style="--c:var(--dim)"><b>2022</b><div><h3><a href="#blackout">Black Out 2022</a></h3><p>Anime short. The blackout that wipes the records.</p></div></li>
+      <li style="--c:var(--cyan)"><b>2029</b><div><h3><a href="#br2029">Blade Runner 2029</a></h3><p>Comic · 12 issues. Ash against Yotun.</p></div></li>
+      <li style="--c:var(--pink)"><b>2032</b><div><h3><a href="#lotus">Blade Runner: Black Lotus</a></h3><p>Anime · 13 episodes. Elle hunts her hunters.</p></div></li>
+      <li style="--c:var(--cyan)"><b>2032</b><div><h3><a href="#ll1">Black Lotus: Leaving L.A.</a></h3><p>Comic · 4 issues. Elle in the desert, between Fracktown and the co-op.</p></div></li>
+      <li style="--c:var(--cyan)"><b>2032</b><div><h3><a href="#lv1">Black Lotus: Las Vegas</a></h3><p>Comic · 4 issues. The replicant kingdom of Paradise.</p></div></li>
+      <li style="--c:var(--dim)"><b>2036</b><div><h3><a href="#dawn">2036: Nexus Dawn</a></h3><p>Short film. Wallace gets the ban lifted.</p></div></li>
+      <li style="--c:var(--cyan)"><b>2039</b><div><h3><a href="#br2039">Blade Runner 2039</a></h3><p>Comic · 12 issues. Luv, Rash and Ash's last move.</p></div></li>
+      <li style="--c:var(--dim)"><b>2048</b><div><h3><a href="#nowhere">2048: Nowhere to Run</a></h3><p>Short film. Sapper Morton's last day in hiding.</p></div></li>
+      <li style="--c:var(--amber)"><b>2049</b><div><h3><a href="#film49">Blade Runner 2049</a></h3><p>Film · 2017. K, the tree and the child.</p></div></li>
+      <li style="--c:var(--rust)"><b>2099</b><div><h3><a href="#br2099">Blade Runner 2099</a></h3><p>Series · 8 episodes, Prime Video, 25 November 2026.</p></div></li>
+    </ol>
+    <p class="prose" style="color:var(--dim);font-size:.9rem;margin-top:16px">Do Androids Dream of Electric Sheep? and K. W. Jeter's sequel novels follow their own separate timeline.</p>
+  </div>
+</section>
+<footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.avpcentral.com/blade-runner-timeline" target="_blank" rel="noopener">AvP Central: Blade Runner timeline 2009–2099</a></li><li><a href="https://www.howtolovecomics.com/2025/06/04/blade-runner-comics-universe-chronological-reading-order/" target="_blank" rel="noopener">How to Love Comics: comics reading order</a></li><li><a href="https://titan-comics.com/c/2085-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div><div class="view" id="era1" data-view="era1" hidden><section id="origins" style="padding-block-end:0">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">起源</span><div class="num">2009</div><h2>Blade Runner: Origins</h2>
+      <div class="chips"><span>Comic · 12 issues</span><span>Vols. Products · Scrap · Burning</span><span>K. Perkins · Mellow Brown · Fernando Dagnino</span></div>
+      <p>How a burnt-out detective, a faked suicide and a sister in a borrowed body created the first Blade Runner.</p></div>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Briefing</div><h2>Before the unit existed</h2></div>
+    <div class="prose">
+      <p>Blade Runner: Origins is set in 2009, ten years before the original film. Tyrell's Nexus 4 replicants have moved beyond off-world labour and combat and now work on Earth as servants for the wealthy. In secret, Tyrell is pushing toward a Nexus 5. There is no Blade Runner unit yet. The story explains why one had to be invented.</p>
+      <p>Published by Titan Comics in 2021–2022, written by K. Perkins and Mellow Brown with Mike Johnson, and drawn mainly by Fernando Dagnino with colours by Marco Lesko.</p>
+    </div>
+    <div class="facts">
+      <div><b>12</b><span>Issues</span></div>
+      <div><b>3</b><span>Volumes</span></div>
+      <div><b>2009</b><span>Setting</span></div>
+      <div><b>−10</b><span>Years before the film</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="board">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Evidence wall</div><h2>Case board</h2><p class="label" style="text-transform:none;letter-spacing:.04em">Filled pins mark the turning points. Tap a pin to jump to the issue.</p></div>
+    <div class="board-scroll">
+      <div class="board">
+        <div class="track"><i></i><i></i><i></i></div>
+        <a class="pin up" href="#i1" style="left:0%;--c:var(--cyan)"><span class="txt"><b>#1</b>Fake suicide<em>Nexus 5 escapes</em></span><span class="stem"></span><span class="dot"></span></a>
+        <a class="pin down" href="#i2" style="left:8.33%;--c:var(--cyan)"><span class="stem"></span><span class="dot"></span><span class="txt"><b>#2</b>Marcus taken<em>Spinner crash</em></span></a>
+        <a class="pin up" href="#i3" style="left:16.66%;--c:var(--cyan)"><span class="txt"><b>#3</b>Asa revealed<em>Stahl survives</em></span><span class="stem"></span><span class="dot"></span></a>
+        <a class="pin down key" href="#i4" style="left:25%;--c:var(--cyan)"><span class="stem"></span><span class="dot"></span><span class="txt"><b>#4</b>Effie shot<em>Cal blackmailed</em></span></a>
+        <a class="pin up" href="#i5" style="left:33.33%;--c:var(--pink)"><span class="txt"><b>#5</b>Cal quits<em>Arnault asks why</em></span><span class="stem"></span><span class="dot"></span></a>
+        <a class="pin down key" href="#i6" style="left:41.66%;--c:var(--pink)"><span class="stem"></span><span class="dot"></span><span class="txt"><b>#6</b>The coat<em>Nexus 5 is Nia</em></span></a>
+        <a class="pin up" href="#i7" style="left:50%;--c:var(--pink)"><span class="txt"><b>#7</b>Nia's story<em>Asa rejected</em></span><span class="stem"></span><span class="dot"></span></a>
+        <a class="pin down" href="#i8" style="left:58.33%;--c:var(--pink)"><span class="stem"></span><span class="dot"></span><span class="txt"><b>#8</b>Filip killed<em>Three-way fight</em></span></a>
+        <a class="pin up" href="#i9" style="left:66.66%;--c:var(--amber)"><span class="txt"><b>#9</b>6B burns<em>Isaac killed</em></span><span class="stem"></span><span class="dot"></span></a>
+        <a class="pin down" href="#i10" style="left:75%;--c:var(--amber)"><span class="stem"></span><span class="dot"></span><span class="txt"><b>#10</b>2008 flashback<em>The explosion</em></span></a>
+        <a class="pin up key" href="#i11" style="left:83.33%;--c:var(--amber)"><span class="txt"><b>#11</b>The broadcast<em>Cal shoots Nia</em></span><span class="stem"></span><span class="dot"></span></a>
+        <a class="pin down key" href="#i12" style="left:91.66%;--c:var(--amber)"><span class="stem"></span><span class="dot"></span><span class="txt"><b>#12</b>Unit founded<em>V-K machine</em></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="files">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">LAPD records · status as of #12</div><h2>Case files</h2></div>
+    <div class="files">
+      <article class="file" data-case="BR-09-001" style="--c:var(--amber)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Cal Moreaux</h3><div class="kind">Human · ex-soldier</div><span class="status" style="--s:var(--amber)">ACTIVE · BLADE RUNNER #1</span><p>Cold-case detective from the slums. Veteran of Kalanthia. Shoots his sister on live TV.</p></div></article>
+      <article class="file" data-case="BR-09-002" style="--c:var(--pink)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Nia Moreaux</h3><div class="kind">Nexus 5 · human mind</div><span class="status" style="--s:var(--pink)">RETIRED · #11</span><p>Cal's sister, a 5th-grade teacher. Becomes the leader of the awakened replicants.</p></div></article>
+      <article class="file" data-case="BR-09-003" style="--c:var(--pink)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Asa</h3><div class="kind">Replicant · human mind</div><span class="status" style="--s:var(--pink)">AT LARGE</span><p>Dr. Lydia Kine in a male body. Faked her own suicide. Smuggles refugees.</p></div></article>
+      <article class="file" data-case="BR-09-004" style="--c:var(--cyan)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Effie Koropey</h3><div class="kind">Human · bioengineer</div><span class="status" style="--s:var(--rust)">DECEASED · #4</span><p>Kine's protégé. Shot by Stahl in a museum. Her research becomes the V-K test.</p></div></article>
+      <article class="file" data-case="BR-09-005" style="--c:var(--cyan)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Marcus Kine</h3><div class="kind">Human</div><span class="status" style="--s:var(--dim)">STATUS UNKNOWN</span><p>Lydia's brother. Never accepts Asa as his sister.</p></div></article>
+      <article class="file" data-case="BR-09-006" style="--c:var(--rust)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Ilora Stahl</h3><div class="kind">Tyrell executive</div><span class="status" style="--s:var(--rust)">ACTIVE · RUNS THE UNIT</span><p>Tyrell's fixer. Survives a crash no human should have survived.</p></div></article>
+      <article class="file" data-case="BR-09-007" style="--c:var(--pink)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Isaac</h3><div class="kind">Nexus 4 · teacher model</div><span class="status" style="--s:var(--rust)">DECEASED · #9</span><p>Gave Nia the apple. Later her lover. Shot in Sector 6B.</p></div></article>
+      <article class="file" data-case="BR-09-008" style="--c:var(--cyan)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Desiree</h3><div class="kind">Human · the slums</div><span class="status" style="--s:var(--dim)">STATUS UNKNOWN</span><p>Childhood friend of Cal and Nia. Crashes a spinner onto Tyrell's roof.</p></div></article>
+      <article class="file" data-case="BR-09-009" style="--c:var(--cyan)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Divina</h3><div class="kind">Human</div><span class="status" style="--s:var(--cyan)">ACTIVE · SHELTERS REFUGEES</span><p>Runs La Plume Sauvage, the safe house that keeps getting burned.</p></div></article>
+      <article class="file" data-case="BR-09-010" style="--c:var(--rust)"><div class="photo"><small>NO PHOTO</small><svg viewBox="0 0 70 84" aria-hidden="true"><circle cx="35" cy="30" r="15"/><path d="M5 84 Q35 40 65 84Z"/></svg></div><div><h3>Eldon Tyrell</h3><div class="kind">Tyrell Corporation</div><span class="status" style="--s:var(--rust)">ACTIVE</span><p>Blames Stahl for the uprising and orders future models fixed.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="vol1">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--cyan);--g:var(--glow-cyan)"><span class="jp" aria-hidden="true">製品</span><div class="num">VOL. 1</div><h2>Products</h2><p>Issues #1–4. A noir murder mystery: a Tyrell "suicide" turns out to be a cover story laid over a cover story, and it ends with Cal blackmailed into hunting a replicant.</p></div>
+    <div class="issues">
+      <article class="issue" id="i1" style="--c:var(--cyan)"><div class="no">#01<small>THE CASE</small></div><div>
+        <h3>The case nobody wants solved</h3>
+        <p><strong>2007, the siege of Kalanthia.</strong> Soldiers Cal Moreaux and Avery are pinned down. Tyrell has supplied a crate to open "if all else fails." When Avery opens it, two combat replicants kill every enemy in the room. Cal's first contact with Tyrell's products is as weapons that saved his life.</p>
+        <p><strong>Los Angeles, 2009.</strong> Cal now works cold cases for the LAPD and reads to his catatonic sister Nia in hospital. He is handed the apparent suicide of Dr. Lydia Kine, a Tyrell bioengineer found hanging in her sealed lab. He gets the case because he is discreet, and expendable. At Tyrell he questions Kine's assistant Effie Koropey until Ilora Stahl, Eldon Tyrell's chosen fixer, cuts in and hints he would be better used working for the company.</p>
+        <p>Divina warns him off a Tyrell job. Back home, Kine's brother Marcus insists his sister would never kill herself, and Cal pulls him clear of a crate tipped from the shadows. Then Effie calls: on the night Lydia died, a <strong>Nexus 5 prototype escaped</strong>.</p>
+      </div></article>
+      <article class="issue" id="i2" style="--c:var(--cyan)"><div class="no">#02<small>THE SET-UP</small></div><div>
+        <h3>The set-up</h3>
+        <p>At the morgue, Kine's wounds don't match a suicide. Sergeant Gutman is furious that Cal won't close the case. When Cal gets back to his desk, Marcus is gone, taken by people nobody will name. Marcus had said another officer sent him to Cal. Cal is being lined up to take the fall.</p>
+        <p>Marcus is in Stahl's hovercar when the escaped Nexus 5 hurls itself into it and brings it down in flames. At Nemo's Diner, Effie tells Cal that the Nexus 5 was given need, curiosity and hope. It wants more. Cal asks the question the series turns on: why make replicants look human at all?</p>
+      </div></article>
+      <article class="issue" id="i3" style="--c:var(--cyan)"><div class="no">#03<small>THE REUNION</small></div><div>
+        <h3>The reunion</h3>
+        <p>Stahl walks away from a crash no human should survive. Marcus is alive too, rescued by <strong>Asa</strong>, a replicant who says he is Lydia. At Cal's apartment, Effie hears him dream of a childhood moment on a rooftop with his sister. They argue and split up: Effie goes for files that incriminate Tyrell, Cal goes to Lydia's apartment.</p>
+        <p>Marcus watches a replicant cook strike back at an abusive owner and decides Asa is only a simulation of his sister. The issue ends with two traps closing. Stahl is waiting in Effie's apartment. Cal sets off the sprinklers at Lydia's, flushes out an ambush, and then Asa walks in. Cal raises his gun.</p>
+      </div></article>
+      <article class="issue key" id="i4" style="--c:var(--cyan)"><div class="no">#04<small>THE FIRST HUNT</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>The first hunt</h3>
+        <p>Cal chases Asa across the rooftops and down rain-lashed streets, leaping car roofs, into a museum. Effie follows, desperate to talk. There, <strong>Stahl shoots Effie dead</strong>. She gives Cal one week to eliminate the Nexus 5, or the slums burn and his sister pays. The first Blade Runner is made by blackmail.</p>
+        <p>Cal lets Asa say goodbye to Effie, and confirms the truth: Asa is Lydia, and <strong>Asa is not the Nexus 5</strong>. They hide Marcus with Divina. Then Cal tells Gutman, straight-faced, that it was suicide after all.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="vol2">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--pink);--g:var(--glow-pink)"><span class="jp" aria-hidden="true">スクラップ</span><div class="num">VOL. 2</div><h2>Scrap</h2><p>Issues #5–8. The story drops from Tyrell's towers to the slums where Cal grew up. Replicants start waking up, and the Nexus 5 turns out to be the person he has been visiting in hospital.</p></div>
+    <div class="issues">
+      <article class="issue" id="i5" style="--c:var(--pink)"><div class="no">#05<small>WHY?</small></div><div>
+        <h3>Why?</h3>
+        <p>Sick of the corruption tying the LAPD to Tyrell, Cal <strong>quits the force</strong>, but Stahl's deadline still binds him. With Asa as his partner, he checks on Arnault, a Nexus 4 servant stuck in a loop, repeating one word: "Why?" Asa crashes through a window to stop him attacking his owners.</p>
+        <p>At La Plume Sauvage, Asa finds nothing mechanically wrong. Divina suggests an existential crisis, which Nexus 4s supposedly can't have. Arnault dies. Stahl ambushes Cal at Nia's bedside and he sends her away. A slum contact points him to the All Caps bar and his childhood friend Desiree, where the doors lock behind him.</p>
+      </div></article>
+      <article class="issue key" id="i6" style="--c:var(--pink)"><div class="no">#06<small>THE COAT</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>The coat</h3>
+        <p>Carlisle's crew believe Cal sold them out to Tyrell, whom they blame for the disappearance of Carlisle's brother Eason. As a boy, Cal lined his coat with metal plates to protect Nia and Desiree in fights. When they hand him back his coat, he uses it as armour and a weapon. The Blade Runner's trenchcoat began as slum armour.</p>
+        <p>Desiree trusts him enough to lead him to the Nexus 5, arguing all the way about whether replicant lives matter. From a distance, Cal sees its face. <strong>It is his sister, Nia.</strong></p>
+      </div></article>
+      <article class="issue" id="i7" style="--c:var(--pink)"><div class="no">#07<small>NIA</small></div><div>
+        <h3>Nia</h3>
+        <p>Flashbacks show that Nia's mind was moved into a Nexus 5 body when she was badly hurt. She was furious, then turned that anger into leading the awakened replicants. Asa's story deepens as well: Lydia lives in a male body, and Marcus cannot accept it. The question is set: can Cal hunt his own sister, and does she hold the moral high ground she claims?</p>
+      </div></article>
+      <article class="issue" id="i8" style="--c:var(--pink)"><div class="no">#08<small>THE FIGHT</small></div><div>
+        <h3>The fight</h3>
+        <p>Cal learns that <strong>Kine was the one who transferred Nia</strong>, and turns on Asa. Filip, a violent replicant in Nia's group, attacks. He tries to gouge out Cal's eyes and drives him through walls before Cal clotheslines him with a bundle of cables. Cal starts to strangle Asa and stops when Asa vows to be better than Lydia was. Asa kills Filip. Stahl now has the three of them in her sights.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="vol3">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">炎上</span><div class="num">VOL. 3</div><h2>Burning</h2><p>Issues #9–12. A war, then a con. Stahl burns the slums, Nia plans one last move, and the Blade Runner unit is built on a staged killing.</p></div>
+    <div class="issues">
+      <article class="issue" id="i9" style="--c:var(--amber)"><div class="no">#09<small>SECTOR 6B</small></div><div>
+        <h3>The Battle for Sector 6B</h3>
+        <p>Stahl's week is up. She launches an all-out attack on Sector 6B with a private army of Nexus 3s, built strong and deliberately dim, ready to burn everything. Cal, Nia and Asa fight on the same side. Cal goes for Stahl alongside Isaac, Nia's lover, and promises him a drink afterwards. <strong>Isaac is shot dead</strong>, and Stahl escapes in a spinner.</p>
+        <p>The neighbourhood holds, at a heavy cost. The alliance cracks and Marcus is no longer welcome. The issue ends on a hard question: if replicants were made to serve, why give them feeling at all?</p>
+      </div></article>
+      <article class="issue" id="i10" style="--c:var(--amber)"><div class="no">#10<small>THE TEACHER</small></div><div>
+        <h3>The teacher</h3>
+        <p><strong>2008.</strong> Nia teaches 5th grade and is put in charge of three Nexus 4s being trained to replace human teachers. She opposes the programme and erupts at Stahl. At Tyrell, Stahl calls Nia a poor candidate for a "burgeoning project." Lydia wants Effie's help persuading her. Effie refuses.</p>
+        <p>Isaac brings Nia a decorative apple and mentions he has read her thesis on empathic teaching. She invites him to lunch. Then <strong>an explosion</strong> leaves her critically injured. Stahl has the ambulance intercepted, and Nia's mind is moved into a Nexus 5 in Kine's lab.</p>
+        <p>In 2009, at the ruins of La Plume Sauvage, Nia says "ego colligunt", "I will collect." She proposes killing Stahl. Cal objects, but she leaves with Desiree, and he follows. Meanwhile Eldon Tyrell orders Stahl to stop this from ever happening in future models.</p>
+      </div></article>
+      <article class="issue key" id="i11" style="--c:var(--amber)"><div class="no">#11<small>THE BROADCAST</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>The broadcast</h3>
+        <p>Desiree crashes a spinner onto Tyrell's roof to clear Nia's way in. Stahl is about to go live to announce rebuilding the slums with specialised replicants. Nia fights down from the roof while Cal crashes a car into the lobby and fights up. Nia reaches the studio first and holds Stahl at gunpoint on air.</p>
+        <p>Then the flashback reveals the truth. <strong>It was Nia's plan, and Cal agreed to it.</strong> The public needed a villain and a hero. If people believed "bad" replicants could be stopped, the "good" ones might be left alone.</p>
+      </div></article>
+    </div>
+
+    <div class="broadcast" role="note">
+      <div class="live">LIVE · TYRELL HQ</div>
+      <blockquote>She asks him to shoot her in the heart, not the head, so the viewers see her face and understand that replicants look just like them.</blockquote>
+      <p>He does as she asks. Cal kills his sister on camera, and the city watches its first Blade Runner at work.</p>
+    </div>
+
+    <div class="issues" style="margin-top:22px">
+      <article class="issue key" id="i12" style="--c:var(--amber)"><div class="no">#12<small>THE FIRST BLADE RUNNER</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>The first Blade Runner</h3>
+        <p>Two months later, the LAPD blames Kine and Effie for the uprising. Citizens are killing replicants, and the media won't call it genocide. Asa and Divina shelter refugees and plan to move them to the forest where Lydia's family used to camp.</p>
+        <p>The <strong>LAPD Blade Runner Unit</strong> is founded with Cal as its first member. Stahl promises safer replicants, then tells Cal that rogue replicant calls will go through her office. He vows to bring her down.</p>
+        <p>On a rooftop, Cal asks Asa to build a <strong>Voight-Kampff machine</strong> from Effie's research, to test Blade Runner applicants, and to let through people who might one day become too empathetic for the job. Before they part, he warns Asa that if they meet again, he will have to shoot him.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="empathy">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Analysis</div><h2>Empathy is the line the story keeps drawing</h2></div>
+    <div class="empathy">
+      <svg class="eye" viewBox="0 0 340 220" role="img" aria-label="A Voight-Kampff style eye">
+        <path class="lid" d="M10 110 Q170 -10 330 110 Q170 230 10 110Z"/>
+        <g id="fibres"></g>
+        <circle class="iris" cx="170" cy="110" r="56"/>
+        <circle class="pupil" cx="170" cy="110" r="21"/>
+        <circle class="shine" cx="179" cy="101" r="5"/>
+        <line class="reticle" x1="0" y1="110" x2="340" y2="110"/>
+        <line class="reticle" x1="170" y1="10" x2="170" y2="210"/>
+      </svg>
+      <div>
+        <ul class="readout">
+          <li style="--c:var(--cyan)">Nia's thesis on empathic teaching<span>#10</span></li>
+          <li style="--c:var(--pink)">A servant replicant asks why<span>#5</span></li>
+          <li style="--c:var(--amber)">Cal's V-K test screens the hunters<span>#12</span></li>
+          <li style="--c:var(--dim)">The 2049 baseline test punishes feeling<span>2049</span></li>
+        </ul>
+        <p class="prose" style="color:var(--dim);margin-top:18px">Empathy is what wakes the replicants up. In Cal's hands, the test that measures it was meant to find hunters who might one day refuse to hunt.</p>
+      </div>
+    </div>
+    <div class="themes">
+      <div class="theme"><h3>Coerced, not chosen</h3><p>Cal becomes a hunter through blackmail. The noble cop the public sees is a performance his sister scripted.</p></div>
+      <div class="theme"><h3>Identity and the body</h3><p>Lydia in a male body and a teacher in a combat-grade prototype both ask whether a mind stays the same person in a new body.</p></div>
+      <div class="theme"><h3>Masks</h3><p>Kine fakes her death, Stahl survives the impossible, Cal closes the case as suicide, and Nia plays the villain.</p></div>
+      <div class="theme"><h3>Designed obedience</h3><p>Teaching models replace teachers, servants break down asking why, soldiers are built dim. Tyrell keeps designing obedience, and it keeps failing.</p></div>
+      <div class="theme"><h3>Icons explained</h3><p>The trenchcoat is slum armour, the rooftop chase echoes the film, and the Voight-Kampff test is built from Effie's research.</p></div>
+      <div class="theme"><h3>Where Cal goes next</h3><p>He becomes the first Blade Runner to retire, then a protector in the LA underworld. In 2039, Ash seeks him out to help her go after Niander Wallace.</p></div>
+    </div>
+  </div>
+</section>
+<section id="tokyo">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--pink);--g:var(--glow-pink)"><span class="jp" aria-hidden="true">東京</span><div class="num">2015</div><h2>Tokyo Nexus</h2>
+      <div class="chips"><span>Comic</span><span>Die in Peace · 4 issues · 2024</span><span>Kianna Shore · Mariano Taibo</span></div>
+      <p>Two survivors of the siege of Kalanthia run an unlicensed detective agency in Tokyo: Mead, a former marine, and Stix, a combat replicant. A missing-person case drags them into a war between the Yakuza, a Tyrell Blade Runner and Cheshire, a rival company building bootleg replicants.</p></div>
+    <div class="issues">
+      <article class="issue" id="tn1" style="--c:var(--pink)"><div class="no">#01<small>THE FORGOTTEN</small></div><div>
+        <h3>A sister goes missing</h3>
+        <p>In a rough corner of Tokyo, a gang of <em>wasureru</em>, "Tokyo's forgotten", jumps Mead and slashes her leg. Stix turns up late and finishes the fight with thrown blades, then patches her up over takoyaki. She doesn't believe his excuse for being late.</p>
+        <p>A young woman, Sayo, hires them to find her missing sister Miyuki, a private investigator who vanished mid-case. Stix refuses the job and goes to volunteer at an underground food kitchen. Mead works it alone and realises Sayo's family runs on organised crime. By the end, an old acquaintance has warned Stix off, and Mead has found a room full of bodies.</p>
+      </div></article>
+      <article class="issue" id="tn2" style="--c:var(--pink)"><div class="no">#02<small>RUMIKA</small></div><div>
+        <h3>The Blade Runner from L.A.</h3>
+        <p><strong>Rumika</strong>, a Blade Runner sent from America, arrives hunting a rogue replicant she believes is Stix. She tells Mead and Sayo that Miyuki has been found dead, apparently killed by a replicant. Mead points out that the killing doesn't match how Stix killed during the war.</p>
+        <p>At Miyuki's apartment they learn she was doing business with <strong>Cheshire</strong>. Then Sayo is shot dead with an arrow, and with her last breath she blames Stix. Mead sees Stix running from the scene and tells Rumika she saw nobody.</p>
+      </div></article>
+      <article class="issue" id="tn3" style="--c:var(--pink)"><div class="no">#03<small>COSMOWORLD</small></div><div>
+        <h3>The most human replicant</h3>
+        <p>Mead reads the precision of Sayo's killing and insists it wasn't Stix. In a Cheshire lab, tests run on "Test Subject 23". Rumika learns that Cheshire has hired former Tyrell scientists, and she is ordered to arrest them or kill them. Asked about Stix, Mead calls him the most human replicant she has ever met.</p>
+        <p>Stix asks Mead to help free a replicant the Yakuza kidnapped, then walks out when he learns she's working with Rumika, collapsing a building behind him to lose the Blade Runner. At the Cosmoworld amusement park, Mead thinks she sees Stix dead and tears into a gang in a rage. He's alive. Rumika says she's no longer after him, and Stix warns that Blade Runners will come for every replicant in the end.</p>
+      </div></article>
+      <article class="issue key" id="tn4" style="--c:var(--pink)"><div class="no">#04<small>AURORA</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>The stolen program</h3>
+        <p>Takumi, Sayo and Miyuki's brother, who went along with the family business, is shot in the head by the Yakuza boss <strong>Alura</strong>. She offers Stix a longer life in return for a job, and she knows his model is changing. Mead reluctantly backs him. A grenade attack hits the building where Rumika has cornered the Tyrell scientists.</p>
+        <p>Pulling Rumika from the rubble, Mead reveals how she and Stix left the military: they stole the data for the <strong>Aurora Program</strong>, which could mass-produce replicants bred for killing. Alura wants it. Mead plans to use Alura's reach to find whoever leaked the program, and lets Rumika go to destroy it.</p>
+      </div></article>
+    </div>
+    <div class="note" style="--c:var(--pink)">
+      <div class="label" style="color:var(--pink)">Sequel · Tokyo Nexus: To Lose Is to Win · 4 issues · from May 2026</div>
+      <p>Nancy A. Collins and Mariano Taibo continue the story. Mead and Stix's old commanding officer, <strong>Uldren</strong>, learns they survived and wants them dead before they can expose him. He stole data from Tyrell that let Cheshire build bootleg replicants with the same kill signature as Stix, which explains the killings that framed him. The pair are also caught in the fallout of a Yakuza civil war, with Rumika sent to wipe out Cheshire and everyone tied to it.</p>
+      <p class="dimline">This series is still coming out, so detailed issue-by-issue summaries aren't available yet.</p>
+    </div>
+  </div>
+</section>
+
+<section id="film82">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">ブレードランナー</span><div class="num">2019</div><h2>Blade Runner</h2>
+      <div class="chips"><span>Film · 1982</span><span>Ridley Scott</span><span>Set November 2019</span></div>
+      <p>The original. A burnt-out ex-Blade Runner is forced back to hunt four Nexus-6 replicants who have come to Earth looking for more life.</p></div>
+    <div class="issues">
+      <article class="issue" id="f1" style="--c:var(--amber)"><div class="no">I<small>THE ARRIVAL</small></div><div>
+        <h3>Four come home</h3>
+        <p>A group of Nexus-6 replicants kill the crew of an off-world shuttle and come to Earth, where replicants are banned on pain of death. One dies trying to break into the Tyrell Corporation. Another, <strong>Leon</strong>, shoots Blade Runner Holden in the middle of a Voight-Kampff test.</p>
+        <p>Captain Bryant pulls <strong>Rick Deckard</strong> out of retirement, with the origami-folding Gaff tagging along. Four remain: the leader <strong>Roy Batty</strong>, Leon, <strong>Zhora</strong> and <strong>Pris</strong>. Nexus-6s are built with a four-year lifespan. At Tyrell, Deckard tests Eldon Tyrell's assistant <strong>Rachael</strong>. It takes over a hundred questions to show she's a replicant who doesn't know it, carrying implanted memories from Tyrell's niece.</p>
+      </div></article>
+      <article class="issue" id="f2" style="--c:var(--amber)"><div class="no">II<small>THE HUNT</small></div><div>
+        <h3>Snake scales and photographs</h3>
+        <p>In Leon's hotel room Deckard finds photographs and an artificial snake scale. The scale leads him to Zhora, dancing at a club with a snake. He chases her through crowded streets and retires her through a shop window. Leon ambushes Deckard and nearly kills him until Rachael shoots Leon.</p>
+        <p>Rachael has learned what she is. In Deckard's apartment the two begin an uneasy, troubling relationship, and he has to ask himself whether she is on his list.</p>
+      </div></article>
+      <article class="issue" id="f3" style="--c:var(--amber)"><div class="no">III<small>THE MAKER</small></div><div>
+        <h3>More life</h3>
+        <p>Pris befriends J.F. Sebastian, a lonely genetic designer with a body that ages too fast. Through him, Roy reaches Eldon Tyrell. Roy asks his maker for more life. Tyrell explains it can't be done, and praises him as the brightest thing he has made. Roy kills Tyrell, and later Sebastian.</p>
+      </div></article>
+      <article class="issue key" id="f4" style="--c:var(--amber)"><div class="no">IV<small>TEARS IN RAIN</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>The rooftop</h3>
+        <p>In the derelict Bradbury Building, Deckard retires Pris. Roy hunts him through the rooms, breaks his fingers, and chases him onto the roof, where Deckard ends up hanging over the street. With his time running out, Roy pulls him up and saves him. He speaks of the things he has seen that no human would believe, and dies in the rain.</p>
+        <p>Gaff lets Deckard know he could have killed Rachael and didn't. At Deckard's apartment, Deckard finds an origami unicorn on the floor and leaves with Rachael, not knowing how long she has.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="br2019">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--cyan);--g:var(--glow-cyan)"><span class="jp" aria-hidden="true">二〇一九</span><div class="num">2019</div><h2>Blade Runner 2019</h2>
+      <div class="chips"><span>Comic · 12 issues</span><span>Vols. Los Angeles · Off-World · Home Again, Home Again</span><span>Michael Green · Mike Johnson · Andres Guinaldo</span></div>
+      <p>Aahna "Ash" Ashina, the LAPD's best Blade Runner, hides a failing spine inside a cybernetic brace. A missing-persons case in the same year as the film turns her against everything she was trained to do.</p></div>
+
+    <h3 class="arc" style="--c:var(--cyan)">Vol. 1 · Los Angeles</h3>
+    <div class="issues">
+      <article class="issue" id="b1" style="--c:var(--cyan)"><div class="no">#01<small>ASH</small></div><div>
+        <h3>The missing wife</h3>
+        <p>Ash corners Benny, a replicant who killed five people. Offered the chance, he cuts out his own eyes and then his throat, which stuns her. Her captain, Wojciech, has a different job for her: the tycoon <strong>Alexander Selwyn</strong> wants his missing wife <strong>Isobel</strong> and daughter <strong>Cleo</strong> found, quietly.</p>
+        <p>Ash finds their spinner under the city viaduct with the chauffeur, Arkady, murdered inside. She goes home to recharge her back brace in a wheelchair. Across town, Isobel and Cleo walk to a meeting with a man called Malak. When three people jump them, Isobel takes all three down with frightening ease.</p>
+      </div></article>
+      <article class="issue" id="b2" style="--c:var(--cyan)"><div class="no">#02<small>THE SKIN</small></div><div>
+        <h3>Ask Selwyn</h3>
+        <p>A back-alley surgeon called the Skin tells Ash that Isobel booked a "birthmark consultation" and talked about going home. Malak takes Isobel and Cleo into the Replicant Underground, to an ex-Tyrell engineer called the Lung.</p>
+        <p>Following the Skin, Ash finds <strong>Bellingham</strong>, a replicant surgically aged to look like an old man. He attacks her, then leaps from a window, telling her to ask Selwyn why he wants his daughter dead. Ash keeps that from Selwyn. Soon after, her spinner is shot out of the sky.</p>
+      </div></article>
+      <article class="issue" id="b3" style="--c:var(--cyan)"><div class="no">#03<small>THE OFFER</small></div><div>
+        <h3>Tyrell's version</h3>
+        <p>Ash crawls out of the wreck before it explodes and wakes thirty hours later in hospital. The department now knows about her brace, Selwyn has had her taken off the case, and Harry Bryant's division has it. At Tyrell, Ms. Elo tells her the truth. <strong>Isobel is a replicant</strong>, a copy of Selwyn's dead wife that Eldon Tyrell gave him. Cleo carries a rare gene linked to a longer life. Tyrell wants Cleo back and offers to fix Ash's spine for good.</p>
+        <p>The smuggler known as the Bones takes Isobel and Cleo over the border to a boatman, the Heart, and on to <strong>El Santuario</strong>, an island of free replicants. Ash tases her old partner Lelas before he can beat a suspect, then scares the suspect into naming a beach in Baja.</p>
+      </div></article>
+      <article class="issue key" id="b4" style="--c:var(--cyan)"><div class="no">#04<small>EL SANTUARIO</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>The trade</h3>
+        <p>At El Santuario, the Underground shows Ash letters between Selwyn and Tyrell. Selwyn was going to hand Cleo over to Tyrell as payment for Isobel. Isobel ran to protect her. Ash agrees to stand down.</p>
+        <p>Selwyn arrives with armed Tyrell men. In the firefight, Isobel stays behind to cover them while Ash escapes with Cleo. Back in Los Angeles, Ash decides to protect the girl rather than give her to the police or to Tyrell. Cleo says her mother told her about another safe place, and points at the sky.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--cyan)">Vol. 2 · Off-World</h3>
+    <div class="issues">
+      <article class="issue" id="b5" style="--c:var(--cyan)"><div class="no">#05<small>THE RABBIT</small></div><div>
+        <h3>Seven years gone</h3>
+        <p>In 2022 replicant production is banned, and the remaining Nexus-8s are left to live out their time serving their owners in the colonies. By 2026 Ash and Cleo are hiding on an off-world mining colony as Darja and Ian Kady, "mother and son". Ash is in a wheelchair. Cleo trades as "the Rabbit". Then rogue Nexus-8s storm the colony and free the replicant workers, and Cleo escapes in the chaos with a replicant friend, <strong>Padraic</strong>.</p>
+      </div></article>
+      <article class="issue" id="b6" style="--c:var(--cyan)"><div class="no">#06<small>HYTHE</small></div><div>
+        <h3>A warrant for Ash</h3>
+        <p>Padraic brings Cleo to the Nexus-8 leader, <strong>Pellam</strong>, who wants transit ciphers. Cleo tells him the nearest are at Ramanuja station. Ash is pulled from the wreckage by a Blade Runner named <strong>Hythe</strong>, who gives her a Voight-Kampff test and knows exactly who she is: a fugitive wanted for the murder of Isobel Selwyn. Ash insists she's Darja Kady, then decides she's done running.</p>
+      </div></article>
+      <article class="issue" id="b7" style="--c:var(--cyan)"><div class="no">#07<small>THE MAZE</small></div><div>
+        <h3>Eyes without numbers</h3>
+        <p>Hythe restores Ash's brace and badge in return for help finding Cleo. They trace the Nexus-8s to a surgeon who swapped out their serial-numbered eyes. Padraic refused. In the Maze, Ramanuja's worst borough, Pellam ambushes them and Hythe kills him. Cleo and Padraic ask a fixer, the Hartawan, to get them to the colony of <strong>Arcadia</strong>. Then Hythe introduces her real employer: Isobel Selwyn.</p>
+      </div></article>
+      <article class="issue key" id="b8" style="--c:var(--cyan)"><div class="no">#08<small>ARCADIA</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>The second Isobel</h3>
+        <p>Isobel says she survived the firefight and has spent seven years searching. At the Arcadia departure gate, Ash spots Cleo. Hythe pulls a gun and reveals the trick. The Isobel Ash knew died. This one was built to lead them to the girl. Padraic tackles Hythe, and Hythe shoots him dead.</p>
+        <p>Then Isobel shoots Hythe. She carries the first Isobel's memories, and her love for Cleo came with them. Ash leaves Cleo in her care to go on to Arcadia, and returns to Earth to finish things with Selwyn.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--cyan)">Vol. 3 · Home Again, Home Again</h3>
+    <div class="issues">
+      <article class="issue" id="b9" style="--c:var(--cyan)"><div class="no">#09<small>FOST</small></div><div>
+        <h3>Back to the ruins</h3>
+        <p>Ash wants Selwyn. Wojciech, now retired, tells her he has gone to ground. Her search leads to the ruins of the Tyrell headquarters, where squatters ambush her. She hides with <strong>Fost</strong>, a scientist from the Isobel project who still believes Tyrell is in business, and convinces him she's on the project too. Selwyn, warned, sends a new Hythe after her.</p>
+      </div></article>
+      <article class="issue" id="b10" style="--c:var(--cyan)"><div class="no">#10<small>THE MAINFRAME</small></div><div>
+        <h3>Arrested</h3>
+        <p>Fost gets Ash into the Tyrell mainframe, where she finds the names linked to Project Isobel and a trail to Selwyn's hiding place. Tipped off by Selwyn, a squadron of LAPD spinners arrests her. On the way to prison the convoy is ambushed, and members of the replicant Resistance carry Ash off to a farm.</p>
+      </div></article>
+      <article class="issue" id="b11" style="--c:var(--cyan)"><div class="no">#11<small>FREYSA</small></div><div>
+        <h3>The Resistance</h3>
+        <p>The Resistance leader, <strong>Freysa</strong>, starts repairing Ash's brace. A member called Pim has tipped off the new Hythe, who kills him at the farmhouse. Ash, Freysa and a boy, Ephraim, escape in Hythe's spinner. Freysa reveals Selwyn has been illegally building Nexus-8s. Ash goes to Selwyn's old mansion and finds him waiting with Cleo's pet lion, now fully grown, and four more Hythes.</p>
+      </div></article>
+      <article class="issue key" id="b12" style="--c:var(--cyan)"><div class="no">#12<small>HOME AGAIN</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>The family</h3>
+        <p>Ash kills two Hythes and the lion, but Selwyn shuts down her brace remotely. Cleo and Isobel arrive. Selwyn begs them to be a family again, and Isobel snaps his neck. When one Hythe moves to kill her, a defective Hythe shoots it, and asks for the mansion and to be left alone as payment.</p>
+        <p>Cleo and Isobel head back to Arcadia. Ash stays on Earth to help the Nexus-8s, alongside Freysa.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+<div class="wrap pager"><a href="#archive">← Archive</a><a href="#era2">Era II →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul>
+      <li><a href="https://bladerunner.fandom.com/wiki/Cal_Moreaux" target="_blank" rel="noopener">Off-world Wiki: Cal Moreaux</a></li>
+      <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins_1" target="_blank" rel="noopener">Off-world Wiki: Origins #1</a></li>
+      <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins_3" target="_blank" rel="noopener">Off-world Wiki: Origins #3</a></li>
+      <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins_4" target="_blank" rel="noopener">Off-world Wiki: Origins #4</a></li>
+      <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins_5" target="_blank" rel="noopener">Off-world Wiki: Origins #5</a></li>
+      <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins_10" target="_blank" rel="noopener">Off-world Wiki: Origins #10</a></li>
+      <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins_11" target="_blank" rel="noopener">Off-world Wiki: Origins #11</a></li>
+      <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins_12" target="_blank" rel="noopener">Off-world Wiki: Origins #12</a></li>
+      <li><a href="https://www.nerdly.co.uk/2021/03/31/blade-runner-origins-2-review/" target="_blank" rel="noopener">Nerdly: #2 review</a></li>
+      <li><a href="https://www.nerdly.co.uk/2021/09/15/blade-runner-origins-6-review/" target="_blank" rel="noopener">Nerdly: #6 review</a></li>
+      <li><a href="https://www.nerdly.co.uk/2021/10/21/blade-runner-origins-7-review/" target="_blank" rel="noopener">Nerdly: #7 review</a></li>
+      <li><a href="https://www.nerdly.co.uk/2022/02/18/blade-runner-origins-9-review-titan-comics/" target="_blank" rel="noopener">Nerdly: #9 review</a></li>
+      <li><a href="https://www.nerdly.co.uk/2022/04/22/blade-runner-origins-11-review/" target="_blank" rel="noopener">Nerdly: #11 review</a></li>
+      <li><a href="https://www.nerdly.co.uk/2022/06/01/blade-runner-origins-12-review-titan-comics/" target="_blank" rel="noopener">Nerdly: #12 review</a></li>
+      <li><a href="https://scifibulletin.com/comics/blade-runner-review-blade-runner-origins-8/" target="_blank" rel="noopener">SciFi Bulletin: #8 review</a></li>
+    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div><div class="view" id="era2" data-view="era2" hidden><section id="blackout">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">停電</span><div class="num">2022</div><h2>Black Out 2022</h2>
+      <div class="chips"><span>Anime short · 2017</span><span>Shinichiro Watanabe</span><span>About 15 minutes</span></div>
+      <p>The event every later story hangs on. Nexus-8 replicants, built with open-ended lifespans, are being hunted down by humans who want them gone. A combat veteran, Iggy, and a young Nexus-8, Trixie, join a plan with a human ally, Ren, to make sure no one can find them again.</p></div>
+    <div class="issues">
+      <article class="issue key" id="bo" style="--c:var(--dim)"><div class="no">—<small>THE BLACKOUT</small></div><div>
+        <h3>The night the records died</h3>
+        <p>Trixie is attacked by anti-replicant thugs and rescued by Iggy. The underground's plan is to destroy the registry that lets anyone trace a replicant. A warhead is detonated high above Los Angeles, and the electromagnetic pulse wipes out the city's data and power. Trixie gives her life buying time for the strike.</p>
+        <p>The fallout shapes the next twenty years. The records of every living replicant are gone, Tyrell goes bankrupt, and replicant production is banned outright.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="br2029">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--cyan);--g:var(--glow-cyan)"><span class="jp" aria-hidden="true">二〇二九</span><div class="num">2029</div><h2>Blade Runner 2029</h2>
+      <div class="chips"><span>Comic · 12 issues</span><span>Vols. Reunion · Echoes · Redemption</span><span>Michael Green · Mike Johnson · Andres Guinaldo</span></div>
+      <p>Ash has been back with the LAPD since 2027, retiring replicants on paper while secretly smuggling them out. Her lover Freysa leads the Replicant Underground. Then a Nexus-6 who escaped Ash twelve years ago turns up alive, long past his four years.</p></div>
+
+    <h3 class="arc" style="--c:var(--cyan)">Vol. 1 · Reunion</h3>
+    <div class="issues">
+      <article class="issue" id="c1" style="--c:var(--cyan)"><div class="no">#01<small>THE SEA WALL</small></div><div>
+        <h3>Yotun redeems</h3>
+        <p>An anonymous tip sends Ash to the Sepulveda Sea Wall construction site, where replicants are said to be working. One runs. When she catches him, he says "Yotun redeems" and jumps to his death. The name nags at her, and the records confirm it: <strong>Yotun</strong>, a Nexus-6 who overpowered her and escaped in 2017.</p>
+      </div></article>
+      <article class="issue" id="c2" style="--c:var(--cyan)"><div class="no">#02<small>THE DIAMANT</small></div><div>
+        <h3>The tanks</h3>
+        <p>A replicant servant, Ducasse, poisons her owners Hyman and Genevieve Bask and takes one of Hyman's eyes as a "key to redemption". The jumper's eye has no serial number, so a colleague wonders if he was even a replicant. At the Diamant, a secret replicant club, Ash's question about Yotun draws the attention of a woman named <strong>Lelia</strong>, who throws a cab door at her and escapes. With Freysa, Ash follows an address to a high-rise full of glass tanks holding replicants.</p>
+      </div></article>
+      <article class="issue" id="c3" style="--c:var(--cyan)"><div class="no">#03<small>THE SACRIFICE</small></div><div>
+        <h3>A life for a life</h3>
+        <p>Yotun and his lieutenant <strong>Kalia</strong> look over the tanks. Tyrell, he says, profited from making life, while he restores it. A Blade Runner named Ruskin is found with his spine torn out, and Ash inherits the Bask case. At a ceremony, a follower gives up their life to extend Yotun's. Lelia knocks Ash out at her own home and takes her away just as Freysa arrives. Yotun's group then boards an airship party for the city's elite, using Bask's eye to get in.</p>
+      </div></article>
+      <article class="issue key" id="c4" style="--c:var(--cyan)"><div class="no">#04<small>REUNION</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>The wall comes down</h3>
+        <p>Yotun takes the airship and lectures Mayor Chen and the guests on their hypocrisy. Replicant hands built the sea wall, and he demands it. Then he blows charges planted along it. Ash wakes strapped to a chair. Jac, a replicant she once saved who now follows Yotun, frees her and shows her that Yotun is reviving Nexus-8s that were never shipped. Lelia kills Jac before he can explain more. Yotun's people leave and destroy the airship.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--cyan)">Vol. 2 · Echoes</h3>
+    <div class="issues">
+      <article class="issue" id="c5" style="--c:var(--cyan)"><div class="no">#05<small>THE DUMP</small></div><div>
+        <h3>The faces she retired</h3>
+        <p>Yotun hijacks a police spinner on the way to his base. Ash gets away from Kalia and Lelia but gets lost in a vast trash dump. Yotun finds her and puts her down by attacking her damaged spine. Freysa searches with Dyson and meets Silka, a new escapee who says she knows where Ash is. At the base, Ash meets replicants she once retired, brought back. Calling it mercy, Yotun lowers her into a tank and promises her a new life.</p>
+      </div></article>
+      <article class="issue" id="c6" style="--c:var(--cyan)"><div class="no">#06<small>THE PLOY</small></div><div>
+        <h3>Freysa as bait</h3>
+        <p>The Underground cuts power to five sectors. Silka, Dyson and Farhad walk into Yotun's base with Freysa as a "hostage" to prove they've switched sides. Yotun suspects a trick, plays along, and takes Freysa with him. In the blackout the others reach the tanks and pull Ash out. Her spine now works perfectly. Silka is killed in the escape. Ash, who overheard Yotun's plans, knows where he's going: LAPD headquarters.</p>
+      </div></article>
+      <article class="issue" id="c7" style="--c:var(--cyan)"><div class="no">#07<small>REBORN</small></div><div>
+        <h3>No pain</h3>
+        <p>Ash has no pain and her eyesight is restored. She goes after Freysa alone. Yotun's forces storm LAPD headquarters with Freysa in tow. She calls it a suicide mission. He calls it Eldon Tyrell's legacy, and reminds her that he once carried her out of an explosion at the Battle of Mesa Echo Erebus.</p>
+      </div></article>
+      <article class="issue key" id="c8" style="--c:var(--cyan)"><div class="no">#08<small>THE BROADCAST</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>Blood</h3>
+        <p>Yotun cries out in pain, and his followers give him their blood. That is how he has outlived his expiry. He broadcasts his takeover of the city. Freysa kills the signal, and he tears out her right eye. Ash fights her way in on a motorcycle as the building is bombed. Yotun slips away, and the Underground pulls Ash and Freysa out as headquarters burns.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--cyan)">Vol. 3 · Redemption</h3>
+    <div class="issues">
+      <article class="issue" id="c9" style="--c:var(--cyan)"><div class="no">#09<small>SIX MONTHS LATER</small></div><div>
+        <h3>Under suspicion</h3>
+        <p>A nurse, Ambrose, fails a Voight-Kampff test and flees. Ash and Freysa protect him from Yotun's follower Pekka, and Freysa notices a dead attacker's skin is badly wrinkled. Ash keeps her leads from her sergeant, Esper, who threatens to partner her with a Blade Runner called <strong>Marlowe</strong>, then sets Marlowe on her quietly. Yotun, now in a wheelchair, welcomes Ambrose to his new hideout.</p>
+      </div></article>
+      <article class="issue" id="c10" style="--c:var(--cyan)"><div class="no">#10<small>THE DIARY</small></div><div>
+        <h3>Alice Leopold's vault</h3>
+        <p>Yotun drains Ambrose's blood and leaves him catatonic. Ash answers a break-in at a vault, finds Pekka hiding in a clock tower, and watches Marlowe retire him before he can talk. The vault belonged to Alice Leopold. From it, Kalia brings Yotun a diary he wrote as a child. He says it was kept safe for him by his older brother: <strong>Eldon Tyrell</strong>.</p>
+      </div></article>
+      <article class="issue" id="c11" style="--c:var(--cyan)"><div class="no">#11<small>THE SPINNER PLANT</small></div><div>
+        <h3>Exposed</h3>
+        <p>Yotun's blood cure is failing, and his followers are ageing to death. At a spinner plant, Ash finds three of them, the last whispering "Yotun redeems". Kalia calls with a farewell and bombs the spinner Ash is in. She survives. Marlowe corners Freysa at home and warns her it's too late. When Ash walks into the precinct to report where Yotun is, Esper takes her gun and badge and arrests her for working with the Underground.</p>
+      </div></article>
+      <article class="issue key" id="c12" style="--c:var(--cyan)"><div class="no">#12<small>EDENS</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>The owl in the box</h3>
+        <p>Ash's old captain, Lydia Wojciech, makes a scene to distract the guards, and Freysa breaks Ash out. At Yotun's hideout they find Kalia dying. She says Yotun has gone home. That means <strong>Edens</strong>, the town where Eldon Tyrell grew up. Yotun shoots their spinner down. Ash's spine starts to fail as the tank's effect wears off, and he drags her to the spot where young Tyrell buried a box. Inside are the bones of an owl, his answer to whether death can be beaten.</p>
+        <p>Ash draws on Yotun, and he yields, hoping she'll live to see others finish his work. Freysa shoots him in the head, then lifts Ash up and tells her she has a story to tell her about a miracle.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="lotus">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--pink);--g:var(--glow-pink)"><span class="jp" aria-hidden="true">黒蓮</span><div class="num">2032</div><h2>Black Lotus</h2>
+      <div class="chips"><span>Anime series · 13 episodes · 2021</span><span>Kenji Kamiyama · Shinji Aramaki</span><span>Jessica Henwick as Elle</span></div>
+      <p>Ten years after the Blackout, a replicant wakes with no memory, a black lotus tattoo and a locked data device. Remembering what was done to her means tracing it back to the top of the Wallace Corporation.</p></div>
+    <div class="issues">
+      <article class="issue" id="l1" style="--c:var(--pink)"><div class="no">E01<small>CITY OF ANGELS</small></div><div>
+        <h3>Elle</h3>
+        <p>October 2032. A young woman, <strong>Elle</strong>, wakes in a transport with no memories. When a gang attacks her, she fights like a machine and remembers her name. A black-market dealer, Doc Badger, shelters her but can't crack her device, and sends her upstairs to <strong>Joseph</strong>, who is passed out drunk.</p>
+      </div></article>
+      <article class="issue" id="l2" style="--c:var(--pink)"><div class="no">E02<small>ALL WE ARE NOT</small></div><div>
+        <h3>The senator</h3>
+        <p>Joseph decrypts the device. It shows Senator Bannister meeting Niander Wallace Sr. Elle recognises Bannister as one of the men who hunted her in the desert. She confronts him at a boxing arena and drops him from a balcony. Joseph shoots her to stop her.</p>
+      </div></article>
+      <article class="issue" id="l3" style="--c:var(--pink)"><div class="no">E03<small>THE HUMAN CONDITION</small></div><div>
+        <h3>The test</h3>
+        <p>Elle wakes in Joseph's apartment. He checks her eye for a serial number and gives her a Voight-Kampff test. It says she's human. More footage shows Bannister and the journalist Hooper hunting replicants for sport.</p>
+      </div></article>
+      <article class="issue key" id="l4" style="--c:var(--pink)"><div class="no">E04<small>THE DOLL HUNT</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>Dolls</h3>
+        <p>At the desert site, Elle relives it. The hunters, including Hooper, Police Chief Earl Grant and his wife Josephine, call the replicants "dolls" and open fire. Elle escaped with a girl called Miu, whom Hooper later killed in an experiment. Elle stabs Hooper to death, her memories flood back, and she swears revenge on every hunter.</p>
+      </div></article>
+      <article class="issue" id="l5" style="--c:var(--pink)"><div class="no">E05<small>PRESSURE</small></div><div>
+        <h3>Black Lotus</h3>
+        <p>Elle and Joseph plan to work through the list. Chief Grant orders the elimination of the killer the press calls "Black Lotus", while a rookie officer, <strong>Alani Davis</strong>, suspects she's a replicant. Police raid Doc's shop and find only Joseph, who set it up as a trap.</p>
+      </div></article>
+      <article class="issue" id="l6" style="--c:var(--pink)"><div class="no">E06<small>THE PERSISTENCE OF MEMORY</small></div><div>
+        <h3>The Grants</h3>
+        <p>Elle breaks into the Grants' home. Josephine says she only watched and that a <strong>Doctor M</strong> organised the hunt. Grant attacks. Elle stabs him, and he accidentally shoots his wife as he dies. The Blade Runner <strong>Marlowe</strong> arrives, and Elle blows him out of the building with a gas explosion.</p>
+      </div></article>
+      <article class="issue" id="l7" style="--c:var(--pink)"><div class="no">E07<small>REALITY</small></div><div>
+        <h3>False memories</h3>
+        <p>Joseph treats Elle's wounds and hides her from Davis. Wallace Sr. prepares to sell off Tyrell's assets and bury the evidence. Doctor M runs Elle's memories through a machine and shows they were implanted and edited. She learns Wallace Sr. ran the hunt, and kills M.</p>
+      </div></article>
+      <article class="issue" id="l8" style="--c:var(--pink)"><div class="no">E08<small>THE DAVIS REPORT</small></div><div>
+        <h3>Nobody believes her</h3>
+        <p>An investigator interrogates Davis about the deaths of Bannister and Grant. She says she believes replicant production has secretly restarted. He finds replicant remains in the Nevada desert, but Davis is put on leave for "delusions".</p>
+      </div></article>
+      <article class="issue" id="l9" style="--c:var(--pink)"><div class="no">E09<small>FREE WILL</small></div><div>
+        <h3>The penthouse</h3>
+        <p>Elle infiltrates the Wallace Corporation to kill Wallace Sr., while Joseph snipes from outside and wounds Marlowe. Security seals Wallace in his penthouse. Elle reaches him anyway. He shoots her, and she kills him with his own gun, then jumps from the window into Joseph's arms.</p>
+      </div></article>
+      <article class="issue" id="l10" style="--c:var(--pink)"><div class="no">E10<small>CLAIR DE LUNE</small></div><div>
+        <h3>The boyfriend</h3>
+        <p>Joseph remembers Selene, a singer he loved, whom Marlowe made him kill. Elle wonders why the man she loved never came looking. With a memory device she sketches his face. Joseph recognises him: <strong>Niander Wallace Jr.</strong>, who has been using Joseph all along.</p>
+      </div></article>
+      <article class="issue" id="l11" style="--c:var(--pink)"><div class="no">E11<small>ALL THE BEST MEMORIES</small></div><div>
+        <h3>Built to kill</h3>
+        <p>Wallace Jr. orders Joseph to retire Elle. Joseph tells her the truth instead: Jr. made her to kill his father. She agrees to have her memories erased, and Joseph reports her dead. Jr. sends another replicant assassin, <strong>Water Lily</strong>, anyway, and Davis is alerted to protect Elle.</p>
+      </div></article>
+      <article class="issue" id="l12" style="--c:var(--pink)"><div class="no">E12<small>ARTIFICIAL SOULS</small></div><div>
+        <h3>Water Lily</h3>
+        <p>Elle fights Water Lily until police arrive, then escapes. Water Lily impales Davis before she can report Jr. Joseph kills Marlowe, Selene's real killer, and collapses. Elle vows to kill Wallace Jr.</p>
+      </div></article>
+      <article class="issue key" id="l13" style="--c:var(--pink)"><div class="no">E13<small>TIME TO DIE</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>The blind maker</h3>
+        <p>Elle confronts Wallace Jr. in Tyrell's old building. Her programming won't let her attack him. She fights Water Lily, whom Jr. kills himself. He offers Elle a place at his side, and she slashes his eyes. Joseph seals himself in the replicant factory and blows it up to save her.</p>
+        <p>Months later, Davis is back at work in a wheelchair. The now-blind Wallace Jr., the Niander Wallace of <em>2049</em>, plans to replace humanity with his replicants. Elle rides Joseph's motorbike out of Los Angeles into the desert.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--pink)">Comic · Black Lotus: Leaving L.A. · 4 issues · 2022 · Nancy A. Collins · Enid Balam</h3>
+    <div class="issues">
+      <article class="issue" id="ll1" style="--c:var(--pink)"><div class="no">#01<small>FRACKTOWN</small></div><div>
+        <h3>The desert</h3>
+        <p>Scavengers ambush Elle on a desert road. She beats them and takes their truck to haul her broken spinner bike to <strong>Fracktown</strong>, a mining town. Boss Barnes, who owns the fracking operation, demands to buy her bike. Miguel, leader of the nearby Inland Empire clean-energy co-op, defuses the standoff and offers her a place to rest. Barnes has a corporate repo man waiting to talk about broken contracts, after the replicant workers at the town's brothel started turning up dead.</p>
+      </div></article>
+      <article class="issue" id="ll2" style="--c:var(--pink)"><div class="no">#02<small>THE CO-OP</small></div><div>
+        <h3>Hostages</h3>
+        <p>At a dinner in Elle's honour, a sniper hits Miguel and raiders storm the co-op, taking hostages including his wife <strong>Nyoko</strong> and daughter <strong>Kaja</strong>. Miguel, a former Blade Runner, has known all along that Elle is a replicant. He asks her to bring his family home and gives her a family heirloom, a katana.</p>
+      </div></article>
+      <article class="issue" id="ll3" style="--c:var(--pink)"><div class="no">#03<small>THE FRACKTORY</small></div><div>
+        <h3>One-woman assault</h3>
+        <p>Barnes calls the co-op's armed defence a "hostile takeover" and demands it disarm. Miguel stalls with talk of a council vote while Elle hits Barnes's fracking plant alone, ending in an explosive rescue.</p>
+      </div></article>
+      <article class="issue key" id="ll4" style="--c:var(--pink)"><div class="no">#04<small>THE SHOWDOWN</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>Kozlov</h3>
+        <p>Nyoko and Kaja come home. Preston, a survivor of an ambush on the freed workers, confesses his love for Nyoko and admits he worked with Barnes to get Miguel out of the way. Barnes is dead by Elle's hand, and his cousin <strong>Kozlov</strong> takes over, telling the town the co-op are eco-terrorists. It ends with Elle facing Kozlov in a showdown in Fracktown, and with a choice about whether to kill.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--pink)">Comic · Black Lotus: Las Vegas · 4 issues · 2025–26 · Nancy A. Collins · Jesús Hervás</h3>
+    <div class="issues">
+      <article class="issue" id="lv1" style="--c:var(--pink)"><div class="no">#01<small>THE DOLL SQUAD</small></div><div>
+        <h3>Paradise</h3>
+        <p>Blind and obsessed, Niander Wallace Jr. builds a hunting team, the "Doll Squad", under his operative Menzes. It includes <strong>Davis</strong>, promised she'll walk again and get off-world with her wife; Kozlov, out for revenge for his cousin; and <strong>Kate Marlowe</strong>, sister of the Blade Runner Elle killed. Starving in the Mojave, Elle raids a convoy, passes the ruins of the Death Valley Spa where early memories stir, and reaches the irradiated ruins of Las Vegas. Someone there welcomes her to "Paradise".</p>
+      </div></article>
+      <article class="issue" id="lv2" style="--c:var(--pink)"><div class="no">#02<small>PAX VEGAS</small></div><div>
+        <h3>The court of machines</h3>
+        <p>The Paradise casino is a replicant kingdom run by <strong>Cleopatra</strong> and <strong>Nefertiti</strong>, survivors of the bomb who took the city from rival factions. The self-styled emperors Julius, Caligula and Nero decide Elle must be human, since she has no serial code. Facing execution, she reveals she's a next-generation assassin built by Wallace. The Doll Squad is ambushed by mercenaries on the way in, and the survivors are captured by Caesar's soldiers.</p>
+      </div></article>
+      <article class="issue" id="lv3" style="--c:var(--pink)"><div class="no">#03<small>THE ARENA</small></div><div>
+        <h3>A princess of Vegas</h3>
+        <p>The queens dress Elle as a princess who must marry one of the three kings and can never leave. A human slave, Vanna, tells her how her brother was sent to the arena. At a gladiator show in Elle's honour, humans fight in bomb collars. Davis turns up trying to protect her, and Elle refuses to watch any more killing and attacks the creature set loose. A stranger pulls her out as Julius sentences her to death.</p>
+      </div></article>
+      <article class="issue key" id="lv4" style="--c:var(--pink)"><div class="no">#04<small>THE UNDERBELLY</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>Viva las replicantes</h3>
+        <p>Nefertiti stabs Julius, and Paradise falls into civil war. Vanna leads Elle and Davis to the tunnels under the casinos, held by the Semita, technology-worshipping replicants. Underground, Davis admits who she works for, and Elle tells her how Wallace Jr. groomed her, made her kill his father and then sent Water Lily to erase her. Topside, Menzes's team is captured as Paradise burns. Elle finds the Semita, gets back her battered bike, and is welcomed with a cheer. The story is set up to continue.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="dawn">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">夜明け</span><div class="num">2036</div><h2>2036: Nexus Dawn</h2>
+      <div class="chips"><span>Short film · 2017</span><span>Luke Scott</span><span>Jared Leto as Niander Wallace</span></div>
+      <p>Niander Wallace walks into a closed hearing of lawmakers to get the replicant ban lifted. He brings a new model, the Nexus-9, and proves it will obey without limits by ordering it to harm itself in front of them. The ban falls, and the Wallace era begins.</p></div>
+  </div>
+</section>
+
+<section id="br2039">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">二〇三九</span><div class="num">2039</div><h2>Blade Runner 2039</h2>
+      <div class="chips"><span>Comic · 12 issues</span><span>Vols. Luv · Upgrade · Ash</span><span>Michael Green · Mike Johnson · Andres Guinaldo</span></div>
+      <p>Wallace has given the LAPD its first replicant Blade Runner: <strong>Luv</strong>. Ash, now ageing and failing, runs the Underground's escape routes with Freysa. Wallace wants Alexander Selwyn's research on replicant reproduction, and Isobel Selwyn holds the key.</p></div>
+
+    <h3 class="arc" style="--c:var(--amber)">Vol. 1 · Luv</h3>
+    <div class="issues">
+      <article class="issue" id="d1" style="--c:var(--amber)"><div class="no">#01<small>LUV</small></div><div>
+        <h3>The first replicant Blade Runner</h3>
+        <p>In a food court, Luv confronts a young replicant, Tabitha, chases her into a meat locker and snaps her neck while her friend Lexi watches. At headquarters Luv's numbers are the best in the unit, and her human colleagues hate her for it. Wallace praises her and sets a new task: find the replicant copy of Selwyn's wife. Lexi buys new eyes, finds the boatman known as the Ferryman, and reaches Catalina, where Ash is waiting and asks for the eyes.</p>
+      </div></article>
+      <article class="issue" id="d2" style="--c:var(--amber)"><div class="no">#02<small>SANTA BARBARA</small></div><div>
+        <h3>New eyes</h3>
+        <p>At the camp Ash finds Freysa with <strong>Sapper Morton</strong>, who served with her off-world. The eyes Lexi brought go to Freysa, who lost one to Yotun, and to Ash, whose eyes, spine and lungs are failing. At Selwyn's old mansion, Luv meets the butler Clarence and the owner, Penelope, who turns out to be an older replicant. She beats Luv. Clarence calls her by her real name: Hythe. Meanwhile, Cleo Selwyn is back on Earth.</p>
+      </div></article>
+      <article class="issue" id="d3" style="--c:var(--amber)"><div class="no">#03<small>THE DISK</small></div><div>
+        <h3>Cleo returns</h3>
+        <p>Ash visits the dying Lydia Wojciech, who warns her to stay away from Luv and from Wallace. At a noodle bar, Cleo finds Ash and tells her Isobel has vanished. Hythe hands Ash a disk of Selwyn's research before gunmen open fire. Luv calls Cleo's hotel room, gun drawn.</p>
+      </div></article>
+      <article class="issue" id="d4" style="--c:var(--amber)"><div class="no">#04<small>THE BLUFF</small></div><div>
+        <h3>An empty disk</h3>
+        <p>Twin hackers decrypt the disk. It shows Selwyn's team made several Isobels and came close to replicant fertility. Luv confronts Cleo. Ash bets that Luv won't kill humans, because that would end the replicant Blade Runner experiment, and hands Luv a disk she says is the research. It's blank. Ash and Cleo escape over the Sea Wall. Freysa wants the research destroyed. Cleo guesses Isobel went to San Francisco. Wallace gives Luv a new partner: a replicant copy of Ash.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--amber)">Vol. 2 · Upgrade</h3>
+    <div class="issues">
+      <article class="issue" id="d5" style="--c:var(--amber)"><div class="no">#05<small>RASH</small></div><div>
+        <h3>Ash's double</h3>
+        <p>Wallace introduces <strong>Rash</strong>, built from Ash's DNA, obedient in everything except killing humans. Ash and Freysa fight over Selwyn's research: Ash wants to use it, Freysa calls it obscene. Ash and Cleo drive north for San Francisco with Lexi hidden in the back. Raiders attack the truck. Lexi shoots one dead, and Cleo is wounded.</p>
+      </div></article>
+      <article class="issue" id="d6" style="--c:var(--amber)"><div class="no">#06<small>THE FARMER</small></div><div>
+        <h3>Rash's first retirement</h3>
+        <p>A farmer takes in Ash, Cleo and Lexi. Luv and Rash work their way through Ash's contacts. Hythe ambushes them and is shot dead by Rash, her first retirement. As Ash leaves for San Francisco, the farmer holds her at gunpoint: he's a Nexus-6 she once hunted.</p>
+      </div></article>
+      <article class="issue" id="d7" style="--c:var(--amber)"><div class="no">#07<small>MACK</small></div><div>
+        <h3>The one who got away</h3>
+        <p>In 2018 Ash shot the replicant <strong>Mack</strong> off a rooftop and told local kids where to find his parts. He survived. Now Lexi's presence convinces him Ash has changed, and he joins her. In the quake-emptied city of San Francisco, they search the house of Isobel's relatives, where Luv and Rash are waiting. Rash shoots Mack.</p>
+      </div></article>
+      <article class="issue key" id="d8" style="--c:var(--amber)"><div class="no">#08<small>ISOBEL</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>Isobel returns</h3>
+        <p>Rash breaks one of Ash's fingers, then one of her own, out of curiosity. Isobel hijacks the Blade Runners' spinner and crashes it into the house. Mack dies covering Ash, and Luv falls into the sea. At the farm Isobel explains that she led Wallace's people away from Cleo. Ash decides the only way out is to kill Wallace, not knowing he is listening.</p>
+      </div></article>
+    </div>
+
+    <h3 class="arc" style="--c:var(--amber)">Vol. 3 · Ash</h3>
+    <div class="issues">
+      <article class="issue" id="d9" style="--c:var(--amber)"><div class="no">#09<small>GAFF</small></div><div>
+        <h3>An origami frog</h3>
+        <p>Wojciech has died. <strong>Gaff</strong> tells Ash that to get close to Wallace she must bring him what he wants, and leaves her an origami frog. Rash follows Ash into a trap, fights Sapper and is tranquilised. Under questioning she says Isobel is the missing piece of Wallace's fertility work. The LAPD puts Luv's contract under review. Ash goes to a club to find someone with a way in: <strong>Cal Moreaux</strong>, the first Blade Runner.</p>
+      </div></article>
+      <article class="issue" id="d10" style="--c:var(--amber)"><div class="no">#10<small>THE FAVOUR</small></div><div>
+        <h3>Cal Moreaux</h3>
+        <p>Cal warns Ash that Wallace rarely leaves his headquarters, but he owes her a favour and agrees to help. At the hideout, Rash breaks free and takes Isobel hostage, then asks to join them. When Luv arrives and orders her to hand Isobel over, Rash knocks her out and asks again.</p>
+      </div></article>
+      <article class="issue" id="d11" style="--c:var(--amber)"><div class="no">#11<small>DAISY</small></div><div>
+        <h3>The nursemaid</h3>
+        <p>Cal points Ash to Daisy, Wallace's old nursemaid and supplier, who sets her pleasure model on them. Freysa questions the captive Luv and decides she's in love with her maker. Wallace comes to the meeting Daisy set up, expecting Ash. He has studied her illness and says he can cure it.</p>
+      </div></article>
+      <article class="issue key" id="d12" style="--c:var(--amber)"><div class="no">#12<small>ASH</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>What Wallace doesn't see</h3>
+        <p>Rash, disguised as Ash, turns down Wallace's offer and fights off his guards. The real Ash waits in his spinner and takes him to Eldon Tyrell's old sanctum, where Tyrell died twenty years earlier. She refuses the cure and gives Wallace Selwyn's research in exchange for leaving Cleo and Isobel alone. She hopes he cracks replicant birth and never perfects their obedience.</p>
+        <p>Cleo and Isobel leave for the colonies, with Rash to protect them. Ash keeps the cure, and how little time she has, to herself, and goes home to spend it with Freysa.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div><div class="view" id="era3" data-view="era3" hidden><section id="nowhere">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">逃げ場なし</span><div class="num">2048</div><h2>2048: Nowhere to Run</h2>
+      <div class="chips"><span>Short film · 2017</span><span>Luke Scott</span><span>Dave Bautista as Sapper Morton</span></div>
+      <p>Sapper Morton, an old Nexus-8 hiding as a protein farmer, comes into the city to sell his produce. When thugs go after a mother and her young daughter he has befriended, he steps in and kills them with a soldier's skill. Someone sees him do it. The report that follows leads a Blade Runner to his farm, and opens <em>2049</em>.</p></div>
+  </div>
+</section>
+
+<section id="film49">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">二〇四九</span><div class="num">2049</div><h2>Blade Runner 2049</h2>
+      <div class="chips"><span>Film · 2017</span><span>Denis Villeneuve</span><span>Ryan Gosling · Harrison Ford · Ana de Armas · Sylvia Hoeks</span></div>
+      <p>Thirty years after the original, a new-model replicant Blade Runner finds proof of something that should be impossible: a replicant who gave birth.</p></div>
+    <div class="issues">
+      <article class="issue" id="g1" style="--c:var(--amber)"><div class="no">I<small>THE TREE</small></div><div>
+        <h3>A box under a dead tree</h3>
+        <p><strong>K</strong>, a Nexus-9 Blade Runner, retires Sapper Morton at his farm. Under a dead tree he finds a buried box holding the bones of a replicant woman who died after giving birth by caesarean section. His superior, <strong>Lt. Joshi</strong>, sees a world-breaking secret and orders every trace of it, including the child, destroyed. K goes home to <strong>Joi</strong>, his holographic companion.</p>
+      </div></article>
+      <article class="issue" id="g2" style="--c:var(--amber)"><div class="no">II<small>THE HORSE</small></div><div>
+        <h3>A memory that might be real</h3>
+        <p>At the Wallace Corporation, archives identify the bones as <strong>Rachael</strong>. Niander Wallace wants the child, the key to replicants who can breed, and sends his enforcer <strong>Luv</strong> to follow K. A date carved into the tree matches a childhood memory of K's: a wooden horse he hid in a furnace. At an orphanage in San Diego he finds the horse exactly where he remembered it.</p>
+        <p>The memory designer <strong>Dr. Ana Stelline</strong> tells him the memory is real, someone lived it. K begins to believe he's the child. He fails his baseline test badly, and Joshi gives him time to disappear before she reports him. Luv kills Joshi.</p>
+      </div></article>
+      <article class="issue key" id="g3" style="--c:var(--amber)"><div class="no">III<small>LAS VEGAS</small></div><div>
+        <span class="flag">TURNING POINT</span>
+        <h3>Deckard</h3>
+        <p>Traces of radiation on the horse lead K to the ruins of Las Vegas and <strong>Rick Deckard</strong>, hiding there for thirty years. Luv attacks, destroys Joi and takes Deckard to Wallace, who offers him a copy of Rachael. Deckard refuses. Rescued by <strong>Freysa</strong>'s replicant resistance, K learns the truth: the child was a girl. He isn't special. His memory was hers.</p>
+      </div></article>
+      <article class="issue key" id="g4" style="--c:var(--amber)"><div class="no">IV<small>SNOW</small></div><div>
+        <span class="flag">FINALE</span>
+        <h3>The daughter</h3>
+        <p>Freysa wants Deckard dead before he can lead Wallace to his daughter. K intercepts Luv's convoy at the sea wall instead, and drowns her in the surf. Badly wounded, he brings Deckard to Dr. Stelline's lab, the woman who makes memories and who is Deckard and Rachael's daughter. Deckard goes in to meet her, while K lies down on the steps in the falling snow.</p>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<section id="br2099">
+  <div class="wrap">
+    <div class="vol-banner" style="--c:var(--rust);--g:rgba(255,90,77,.4)"><span class="jp" aria-hidden="true">二〇九九</span><div class="num">2099</div><h2>Blade Runner 2099</h2>
+      <div class="chips"><span>TV series · 8 episodes</span><span>Prime Video · 25 November 2026</span><span>Showrunner Silka Luisa</span></div>
+      <p>Fifty years after <em>2049</em>, in a Los Angeles where humans have become second-class citizens to replicants, Olwen, played by Michelle Yeoh, is a veteran Blade Runner near the end of her life. She teams up with Cora, a mysterious new recruit played by Hunter Schafer, to investigate a conspiracy rooted in the city's darkest past.</p></div>
+    <div class="note" style="--c:var(--rust)">
+      <div class="label" style="color:var(--rust)">Not yet released</div>
+      <p>All eight episodes arrive at once on Prime Video on 25 November 2026. Ridley Scott is an executive producer, and Jonathan van Tulleken directs the first two episodes. The cast also includes Dimitri Abold, Lewis Gribben, Sheila Atim and Tom Burke.</p>
+      <p class="dimline">An episode-by-episode synopsis can be added here once the series is out.</p>
+    </div>
+  </div>
+</section>
+<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p></div></footer></div></main>
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var css = getComputedStyle(document.documentElement);
+  var C = { cyan: css.getPropertyValue('--cyan').trim(), pink: css.getPropertyValue('--pink').trim(), amber: css.getPropertyValue('--amber').trim(), rust: css.getPropertyValue('--rust').trim() };
+
+  // Eye fibres
+  var g = document.getElementById('fibres'), ns = 'http://www.w3.org/2000/svg';
+  for (var i = 0; g && i < 48; i++) {
+    var t = i / 48 * Math.PI * 2, r2 = i % 2 ? 48 : 55, l = document.createElementNS(ns, 'line');
+    l.setAttribute('x1', 170 + Math.cos(t) * 24); l.setAttribute('y1', 110 + Math.sin(t) * 24);
+    l.setAttribute('x2', 170 + Math.cos(t) * r2); l.setAttribute('y2', 110 + Math.sin(t) * r2);
+    l.setAttribute('class', 'fibre'); g.appendChild(l);
+  }
+
+  // Rain
+  var rc = document.getElementById('rain'), rx = rc.getContext('2d'), drops = [];
+  function sizeRain() { rc.width = innerWidth; rc.height = innerHeight; drops = [];
+    var n = Math.floor(innerWidth * innerHeight / 9000);
+    for (var i = 0; i < n; i++) drops.push({ x: Math.random() * rc.width, y: Math.random() * rc.height, v: 9 + Math.random() * 9, l: 10 + Math.random() * 16 }); }
+  function drawRain() { rx.clearRect(0, 0, rc.width, rc.height); rx.strokeStyle = 'rgba(150,185,255,.28)'; rx.lineWidth = 1; rx.beginPath();
+    drops.forEach(function (d) { rx.moveTo(d.x, d.y); rx.lineTo(d.x - 2, d.y + d.l);
+      if (!reduce) { d.y += d.v; d.x -= 1.1; if (d.y > rc.height) { d.y = -20; d.x = Math.random() * rc.width + 40; } } });
+    rx.stroke(); }
+
+  // City
+  var cc = document.getElementById('city'), cx = cc.getContext('2d'), towers = [], spinners = [];
+  function rnd(s) { var x = Math.sin(s) * 10000; return x - Math.floor(x); }
+  function sizeCity() { var r = cc.getBoundingClientRect(); cc.width = r.width; cc.height = r.height; towers = []; var x = 0, k = 0;
+    while (x < cc.width) { var w = 30 + rnd(k + 1) * 60, h = cc.height * (0.18 + rnd(k + 7) * 0.42); towers.push({ x: x, w: w, h: h, k: k, far: rnd(k + 3) > .55 }); x += w + 2 + rnd(k + 5) * 8; k++; }
+    spinners = [{ x: cc.width * .2, y: cc.height * .3, v: .6 }, { x: cc.width * .75, y: cc.height * .45, v: -.45 }, { x: cc.width * .5, y: cc.height * .2, v: .3 }]; }
+  var flame = 0;
+  function drawCity(t) { var H = cc.height; cx.clearRect(0, 0, cc.width, H);
+    var gr = cx.createRadialGradient(cc.width * .85, H, 10, cc.width * .85, H, H * .9); gr.addColorStop(0, 'rgba(255,120,30,.35)'); gr.addColorStop(1, 'rgba(255,120,30,0)');
+    cx.fillStyle = gr; cx.fillRect(0, 0, cc.width, H);
+    // flare stacks
+    [[.88, .62], [.94, .7]].forEach(function (f, i) { var fx = cc.width * f[0], fy = H * f[1];
+      cx.fillStyle = '#0b0f1c'; cx.fillRect(fx - 4, fy, 8, H - fy);
+      var fl = 14 + Math.sin(t / 180 + i) * 5 + (reduce ? 0 : Math.random() * 4); var fg = cx.createRadialGradient(fx, fy - 8, 1, fx, fy - 8, fl * 2.2);
+      fg.addColorStop(0, 'rgba(255,230,160,.95)'); fg.addColorStop(.35, 'rgba(255,140,40,.7)'); fg.addColorStop(1, 'rgba(255,90,20,0)'); cx.fillStyle = fg; cx.beginPath(); cx.arc(fx, fy - 8, fl * 2.2, 0, 7); cx.fill(); });
+    towers.forEach(function (b) { var y = H - b.h * (b.far ? 1.15 : 1); cx.fillStyle = b.far ? '#141b2e' : '#0a0e1a'; cx.fillRect(b.x, y, b.w, H - y);
+      if (b.far) return;
+      for (var r = 0; r * 11 + 10 < b.h; r++) for (var c = 0; c * 8 + 8 < b.w; c++) { var s = rnd(b.k * 131 + r * 17 + c * 7);
+        if (s > .78) { var flick = reduce ? 1 : (rnd(s * 99 + Math.floor(t / 1500)) > .04 ? 1 : 0); cx.fillStyle = s > .93 ? C.cyan : s > .9 ? C.pink : C.amber; cx.globalAlpha = .55 * flick; cx.fillRect(b.x + 4 + c * 8, y + 6 + r * 11, 3, 5); } }
+      cx.globalAlpha = 1;
+      if (b.h > H * .5) { cx.fillStyle = 'rgba(255,60,60,' + (reduce ? .9 : (Math.sin(t / 400 + b.k) > 0 ? .95 : .25)) + ')'; cx.beginPath(); cx.arc(b.x + b.w / 2, y - 3, 2, 0, 7); cx.fill(); } });
+    spinners.forEach(function (s, i) { if (!reduce) { s.x += s.v; if (s.x > cc.width + 40) s.x = -40; if (s.x < -40) s.x = cc.width + 40; }
+      var sy = s.y + Math.sin(t / 900 + i) * 4;
+      var bg = cx.createLinearGradient(0, sy, 0, sy + 120); bg.addColorStop(0, 'rgba(255,200,120,.16)'); bg.addColorStop(1, 'rgba(255,200,120,0)');
+      cx.fillStyle = bg; cx.beginPath(); cx.moveTo(s.x - 10, sy + 4); cx.lineTo(s.x - 46, sy + 120); cx.lineTo(s.x + 46, sy + 120); cx.lineTo(s.x + 10, sy + 4); cx.fill();
+      cx.fillStyle = '#1a2233'; cx.beginPath(); cx.moveTo(s.x - 16, sy); cx.lineTo(s.x + 16, sy); cx.lineTo(s.x + 11, sy + 6); cx.lineTo(s.x - 11, sy + 6); cx.fill();
+      cx.fillStyle = (Math.floor(t / 300) + i) % 2 ? C.rust : C.cyan; cx.fillRect(s.x + (s.v > 0 ? 13 : -15), sy + 1, 2, 2); });
+  }
+  function frame(t) { drawRain(); drawCity(t || 0); if (!reduce) requestAnimationFrame(frame); }
+  function resize() { sizeRain(); sizeCity(); if (reduce) frame(0); }
+  addEventListener('resize', resize); resize(); frame(0);
+})();
+
+
+/* Original generative score: five tracks built from synth voices, plus a layered rain engine. */
+(function () {
+  var box = document.getElementById('score');
+  if (!box) return;
+  var btn = document.getElementById('scorebtn'), prevB = document.getElementById('scoreprev'), nextB = document.getElementById('scorenext'),
+      rainB = document.getElementById('scorerain'), vol = document.getElementById('scorevol'), title = document.getElementById('scoretitle'), hint = document.getElementById('scorehint');
+  var ctx = null, master, musicBus, verb, delayIn, rainGain, timer = null, on = false, rainOn = true;
+  var cur = 0, tg = null, padF = null, next = 0, step = 0, rainNext = 0, thunderAt = 0;
+
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  function hz(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  /* ---------- instruments (all connect to the current track's input) ---------- */
+  function pad(m, t, dur, peak, dest) {
+    [-8, 8].forEach(function (c) {
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sawtooth'; o.frequency.value = hz(m); o.detune.value = c;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + 2.6);
+      g.gain.setValueAtTime(peak, t + dur - 0.4); g.gain.linearRampToValueAtTime(0, t + dur + 3.4);
+      o.connect(g); g.connect(dest); o.start(t); o.stop(t + dur + 3.6);
+    });
+  }
+  function brass(m, t, dest) {
+    var f = ctx.createBiquadFilter(), g = ctx.createGain();
+    f.type = 'lowpass'; f.Q.value = 2.2;
+    f.frequency.setValueAtTime(240, t); f.frequency.linearRampToValueAtTime(2300, t + 1.5); f.frequency.exponentialRampToValueAtTime(560, t + 6.5);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.045, t + 1.3); g.gain.linearRampToValueAtTime(0, t + 7.2);
+    [1, 1.004].forEach(function (r) { var o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = hz(m) * r; o.connect(f); o.start(t); o.stop(t + 7.4); });
+    f.connect(g); g.connect(dest);
+  }
+  function bell(m, t, peak, type, dest, decay) {
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type || 'sine'; o.frequency.value = hz(m);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + (decay || 4));
+    o.connect(g); g.connect(dest); o.start(t); o.stop(t + (decay || 4) + 0.2);
+  }
+  function ping(m, t, dest) {
+    [[1, 0.03], [2.76, 0.012], [5.4, 0.006]].forEach(function (p) {
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = hz(m) * p[0];
+      g.gain.setValueAtTime(p[1], t); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.5 / p[0] + 0.3);
+      o.connect(g); g.connect(dest); o.start(t); o.stop(t + 3);
+    });
+  }
+  function arpNote(m, t, dest) {
+    var o = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    o.type = 'sawtooth'; o.frequency.value = hz(m);
+    f.type = 'lowpass'; f.Q.value = 6; f.frequency.setValueAtTime(2600, t); f.frequency.exponentialRampToValueAtTime(420, t + 0.22);
+    g.gain.setValueAtTime(0.028, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
+    o.connect(f); f.connect(g); g.connect(dest); o.start(t); o.stop(t + 0.35);
+  }
+  function lead(m, t, dur, dest) {
+    var o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), vib = ctx.createOscillator(), vg = ctx.createGain();
+    o.type = 'triangle'; o2.type = 'sine'; o.frequency.value = hz(m); o2.frequency.value = hz(m) * 2;
+    vib.frequency.value = 5.2; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(hz(m) * 0.012, t + dur * 0.6);
+    vib.connect(vg); vg.connect(o.frequency); vg.connect(o2.frequency);
+    var g2 = ctx.createGain(); g2.gain.value = 0.25; o2.connect(g2); g2.connect(g);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05, t + 0.35); g.gain.setValueAtTime(0.05, t + dur * 0.7); g.gain.linearRampToValueAtTime(0, t + dur + 0.8);
+    o.connect(g); g.connect(dest); [o, o2, vib].forEach(function (x) { x.start(t); x.stop(t + dur + 1); });
+  }
+  function drone(m, t, dur, dest) {
+    var o = ctx.createOscillator(), s = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    o.type = 'sine'; o.frequency.value = hz(m); s.type = 'sawtooth'; s.frequency.value = hz(m) * 1.002;
+    f.type = 'lowpass'; f.frequency.value = 220;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.09, t + 3); g.gain.setValueAtTime(0.09, t + dur - 1); g.gain.linearRampToValueAtTime(0, t + dur + 3);
+    o.connect(g); s.connect(f); f.connect(g); g.connect(dest);
+    [o, s].forEach(function (x) { x.start(t); x.stop(t + dur + 3.2); });
+  }
+
+  /* ---------- tracks ---------- */
+  var TRACKS = [
+    { name: 'Rain on Sector 6B', chords: [[50, 57, 60, 64, 69], [46, 53, 57, 62, 69], [43, 50, 53, 58, 62], [45, 52, 57, 62, 64], [45, 52, 57, 61, 64]], len: [9, 9, 9, 5, 5], cut: 850,
+      play: function (k, c, t, d, T) {
+        c.forEach(function (m) { pad(m, t, d, 0.032, T.pad); });
+        if (k === 0 || k === 2) brass(c[c.length - 1] - (k === 0 ? 12 : 0), t + 0.4, T.dry);
+        for (var b = 1; b < d; b += 1.5) if (Math.random() < 0.28) bell(pick([62, 65, 67, 69, 72, 74, 77, 81]), t + b + rnd(0, 0.3), 0.05, 'sine', T.dry);
+      } },
+    { name: 'Spinner Lights', chords: [[41, 48, 56, 60, 63], [44, 51, 55, 60, 63], [39, 46, 55, 58, 63], [46, 53, 58, 62, 65]], len: [6.4, 6.4, 6.4, 6.4], cut: 700,
+      play: function (k, c, t, d, T) {
+        c.forEach(function (m) { pad(m, t, d, 0.024, T.pad); });
+        var pat = [0, 2, 3, 4, 3, 2], up = c.map(function (m) { return m + 12; });
+        for (var i = 0; i * 0.2 < d - 0.05; i++) arpNote(up[pat[i % pat.length]] + (i % 12 > 5 ? 12 : 0), t + i * 0.2, T.dry);
+        drone(c[0] - 12, t, d, T.dry);
+      } },
+    { name: 'Off-World Lament', chords: [[40, 47, 55, 59, 62], [36, 43, 52, 55, 59], [43, 50, 55, 59, 62], [38, 45, 54, 57, 62]], len: [8, 8, 8, 8], cut: 1100,
+      play: function (k, c, t, d, T) {
+        c.forEach(function (m) { pad(m, t, d, 0.028, T.pad); });
+        var sc = [64, 66, 67, 69, 71, 74, 76, 79], x = t + 0.8, n = Math.floor(rnd(3, 6)), idx = Math.floor(rnd(1, 5));
+        for (var i = 0; i < n && x < t + d - 1; i++) { var du = pick([1, 1.5, 2, 2.5]); lead(sc[idx], x, du, T.dry); x += du; idx = Math.max(0, Math.min(sc.length - 1, idx + pick([-2, -1, -1, 1, 1, 2]))); }
+      } },
+    { name: 'Tyrell Pyramid', chords: [[36, 43], [36, 44], [34, 41], [36, 43]], len: [10, 10, 10, 10], cut: 600,
+      play: function (k, c, t, d, T) {
+        drone(c[0], t, d, T.dry); pad(c[1] + 12, t, d, 0.022, T.pad); pad(c[1] + 15, t + 2, d - 2, 0.016, T.pad);
+        for (var b = 0.5; b < d; b += rnd(1.5, 3.2)) ping(pick([72, 75, 79, 80, 84, 87]), t + b, T.dry);
+        if (k === 1) brass(c[1] + 12, t + 3, T.dry);
+      } },
+    { name: 'Nexus Lullaby', chords: [[43, 50, 54, 59, 62], [40, 47, 54, 55, 62], [36, 43, 52, 55, 59], [38, 45, 54, 57, 60]], len: [7, 7, 7, 7], cut: 1300,
+      play: function (k, c, t, d, T) {
+        c.forEach(function (m) { pad(m, t, d, 0.022, T.pad); });
+        var tones = c.slice(2).map(function (m) { return m + 24; }).concat([86, 83]);
+        for (var i = 0; i < 10; i++) if (Math.random() < 0.75) bell(pick(tones), t + 0.3 + i * 0.66, 0.035, 'triangle', T.dry, 2.5);
+      } }
+  ];
+
+  /* ---------- engine ---------- */
+  function build() {
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return false;
+    ctx = new AC();
+    master = ctx.createGain(); master.gain.value = 0;
+    var comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3;
+    master.connect(comp); comp.connect(ctx.destination);
+    var len = Math.floor(ctx.sampleRate * 5.5), ir = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (var c = 0; c < 2; c++) { var dd = ir.getChannelData(c); for (var i = 0; i < len; i++) dd[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+    verb = ctx.createConvolver(); verb.buffer = ir;
+    var wet = ctx.createGain(); wet.gain.value = 0.6; verb.connect(wet); wet.connect(master);
+    var dl = ctx.createDelay(2); dl.delayTime.value = 0.72;
+    var fb = ctx.createGain(); fb.gain.value = 0.4;
+    var dlf = ctx.createBiquadFilter(); dlf.type = 'lowpass'; dlf.frequency.value = 1600;
+    dl.connect(dlf); dlf.connect(fb); fb.connect(dl); dlf.connect(verb);
+    musicBus = ctx.createGain(); musicBus.gain.value = 1;
+    musicBus.connect(master); musicBus.connect(verb); musicBus.connect(dl);
+    buildRain();
+    return true;
+  }
+  function noiseBuf(sec, brown) {
+    var b = ctx.createBuffer(2, Math.floor(ctx.sampleRate * sec), ctx.sampleRate);
+    for (var c = 0; c < 2; c++) { var d = b.getChannelData(c), last = 0;
+      for (var i = 0; i < d.length; i++) { var w = Math.random() * 2 - 1; if (brown) { last = (last + 0.02 * w) / 1.02; d[i] = last * 3.5; } else d[i] = w; } }
+    return b;
+  }
+  function loop(buf, rate) { var s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.playbackRate.value = rate || 1; s.start(); return s; }
+  /* Rain: the "city street" style. Rain on pavement and a low rumble.
+     Rendered once into a 20-second seamless loop. */
+  function renderStreet() {
+    var SR = ctx.sampleRate, n = Math.floor(SR * 20), L = new Float32Array(n), Rr = new Float32Array(n), R = Math.random;
+    var ch, i, out;
+    for (ch = 0; ch < 2; ch++) {   // soft pink-noise wash of rain across the street
+      out = ch ? Rr : L; var b = [0, 0, 0, 0, 0], lp = 0, hp = 0;
+      for (i = 0; i < n; i++) { var w = R() * 2 - 1;
+        b[0] = 0.99886 * b[0] + w * 0.0555179; b[1] = 0.99332 * b[1] + w * 0.0750759; b[2] = 0.969 * b[2] + w * 0.153852; b[3] = 0.8665 * b[3] + w * 0.3104856; b[4] = 0.55 * b[4] + w * 0.5329522;
+        var pk = (b[0] + b[1] + b[2] + b[3] + b[4] + w * 0.5362) * 0.11; lp += 0.25 * (pk - lp); hp += 0.02 * (lp - hp);
+        var g = 1 - 0.15 * (0.5 + 0.5 * Math.sin(2 * Math.PI * i / n + ch * 0.6) * Math.sin(4 * Math.PI * i / n + 1.1));
+        out[i] += (lp - hp) * 0.6 * g; }
+      var last = 0, l2 = 0;            // distant low rumble
+      for (i = 0; i < n; i++) { last = (last + 0.02 * (R() * 2 - 1)) / 1.02; l2 += 0.01 * (last * 3.5 - l2); out[i] += l2 * 0.25; }
+    }
+    function burst(at, len, decay, amp, pan, fc, q) {   // one drop hitting the pavement
+      var f = 2 * Math.sin(Math.PI * Math.min(fc, SR / 6) / SR), low = 0, band = 0, damp = 1 / q;
+      var gl = amp * Math.sqrt((1 - pan) / 2), gr = amp * Math.sqrt((1 + pan) / 2), m = Math.floor(len * SR);
+      for (var k = 0; k < m && at + k < n; k++) { var x = (R() * 2 - 1) * Math.exp(-k / (decay * SR)); low += f * band; var hi = x - low - damp * band; band += f * hi; L[at + k] += band * gl; Rr[at + k] += band * gr; }
+    }
+    for (var c = 0; c < 20 * 600; c++) burst(Math.floor(R() * n), 0.004, rnd(0.0005, 0.0015), rnd(0.03, 0.15), rnd(-1, 1), rnd(1200, 5000), 1.5);
+    var x = Math.floor(SR * 0.5), end = n - x, peak = 0;   // seamless loop + level
+    for (i = 0; i < x; i++) { var a = i / x; L[i] = L[i] * a + L[end + i] * (1 - a); Rr[i] = Rr[i] * a + Rr[end + i] * (1 - a); }
+    for (i = 0; i < end; i++) peak = Math.max(peak, Math.abs(L[i]), Math.abs(Rr[i]));
+    var gain = 0.8 / (peak || 1), buf = ctx.createBuffer(2, end, SR), dl = buf.getChannelData(0), dr = buf.getChannelData(1);
+    for (i = 0; i < end; i++) { dl[i] = L[i] * gain; dr[i] = Rr[i] * gain; }
+    return buf;
+  }
+  function buildRain() {
+    rainGain = ctx.createGain(); rainGain.gain.value = 0; rainGain.connect(master);
+    setTimeout(function () {   // render after the music has started, then fade the rain in
+      var s = ctx.createBufferSource(); s.buffer = renderStreet(); s.loop = true; s.connect(rainGain); s.start();
+      rainGain.gain.setTargetAtTime(rainOn ? 0.18 : 0, ctx.currentTime, 0.8);
+    }, 60);
+  }
+  function scheduleRain() {}
+  function newTrack(i, t) {
+    if (tg) { var old = tg; old.gain.cancelScheduledValues(t); old.gain.setValueAtTime(old.gain.value, t); old.gain.linearRampToValueAtTime(0, t + 2.5); setTimeout(function () { old.disconnect(); }, 12000); }
+    tg = ctx.createGain(); tg.gain.setValueAtTime(0, t); tg.gain.linearRampToValueAtTime(1, t + 3); tg.connect(musicBus);
+    padF = ctx.createBiquadFilter(); padF.type = 'lowpass'; padF.frequency.value = TRACKS[i].cut; padF.Q.value = 0.8; padF.connect(tg);
+    var lfo = ctx.createOscillator(), lg = ctx.createGain(); lfo.frequency.value = 0.045; lg.gain.value = TRACKS[i].cut * 0.5; lfo.connect(lg); lg.connect(padF.frequency); lfo.start(t); lfo.stop(t + 3600);
+    next = t + 0.2; step = 0;
+  }
+  function schedule() {
+    var T = TRACKS[cur], io = { pad: padF, dry: tg };
+    while (next < ctx.currentTime + 1.5) {
+      var k = step % T.chords.length, d = T.len[k];
+      T.play(k, T.chords[k], next, d, io);
+      next += d; step++;
+    }
+    scheduleRain();
+  }
+  function level() { return (vol ? parseFloat(vol.value) : 0.6); }
+  function start() {
+    if (!ctx && !build()) { hint.textContent = 'Audio is not supported in this browser'; return; }
+    ctx.resume();
+    if (!timer) { newTrack(cur, ctx.currentTime); rainNext = ctx.currentTime; thunderAt = ctx.currentTime + rnd(20, 40); schedule(); timer = setInterval(schedule, 300); }
+    master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+    master.gain.linearRampToValueAtTime(level(), ctx.currentTime + 3);
+    on = true; store('br-score', 'on'); paint();
+  }
+  function stop() {
+    if (ctx) {
+      master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.2);
+      setTimeout(function () { if (!on) { clearInterval(timer); timer = null; tg = null; ctx.suspend(); } }, 1400);
+    }
+    on = false; store('br-score', 'off'); paint();
+  }
+  function skip(dir) {
+    cur = (cur + dir + TRACKS.length) % TRACKS.length; store('br-track', String(cur));
+    if (on && ctx) newTrack(cur, ctx.currentTime);
+    paint();
+  }
+  function paint() {
+    box.classList.toggle('playing', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.setAttribute('aria-label', on ? 'Pause score' : 'Play score');
+    btn.querySelector('.t').textContent = on ? '❚❚' : '▶';
+    title.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(TRACKS.length).padStart(2, '0') + ' · ' + TRACKS[cur].name;
+    rainB.setAttribute('aria-pressed', rainOn ? 'true' : 'false');
+    hint.textContent = on ? 'Original score' : (store('br-score') === 'on' ? 'Tap anywhere to resume' : 'Original score');
+  }
+  var saved = parseInt(store('br-track'), 10); if (saved >= 0 && saved < TRACKS.length) cur = saved;
+  if (store('br-rain') === 'off') rainOn = false;
+  btn.addEventListener('click', function () { on ? stop() : start(); });
+  prevB.addEventListener('click', function () { skip(-1); });
+  nextB.addEventListener('click', function () { skip(1); });
+  rainB.addEventListener('click', function () {
+    rainOn = !rainOn; store('br-rain', rainOn ? 'on' : 'off');
+    if (rainGain) rainGain.gain.setTargetAtTime(rainOn ? 0.18 : 0, ctx.currentTime, 0.4);
+    paint();
+  });
+  if (vol) vol.addEventListener('input', function () { if (on && ctx) master.gain.setTargetAtTime(level(), ctx.currentTime, 0.2); });
+  if (store('br-score') === 'on') {
+    var resume = function (e) { if (box.contains(e.target)) return; document.removeEventListener('pointerdown', resume); document.removeEventListener('keydown', resume); if (!on) start(); };
+    document.addEventListener('pointerdown', resume); document.addEventListener('keydown', resume);
+  }
+  paint();
+})();
+
+
+/* Original poster art for each work, painted on canvas. */
+(function () {
+  var C = { amber: '#ffb347', cyan: '#22e5ff', pink: '#ff2e88', rust: '#ff5a4d', ink: '#e6eaf4', dim: '#95a2c4', night: '#070910', mass: '#0a0e1a' };
+  function seeded(s) { var x = 0; for (var i = 0; i < s.length; i++) x = (x * 31 + s.charCodeAt(i)) >>> 0; return function () { x = (x * 1664525 + 1013904223) >>> 0; return x / 4294967296; }; }
+  function rgba(hex, a) { var n = parseInt(hex.slice(1), 16); return 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+
+  function sky(g, w, h, top, bottom) { var gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, top); gr.addColorStop(1, bottom); g.fillStyle = gr; g.fillRect(0, 0, w, h); }
+  function glow(g, x, y, r, col, a) { var gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, rgba(col, a)); gr.addColorStop(1, rgba(col, 0)); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); }
+  function skyline(g, w, h, R, base, minH, maxH, col, lit, fill) {
+    var x = -4;
+    while (x < w) { var bw = 10 + R() * 26, bh = minH + R() * (maxH - minH);
+      g.fillStyle = fill || C.mass; g.fillRect(x, base - bh, bw, bh + h);
+      if (lit) for (var yy = base - bh + 5; yy < base - 4; yy += 6) for (var xx = x + 3; xx < x + bw - 3; xx += 5) if (R() < lit) { g.fillStyle = rgba(R() < 0.8 ? col : C.ink, 0.35 + R() * 0.5); g.fillRect(xx, yy, 2, 3); }
+      x += bw + 1 + R() * 3; }
+  }
+  function rain(g, w, h, R, n, a) { g.strokeStyle = 'rgba(160,190,255,' + a + ')'; g.lineWidth = 1; g.beginPath(); for (var i = 0; i < n; i++) { var x = R() * w, y = R() * h, l = 6 + R() * 12; g.moveTo(x, y); g.lineTo(x - 2, y + l); } g.stroke(); }
+  function scan(g, w, h) { g.fillStyle = 'rgba(255,255,255,0.025)'; for (var y = 0; y < h; y += 3) g.fillRect(0, y, w, 1); }
+  function frame(g, w, h, col, title, sub, year) {
+    var grd = g.createLinearGradient(0, h * 0.62, 0, h); grd.addColorStop(0, 'rgba(7,9,16,0)'); grd.addColorStop(1, 'rgba(7,9,16,0.92)'); g.fillStyle = grd; g.fillRect(0, h * 0.6, w, h * 0.4);
+    g.strokeStyle = col; g.lineWidth = 2; g.shadowColor = col; g.shadowBlur = 12; g.strokeRect(7, 7, w - 14, h - 14); g.shadowBlur = 0;
+    g.fillStyle = col; g.font = '400 11px "Share Tech Mono", monospace'; g.textAlign = 'left'; g.fillText(year, 18, 28);
+    g.textAlign = 'right'; g.fillStyle = C.ink; g.globalAlpha = 0.7; g.fillText('BLADE RUNNER', w - 18, 28); g.globalAlpha = 1;
+    g.textAlign = 'left'; g.shadowColor = col; g.shadowBlur = 16; g.fillStyle = col;
+    var size = title.length > 13 ? 22 : 28; g.font = '700 ' + size + 'px "Chakra Petch", sans-serif';
+    var lines = title.split('\n'); for (var i = 0; i < lines.length; i++) g.fillText(lines[i], 18, h - 40 - (lines.length - 1 - i) * (size + 2));
+    g.shadowBlur = 0; g.fillStyle = C.dim; g.font = '400 11px "Share Tech Mono", monospace'; g.fillText(sub, 18, h - 20);
+  }
+
+  var ART = {
+    origins: { col: C.amber, title: 'ORIGINS', sub: 'COMIC · 2009', year: '2009', draw: function (g, w, h, R) {
+      sky(g, w, h, '#0b0d1c', '#2a1410'); glow(g, w * 0.5, h * 0.3, w * 0.5, C.amber, 0.25);
+      g.strokeStyle = rgba(C.cyan, 0.8); g.lineWidth = 2; g.beginPath(); g.ellipse(w / 2, h * 0.3, w * 0.3, w * 0.16, 0, 0, 7); g.stroke();
+      g.strokeStyle = rgba(C.pink, 0.8); g.beginPath(); g.arc(w / 2, h * 0.3, w * 0.12, 0, 7); g.stroke();
+      for (var i = 0; i < 40; i++) { var t = i / 40 * Math.PI * 2; g.strokeStyle = rgba(C.pink, 0.35); g.beginPath(); g.moveTo(w / 2 + Math.cos(t) * w * 0.05, h * 0.3 + Math.sin(t) * w * 0.05); g.lineTo(w / 2 + Math.cos(t) * w * 0.115, h * 0.3 + Math.sin(t) * w * 0.115); g.stroke(); }
+      g.fillStyle = C.night; g.beginPath(); g.arc(w / 2, h * 0.3, w * 0.045, 0, 7); g.fill(); g.strokeStyle = C.amber; g.stroke();
+      skyline(g, w, h, R, h * 0.98, h * 0.18, h * 0.42, C.amber, 0.22); rain(g, w, h, R, 140, 0.25); } },
+    tokyo: { col: C.pink, title: 'TOKYO\nNEXUS', sub: 'COMIC · 2015', year: '2015', draw: function (g, w, h, R) {
+      sky(g, w, h, '#120818', '#2a0b1c'); var cy = h * 0.42;
+      g.fillStyle = C.rust; g.beginPath(); g.arc(w / 2, cy, w * 0.32, 0, 7); g.fill(); glow(g, w / 2, cy, w * 0.6, C.pink, 0.3);
+      g.fillStyle = '#120818'; for (var k = 0; k < 6; k++) g.fillRect(0, cy + 6 + k * 11, w, 3 + k);
+      skyline(g, w, h, R, h, h * 0.2, h * 0.5, C.pink, 0.25);
+      g.font = '700 15px "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif'; ['東', '京', '連', '結'].forEach(function (ch, i) { g.fillStyle = C.cyan; g.shadowColor = C.cyan; g.shadowBlur = 10; g.fillText(ch, w - 30, 60 + i * 18); }); g.shadowBlur = 0;
+      for (var l = 0; l < 7; l++) { var lx = 24 + l * (w - 48) / 6, ly = h * 0.16 + Math.sin(l) * 6; g.fillStyle = C.rust; g.beginPath(); g.ellipse(lx, ly, 6, 8, 0, 0, 7); g.fill(); glow(g, lx, ly, 16, C.rust, 0.4); }
+      rain(g, w, h, R, 120, 0.22); } },
+    film82: { col: C.amber, title: 'BLADE\nRUNNER', sub: 'FILM · 1982', year: '2019', draw: function (g, w, h, R) {
+      sky(g, w, h, '#06070e', '#3a1a08'); var base = h * 0.78;
+      for (var y = base; y < h; y += 6) { g.fillStyle = rgba(C.amber, 0.06 + (y - base) / (h - base) * 0.2); g.fillRect(0, y, w, 1); }
+      for (var x = 0; x < w; x += 3) if (R() < 0.5) { g.fillStyle = rgba(C.amber, 0.2 + R() * 0.6); g.fillRect(x, base - R() * 30, 1.5, 1.5); }
+      [[0.2, 0.42], [0.62, 0.35], [0.84, 0.5]].forEach(function (s) { var sx = w * s[0], sy = h * s[1];
+        g.fillStyle = C.mass; g.fillRect(sx - 4, sy, 8, base - sy + 40); glow(g, sx, sy - 14, 46, C.amber, 0.7); glow(g, sx, sy - 18, 18, '#fff1c4', 0.9);
+        g.fillStyle = rgba('#ffd27a', 0.9); g.beginPath(); g.moveTo(sx - 6, sy); g.quadraticCurveTo(sx - 2 + R() * 4, sy - 40, sx, sy - 34); g.quadraticCurveTo(sx + 4, sy - 20, sx + 6, sy); g.fill(); });
+      skyline(g, w, h, R, h, h * 0.05, h * 0.2, C.amber, 0.12);
+      for (var i = 0; i < 4; i++) { var px = R() * w, py = h * 0.15 + R() * h * 0.25; g.fillStyle = C.rust; g.fillRect(px, py, 3, 2); g.fillStyle = C.cyan; g.fillRect(px + 10, py, 3, 2); }
+      rain(g, w, h, R, 100, 0.18); } },
+    br2019: { col: C.cyan, title: '2019', sub: 'COMIC · 12 ISSUES', year: '2019', draw: function (g, w, h, R) {
+      sky(g, w, h, '#050912', '#0b2030'); var hz = h * 0.5;
+      g.fillStyle = '#d8f6ff'; g.beginPath(); g.arc(w * 0.7, h * 0.22, 22, 0, 7); g.fill(); glow(g, w * 0.7, h * 0.22, 90, C.cyan, 0.35);
+      g.fillStyle = '#071420'; g.beginPath(); g.moveTo(w * 0.1, hz); g.quadraticCurveTo(w * 0.25, hz - 34, w * 0.42, hz); g.fill();
+      for (var y = hz; y < h; y += 4) { var a = 0.05 + (y - hz) / h * 0.3; g.fillStyle = rgba(C.cyan, a * (0.4 + R())); g.fillRect(w * 0.7 - (y - hz) * 0.6 * R(), y, (y - hz) * 1.2 * R() + 4, 1); }
+      g.fillStyle = '#0a1a28'; g.fillRect(0, hz, w, 2); rain(g, w, h, R, 90, 0.15);
+      for (var i = 0; i < 10; i++) { g.fillStyle = rgba(C.amber, 0.8); g.fillRect(w * 0.12 + i * 6, hz - 2, 2, 2); } } },
+    blackout: { col: C.dim, title: 'BLACK OUT\n2022', sub: 'ANIME SHORT', year: '2022', draw: function (g, w, h, R) {
+      sky(g, w, h, '#0c0f18', '#05060a'); var cx = w * 0.55, cy = h * 0.2;
+      glow(g, cx, cy, w * 0.7, '#ffffff', 0.35); g.fillStyle = '#fff'; g.beginPath(); g.arc(cx, cy, 8, 0, 7); g.fill();
+      for (var r = 30; r < w; r += 26) { g.strokeStyle = 'rgba(255,255,255,' + (0.35 - r / w * 0.3) + ')'; g.beginPath(); g.arc(cx, cy, r, 0, 7); g.stroke(); }
+      var base = h; var x = -4; while (x < w) { var bw = 10 + R() * 24, bh = h * 0.15 + R() * h * 0.4; g.fillStyle = C.mass; g.fillRect(x, base - bh, bw, bh);
+        for (var yy = base - bh + 5; yy < base - 4; yy += 6) for (var xx = x + 3; xx < x + bw - 3; xx += 5) if (R() < 0.3 && xx < w * 0.35) { g.fillStyle = rgba(C.amber, 0.6); g.fillRect(xx, yy, 2, 3); }
+        x += bw + 2; } rain(g, w, h, R, 60, 0.12); } },
+    br2029: { col: C.cyan, title: '2029', sub: 'COMIC · 12 ISSUES', year: '2029', draw: function (g, w, h, R) {
+      sky(g, w, h, '#060a14', '#122336'); glow(g, w * 0.3, h * 0.55, w * 0.6, C.rust, 0.35);
+      g.fillStyle = '#0b1220'; g.beginPath(); g.moveTo(0, h * 0.55); g.lineTo(w, h * 0.42); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+      for (var i = 0; i < 26; i++) { g.strokeStyle = rgba(C.cyan, 0.3); g.beginPath(); var yy = h * 0.55 - i * 0.5 + i * 0; g.moveTo(i * w / 26, h * 0.55 - (h * 0.13) * i / 26); g.lineTo(i * w / 26, h * 0.62 - (h * 0.13) * i / 26); g.stroke(); }
+      for (var s = 0; s < 40; s++) { glow(g, R() * w * 0.5, h * 0.52 + R() * 20, 10 + R() * 14, '#ffffff', 0.25); }
+      g.fillStyle = '#18233a'; g.beginPath(); g.ellipse(w * 0.62, h * 0.2, w * 0.22, 14, -0.05, 0, 7); g.fill();
+      for (var l = 0; l < 9; l++) { g.fillStyle = l % 3 ? C.amber : C.rust; g.fillRect(w * 0.45 + l * 8, h * 0.205, 3, 2); }
+      glow(g, w * 0.3, h * 0.5, 40, C.amber, 0.7); rain(g, w, h, R, 120, 0.2); } },
+    lotus: { col: C.pink, title: 'BLACK\nLOTUS', sub: 'ANIME · 13 EPISODES', year: '2032', draw: function (g, w, h, R) {
+      sky(g, w, h, '#0e0614', '#2b1020'); g.fillStyle = '#f6d7e6'; g.beginPath(); g.arc(w * 0.5, h * 0.27, 40, 0, 7); g.fill(); glow(g, w * 0.5, h * 0.27, 120, C.pink, 0.35);
+      var cx = w / 2, cy = h * 0.5; g.lineWidth = 2;
+      [[-1.25, 46], [-0.7, 54], [-0.25, 58], [0.25, 58], [0.7, 54], [1.25, 46], [0, 64]].forEach(function (p) {
+        g.save(); g.translate(cx, cy); g.rotate(p[0]); g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(-16, -p[1] * 0.55, 0, -p[1]); g.quadraticCurveTo(16, -p[1] * 0.55, 0, 0);
+        g.fillStyle = '#0b0710'; g.fill(); g.strokeStyle = C.pink; g.shadowColor = C.pink; g.shadowBlur = 10; g.stroke(); g.restore(); });
+      g.shadowBlur = 0; g.fillStyle = '#1c0d16'; for (var d = 0; d < 3; d++) { g.beginPath(); g.moveTo(0, h * (0.62 + d * 0.07)); g.quadraticCurveTo(w * (0.3 + d * 0.2), h * (0.56 + d * 0.07), w, h * (0.63 + d * 0.06)); g.lineTo(w, h); g.lineTo(0, h); g.fill(); }
+      rain(g, w, h, R, 40, 0.12); } },
+    dawn: { col: C.dim, title: 'NEXUS\nDAWN', sub: 'SHORT FILM · 2036', year: '2036', draw: function (g, w, h, R) {
+      sky(g, w, h, '#151821', '#4a3a2e'); var sy = h * 0.58; glow(g, w / 2, sy, w * 0.8, '#ffd8a0', 0.4);
+      g.fillStyle = '#ffe9c8'; g.beginPath(); g.arc(w / 2, sy, 30, Math.PI, 0); g.fill();
+      for (var a = 0; a < 14; a++) { var t = Math.PI + a / 13 * Math.PI; g.strokeStyle = 'rgba(255,230,190,0.18)'; g.beginPath(); g.moveTo(w / 2, sy); g.lineTo(w / 2 + Math.cos(t) * w, sy + Math.sin(t) * w); g.stroke(); }
+      g.fillStyle = '#20222a'; g.fillRect(0, sy, w, h - sy); skyline(g, w, h, R, h, h * 0.05, h * 0.28, C.dim, 0.05, '#1a1c24'); } },
+    br2039: { col: C.amber, title: '2039', sub: 'COMIC · 12 ISSUES', year: '2039', draw: function (g, w, h, R) {
+      sky(g, w, h, '#0a0b14', '#1c1410'); var cx = w / 2;
+      for (var i = 0; i < 44; i++) { var y = 50 + i * (h * 0.55 / 44), ph = i * 0.42, x1 = cx + Math.sin(ph) * 46, x2 = cx - Math.sin(ph) * 46, front = Math.cos(ph) > 0;
+        g.strokeStyle = 'rgba(230,234,244,0.15)'; g.beginPath(); g.moveTo(x1, y); g.lineTo(x2, y); g.stroke();
+        g.fillStyle = front ? C.amber : rgba(C.amber, 0.35); g.beginPath(); g.arc(x1, y, 3, 0, 7); g.fill(); glow(g, x1, y, 10, C.amber, front ? 0.4 : 0.1);
+        g.fillStyle = !front ? C.cyan : rgba(C.cyan, 0.35); g.beginPath(); g.arc(x2, y, 3, 0, 7); g.fill(); glow(g, x2, y, 10, C.cyan, !front ? 0.4 : 0.1); }
+      skyline(g, w, h, R, h, h * 0.12, h * 0.34, C.amber, 0.18); rain(g, w, h, R, 90, 0.18); } },
+    nowhere: { col: C.dim, title: 'NOWHERE\nTO RUN', sub: 'SHORT FILM · 2048', year: '2048', draw: function (g, w, h, R) {
+      sky(g, w, h, '#1a1d1f', '#8a8e86'); var base = h * 0.62;
+      for (var row = 0; row < 4; row++) { var y = base + row * 22, s = 1 + row * 0.25;
+        for (var x = -20 + row * 9; x < w; x += 40 * s) { g.fillStyle = 'rgba(40,44,46,' + (0.5 + row * 0.15) + ')'; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 18 * s, y - 22 * s, x + 36 * s, y); g.fill(); } }
+      g.fillStyle = 'rgba(200,205,195,0.25)'; g.fillRect(0, base - 40, w, 40); glow(g, w * 0.72, base - 8, 18, C.amber, 0.8); } },
+    film49: { col: C.amber, title: '2049', sub: 'FILM · 2017', year: '2049', draw: function (g, w, h, R) {
+      sky(g, w, h, '#2e1708', '#c46a1c'); glow(g, w * 0.4, h * 0.42, w * 0.7, '#ffb060', 0.45); g.fillStyle = 'rgba(255,220,170,0.85)'; g.beginPath(); g.arc(w * 0.4, h * 0.42, 26, 0, 7); g.fill();
+      g.fillStyle = 'rgba(60,30,12,0.55)'; for (var i = 0; i < 6; i++) g.fillRect(w * (0.05 + R() * 0.8), h * 0.6 - R() * h * 0.3, 14 + R() * 30, h);
+      g.fillStyle = 'rgba(40,22,10,0.9)'; for (var s = 0; s < 6; s++) g.fillRect(0, h * 0.72 + s * 14, w - s * 18, 12);
+      g.fillStyle = 'rgba(255,255,255,0.75)'; for (var f = 0; f < 140; f++) { g.beginPath(); g.arc(R() * w, R() * h, R() * 1.6 + 0.4, 0, 7); g.fill(); } } },
+    br2099: { col: C.rust, title: '2099', sub: 'SERIES · 8 EPISODES', year: '2099', draw: function (g, w, h, R) {
+      sky(g, w, h, '#14050a', '#5a1410'); glow(g, w / 2, h * 0.9, w, C.rust, 0.4);
+      for (var i = 0; i < 9; i++) { var tx = 10 + R() * (w - 30), tw = 6 + R() * 14, th = h * (0.5 + R() * 0.45); g.fillStyle = '#0d0508'; g.fillRect(tx, h - th, tw, th);
+        for (var y = h - th + 4; y < h; y += 7) if (R() < 0.4) { g.fillStyle = rgba(C.rust, 0.7); g.fillRect(tx + 2, y, tw - 4, 1); } glow(g, tx + tw / 2, h - th, 8, C.rust, 0.7); }
+      for (var t = 0; t < 7; t++) { var ty = h * (0.3 + R() * 0.45); var gr = g.createLinearGradient(0, ty, w, ty); gr.addColorStop(0, rgba(C.cyan, 0)); gr.addColorStop(0.5, rgba(C.cyan, 0.7)); gr.addColorStop(1, rgba(C.cyan, 0)); g.fillStyle = gr; g.fillRect(0, ty, w, 1.2); }
+      rain(g, w, h, R, 100, 0.18); } }
+  };
+
+  function paint(cv) {
+    var key = cv.getAttribute('data-art'), a = ART[key]; if (!a) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), w = 300, h = 400; cv.width = w * dpr; cv.height = h * dpr;
+    var g = cv.getContext('2d'); g.scale(dpr, dpr); var R = seeded(key);
+    g.fillStyle = C.night; g.fillRect(0, 0, w, h); g.save(); g.beginPath(); g.rect(8, 8, w - 16, h - 16); g.clip(); a.draw(g, w, h, R); scan(g, w, h); g.restore(); frame(g, w, h, a.col, a.title, a.sub, a.year);
+    cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', 'Original poster art for ' + a.title.replace('\n', ' '));
+  }
+  // put a poster beside each work's banner
+  Object.keys(ART).forEach(function (id) {
+    var sec = document.getElementById(id); if (!sec) return; var b = sec.querySelector('.vol-banner'); if (!b || b.querySelector('canvas.cover')) return;
+    var text = document.createElement('div'); text.className = 'bt';
+    Array.prototype.slice.call(b.children).forEach(function (ch) { if (!ch.classList.contains('jp')) text.appendChild(ch); });
+    var cv = document.createElement('canvas'); cv.className = 'cover'; cv.setAttribute('data-art', id);
+    b.classList.add('has-cover'); b.appendChild(text); b.appendChild(cv);
+  });
+  function all() { Array.prototype.forEach.call(document.querySelectorAll('canvas[data-art]'), paint); }
+  all(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+})();
+
+
+(function () {
+  var HEROES = {"archive": ["Los Angeles · 2009 – 2099 · Case archive", "BLADE RUNNER", "ARCHIVE", "Every comic, film, short and anime in the Blade Runner saga, told in story order across three eras. From the first Blade Runner to the city fifty years after K.", ["レプリカント", "ロサンゼルス"]], "era1": ["Era I · 2009 – 2019 · Before the Blackout", "ERA I", "2009 — 2019", "The first Blade Runner, two war veterans in Tokyo, Deckard's hunt and Ash's first case. Four stories, from the birth of the unit to the year of the film.", ["起源", "東京"]], "era2": ["Era II · 2022 – 2039 · After the Blackout", "ERA II", "2022 — 2039", "The records burn and Tyrell falls. Ash fights a replicant who refuses to die, Elle hunts the men who hunted her, and Wallace rises to take Tyrell's place.", ["黒蓮", "停電"]], "era3": ["Era III · 2048 – 2099 · The Wallace Age", "ERA III", "2048 — 2099", "A replicant Blade Runner finds bones under a dead tree, and the world that follows fifty years on.", ["奇跡", "二〇九九"]]};
+  var views = document.querySelectorAll('.view'), hero = document.querySelector('.hero');
+  function show(v) {
+    Array.prototype.forEach.call(views, function (el) { el.hidden = el.id !== v; });
+    Array.prototype.forEach.call(document.querySelectorAll('nav.bar .sub'), function (el) { el.hidden = el.getAttribute('data-for') !== v; });
+    Array.prototype.forEach.call(document.querySelectorAll('nav.bar [data-nav]'), function (a) { if (a.getAttribute('data-nav') === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    var h = HEROES[v];
+    hero.querySelector('.kicker').textContent = h[0];
+    var h1 = hero.querySelector('h1'); h1.firstChild.nodeValue = h[1]; h1.querySelector('span').textContent = h[2];
+    h1.classList.remove('flicker'); void h1.offsetWidth; h1.classList.add('flicker');
+    hero.querySelector('.lede').textContent = h[3];
+    var signs = hero.querySelectorAll('.sign'); signs[0].textContent = h[4][0]; signs[1].textContent = h[4][1];
+    window.dispatchEvent(new Event('resize'));
+  }
+  function route(id, smooth) {
+    var el = id && document.getElementById(id), view = el && (el.classList.contains('view') ? el : el.closest('.view'));
+    if (!view) { view = document.getElementById('archive'); el = view; }
+    var changed = view.hidden; show(view.id);
+    if (el === view) { if (changed || !smooth) window.scrollTo(0, 0); else window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    else { var nav = document.querySelector('nav.bar'), pt = el.tagName === 'SECTION' ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0, y = el.getBoundingClientRect().top + window.pageYOffset + pt - nav.offsetHeight - 16;
+      window.scrollTo({ top: y, behavior: changed ? 'auto' : 'smooth' }); }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+    var id = a.getAttribute('href').slice(1); e.preventDefault(); route(id, true);
+  });
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  route(location.hash.slice(1), false);
+  window.addEventListener('load', function () { if (location.hash) route(location.hash.slice(1), false); });
+})();
+</script>
+</body></html>
