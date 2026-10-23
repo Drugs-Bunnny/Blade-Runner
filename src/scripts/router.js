@@ -11,6 +11,10 @@
     h1.classList.remove('flicker'); void h1.offsetWidth; h1.classList.add('flicker');
     hero.querySelector('.lede').textContent = h[3];
     var signs = hero.querySelectorAll('.sign'); signs[0].textContent = h[4][0]; signs[1].textContent = h[4][1];
+    var prev = document.documentElement.getAttribute('data-mood');
+    document.documentElement.setAttribute('data-mood', v);
+    // the city, sounds and badges listen for this to change their look
+    window.dispatchEvent(new CustomEvent('br:view', { detail: { view: v, changed: prev !== v && prev !== null } }));
     window.dispatchEvent(new Event('resize'));
   }
   function route(id, smooth) {
