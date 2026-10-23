@@ -5,6 +5,7 @@
     i:    { name: 'Origins',            anchor: '#origins',  verb: 'read' },
     tn:   { name: 'Tokyo Nexus',        anchor: '#tokyo',    verb: 'read' },
     f:    { name: 'Blade Runner',       anchor: '#film82',   verb: 'watched' },
+    gm:   { name: 'Blade Runner (game)', anchor: '#game97',  verb: 'played' },
     b:    { name: 'Blade Runner 2019',  anchor: '#br2019',   verb: 'read' },
     bo:   { name: 'Black Out 2022',     anchor: '#blackout', verb: 'watched' },
     c:    { name: 'Blade Runner 2029',  anchor: '#br2029',   verb: 'read' },
@@ -19,6 +20,7 @@
   // story-wide panels that give away an ending, unlocked when that story is finished
   var PANELS = [['#board', 'i'], ['#files', 'i'], ['.broadcast', 'i'], ['#empathy', 'i']];
 
+  var WORDS = { read: ['Mark read', '✓ Read', 'Read up to here', 'Read'], watched: ['Mark watched', '✓ Watched', 'Watched up to here', 'Watched'], played: ['Mark played', '✓ Played', 'Played up to here', 'Played'] };
   var KEY = 'br-read', SKEY = 'br-shield';
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: keep going in memory */ } }
@@ -37,7 +39,7 @@
     var verb = STORIES[key].verb;
     var bar = document.createElement('div'); bar.className = 'rd';
     bar.innerHTML = '<button type="button" class="rd-mark" aria-pressed="false"></button>' +
-      '<button type="button" class="rd-upto">' + (verb === 'watched' ? 'Watched up to here' : 'Read up to here') + '</button>';
+      '<button type="button" class="rd-upto">' + WORDS[verb][2] + '</button>';
     a.appendChild(bar);
     bar.querySelector('.rd-mark').addEventListener('click', function () { set([a.id], !read[a.id]); });
     bar.querySelector('.rd-upto').addEventListener('click', function () {
@@ -61,6 +63,16 @@
     inner.appendChild(rv); inner._key = 'panel:' + p[0];
   });
 
+  // character files: blurred until every appearance has been read
+  var dossiers = Array.prototype.slice.call(document.querySelectorAll('[data-spoils]'));
+  dossiers.forEach(function (d) {
+    d._ids = d.getAttribute('data-spoils').split(/\s+/).filter(Boolean); d._body = d.querySelector('.dzb');
+    var rv = document.createElement('button'); rv.type = 'button'; rv.className = 'rd-reveal';
+    rv.innerHTML = '<span>Spoilers hidden</span><small>Tap to reveal</small>';
+    rv.addEventListener('click', function () { revealed['file:' + d.id] = true; paint(); });
+    d.appendChild(rv);
+  });
+
   // progress meters on each story header
   function meter(cls) { var m = document.createElement('div'); m.className = 'prog ' + (cls || ''); m.innerHTML = '<div class="prog-row"><span class="prog-l"></span><span class="prog-n"></span></div><div class="prog-bar"><i></i></div>'; return m; }
   var meters = [];
@@ -70,7 +82,7 @@
     if (s.arc) { var first = document.querySelector(s.anchor), group = first && first.parentElement, h = group && group.previousElementSibling;
       if (h && h.classList.contains('arc')) { m.classList.add('arcprog'); h.parentNode.insertBefore(m, group); host = m; } }
     else { var b = document.querySelector(s.anchor + ' .vol-banner'); if (b) { (b.querySelector('.bt') || b).appendChild(m); host = m; } }
-    if (host) meters.push({ el: m, ids: byStory[k].map(function (a) { return a.id; }), label: s.verb === 'watched' ? 'Watched' : 'Read' });
+    if (host) meters.push({ el: m, ids: byStory[k].map(function (a) { return a.id; }), label: WORDS[s.verb][3] });
   });
 
   // era cards and the reading-order list on the hub
@@ -133,7 +145,7 @@
       var r = !!read[a.id], verb = STORIES[a._story].verb, btn = a.querySelector('.rd-mark');
       a.classList.toggle('is-read', r);
       btn.setAttribute('aria-pressed', r ? 'true' : 'false');
-      btn.textContent = r ? (verb === 'watched' ? '✓ Watched' : '✓ Read') : (verb === 'watched' ? 'Mark watched' : 'Mark read');
+      btn.textContent = r ? WORDS[verb][1] : WORDS[verb][0];
       var veiled = shield && !r && !revealed[a.id];
       a.classList.toggle('veiled', veiled);
       if (a._body) { if (veiled) a._body.setAttribute('inert', ''); else a._body.removeAttribute('inert'); }
@@ -142,6 +154,11 @@
       var veiled = shield && !storyDone(p._story) && !revealed[p._key];
       p.classList.toggle('veiled', veiled);
       Array.prototype.forEach.call(p.children, function (ch) { if (ch.classList.contains('rd-reveal')) return; if (veiled) ch.setAttribute('inert', ''); else ch.removeAttribute('inert'); });
+    });
+    dossiers.forEach(function (d) {
+      var veiled = shield && count(d._ids) < d._ids.length && !revealed['file:' + d.id];
+      d.classList.toggle('veiled', veiled);
+      if (d._body) { if (veiled) d._body.setAttribute('inert', ''); else d._body.removeAttribute('inert'); }
     });
     meters.forEach(function (m) {
       var n = count(m.ids), t = m.ids.length;

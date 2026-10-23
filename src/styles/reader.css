@@ -46,3 +46,5 @@
   .rb-next { flex: 1 1 100%; text-align: center; }
   .rb-shield, .rb-reset { flex: 1 1 auto; justify-content: center; }
 }
+.dossier.veiled .dzb { filter: blur(8px); opacity: .5; user-select: none; pointer-events: none; }
+.dossier.veiled > .rd-reveal { top: 62%; }

@@ -118,3 +118,23 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   #score .sb { width: 38px; height: 38px; }
   #score .sb.main { width: 44px; height: 44px; }
 }
+
+/* ---------- character files ---------- */
+.dossiers { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+.dossier { position: relative; align-items: start; scroll-margin-top: 140px; }
+.dossier h3 { margin-top: 18px; }
+.dossier p { margin: 6px 0 10px; }
+.apps { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.apps-l { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-right: 2px; flex-basis: 100%; }
+.app { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .04em; text-decoration: none; color: var(--c); border: 1px solid var(--c); padding: 3px 7px; line-height: 1.2; white-space: nowrap; }
+.app:hover, .app:focus-visible { background: var(--c); color: var(--night); }
+.files-link { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 18px; padding: 18px 22px; border: 1.5px solid var(--line); background: var(--deep); text-decoration: none; color: var(--ink); }
+.files-link:hover { border-color: var(--amber); box-shadow: 0 0 26px -10px var(--glow-amber); }
+.files-link b { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: .03em; }
+.files-link span { color: var(--dim); }
+.files-link em { font-style: normal; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); }
+@media (max-width: 640px) {
+  .dossier h3 { margin-top: 0; }
+  nav.bar .wrap { gap: 4px 12px; }
+  nav.bar .wrap > a:not(.brand) { font-size: .74rem; letter-spacing: .06em; }
+}

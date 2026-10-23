@@ -53,6 +53,28 @@
       skyline(g, w, h, R, h, h * 0.05, h * 0.2, C.amber, 0.12);
       for (var i = 0; i < 4; i++) { var px = R() * w, py = h * 0.15 + R() * h * 0.25; g.fillStyle = C.rust; g.fillRect(px, py, 3, 2); g.fillStyle = C.cyan; g.fillRect(px + 10, py, 3, 2); }
       rain(g, w, h, R, 100, 0.18); } },
+    game97: { col: C.cyan, title: 'THE GAME', sub: 'PC GAME · 1997', year: '2019', draw: function (g, w, h, R) {
+      sky(g, w, h, '#03110f', '#06201c');
+      var x0 = 30, y0 = 58, pw = w - 60, ph = h * 0.5;
+      g.fillStyle = '#1a0d06'; g.fillRect(x0, y0, pw, ph);
+      var gr = g.createLinearGradient(0, y0, 0, y0 + ph); gr.addColorStop(0, '#2a1608'); gr.addColorStop(1, '#5a2a0c'); g.fillStyle = gr; g.fillRect(x0, y0, pw, ph);
+      g.save(); g.beginPath(); g.rect(x0, y0, pw, ph); g.clip();
+      skyline(g, w, h, R, y0 + ph, ph * 0.25, ph * 0.75, C.amber, 0.3, '#120904');
+      g.fillStyle = 'rgba(34,229,255,0.06)'; for (var y = y0; y < y0 + ph; y += 3) g.fillRect(x0, y, pw, 1);
+      g.restore();
+      g.strokeStyle = rgba(C.cyan, 0.25); g.lineWidth = 1;
+      for (var gx = x0; gx <= x0 + pw; gx += pw / 8) { g.beginPath(); g.moveTo(gx, y0); g.lineTo(gx, y0 + ph); g.stroke(); }
+      for (var gy = y0; gy <= y0 + ph; gy += ph / 6) { g.beginPath(); g.moveTo(x0, gy); g.lineTo(x0 + pw, gy); g.stroke(); }
+      var bx = x0 + pw * 0.56, by = y0 + ph * 0.28, bw = pw * 0.26, bh = ph * 0.3;
+      g.strokeStyle = C.cyan; g.lineWidth = 2; g.shadowColor = C.cyan; g.shadowBlur = 10; g.strokeRect(bx, by, bw, bh); g.shadowBlur = 0;
+      g.beginPath(); g.moveTo(bx + bw / 2, y0); g.lineTo(bx + bw / 2, by); g.moveTo(bx + bw / 2, by + bh); g.lineTo(bx + bw / 2, y0 + ph);
+      g.moveTo(x0, by + bh / 2); g.lineTo(bx, by + bh / 2); g.moveTo(bx + bw, by + bh / 2); g.lineTo(x0 + pw, by + bh / 2); g.lineWidth = 1; g.strokeStyle = rgba(C.cyan, 0.6); g.stroke();
+      g.strokeStyle = C.cyan; g.lineWidth = 1.5; g.strokeRect(x0, y0, pw, ph);
+      g.font = '400 10px "Share Tech Mono", monospace'; g.fillStyle = C.cyan; g.textAlign = 'left';
+      g.fillText('ENHANCE 224 TO 176', x0, y0 + ph + 18); g.fillText('TRACK 45 RIGHT', x0, y0 + ph + 32);
+      g.textAlign = 'right'; g.fillText('ZOOM 4.2', x0 + pw, y0 + ph + 18);
+      for (var k = 0; k < 18; k++) { g.fillStyle = rgba(C.cyan, 0.15 + R() * 0.5); g.fillRect(x0 + k * (pw / 18), y0 + ph + 42, pw / 18 - 3, 3 + R() * 10); }
+    } },
     br2019: { col: C.cyan, title: '2019', sub: 'COMIC · 12 ISSUES', year: '2019', draw: function (g, w, h, R) {
       sky(g, w, h, '#050912', '#0b2030'); var hz = h * 0.5;
       g.fillStyle = '#d8f6ff'; g.beginPath(); g.arc(w * 0.7, h * 0.22, 22, 0, 7); g.fill(); glow(g, w * 0.7, h * 0.22, 90, C.cyan, 0.35);

@@ -23,10 +23,11 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap">')
 
 # Views, in order. The first one is shown on load.
-VIEWS = ["archive", "era1", "era2", "era3"]
+VIEWS = ["archive", "era1", "era2", "era3", "people"]
 NAV = [("era1", 'Era I<span class="yrs"> · 2009–2019</span>'),
        ("era2", 'Era II<span class="yrs"> · 2022–2039</span>'),
-       ("era3", 'Era III<span class="yrs"> · 2048–2099</span>')]
+       ("era3", 'Era III<span class="yrs"> · 2048–2099</span>'),
+       ("people", 'Files')]
 
 STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css"]
 SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js"]

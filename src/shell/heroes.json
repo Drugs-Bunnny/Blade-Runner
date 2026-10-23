@@ -3,7 +3,7 @@
     "Los Angeles · 2009 – 2099 · Case archive",
     "BLADE RUNNER",
     "ARCHIVE",
-    "Every comic, film, short and anime in the Blade Runner saga, told in story order across three eras. From the first Blade Runner to the city fifty years after K.",
+    "Every comic, film, game, short and anime in the Blade Runner saga, told in story order across three eras. From the first Blade Runner to the city fifty years after K.",
     [
       "レプリカント",
       "ロサンゼルス"
@@ -13,7 +13,7 @@
     "Era I · 2009 – 2019 · Before the Blackout",
     "ERA I",
     "2009 — 2019",
-    "The first Blade Runner, two war veterans in Tokyo, Deckard's hunt and Ash's first case. Four stories, from the birth of the unit to the year of the film.",
+    "The first Blade Runner, two war veterans in Tokyo, Deckard's hunt, a rookie's case running alongside it, and Ash's first job. Five stories, from the birth of the unit to the year of the film.",
     [
       "起源",
       "東京"
@@ -37,6 +37,16 @@
     [
       "奇跡",
       "二〇九九"
+    ]
+  ],
+  "people": [
+    "LAPD records · cross-referenced",
+    "CASE FILES",
+    "WHO'S WHO",
+    "The people who cross from one story to the next: Blade Runners, replicants and the men who make them, each with every appearance in story order.",
+    [
+      "記録",
+      "人物"
     ]
   ]
 }
