@@ -5,6 +5,7 @@
   if (!box) return;
   var btn = document.getElementById('scorebtn'), prevB = document.getElementById('scoreprev'), nextB = document.getElementById('scorenext'),
       rainB = document.getElementById('scorerain'), vol = document.getElementById('scorevol'), title = document.getElementById('scoretitle'), hint = document.getElementById('scorehint');
+  var direct = null, mediaEl = null, viaElement = false;
   var ctx = null, master, musicBus, verb, delayIn, rainGain, timer = null, on = false, rainOn = true;
   var cur = 0, tg = null, padF = null, next = 0, step = 0, rainNext = 0, thunderAt = 0;
 
@@ -111,7 +112,15 @@
     ctx = new AC();
     master = ctx.createGain(); master.gain.value = 0;
     var comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3;
-    master.connect(comp); comp.connect(ctx.destination);
+    master.connect(comp);
+    // Two outputs: straight to the speakers, and through an <audio> element. The
+    // <audio> route lets the phone show lock-screen controls and keep playing when
+    // the screen is off. If it works, the direct route is muted so nothing doubles.
+    direct = ctx.createGain(); comp.connect(direct); direct.connect(ctx.destination);
+    if (ctx.createMediaStreamDestination) {
+      try { var dest = ctx.createMediaStreamDestination(); comp.connect(dest);
+        mediaEl = document.createElement('audio'); mediaEl.srcObject = dest.stream; mediaEl.setAttribute('playsinline', '');
+      } catch (e) { mediaEl = null; } }
     var len = Math.floor(ctx.sampleRate * 5.5), ir = ctx.createBuffer(2, len, ctx.sampleRate);
     for (var c = 0; c < 2; c++) { var dd = ir.getChannelData(c); for (var i = 0; i < len; i++) dd[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
     verb = ctx.createConvolver(); verb.buffer = ir;
@@ -177,7 +186,7 @@
   }
   function schedule() {
     var T = TRACKS[cur], io = { pad: padF, dry: tg };
-    while (next < ctx.currentTime + 1.5) {
+    while (next < ctx.currentTime + 2.5) {
       var k = step % T.chords.length, d = T.len[k];
       T.play(k, T.chords[k], next, d, io);
       next += d; step++;
@@ -191,7 +200,11 @@
     if (!timer) { newTrack(cur, ctx.currentTime); rainNext = ctx.currentTime; thunderAt = ctx.currentTime + rnd(20, 40); schedule(); timer = setInterval(schedule, 300); }
     master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
     master.gain.linearRampToValueAtTime(level(), ctx.currentTime + 3);
-    on = true; store('br-score', 'on'); paint();
+    if (mediaEl && !viaElement) {
+      var pr = mediaEl.play();
+      if (pr && pr.then) pr.then(function () { viaElement = true; direct.gain.setValueAtTime(0, ctx.currentTime); }, function () { viaElement = false; });
+    } else if (mediaEl) { mediaEl.play().catch(function () {}); }
+    on = true; store('br-score', 'on'); paint(); session();
   }
   function stop() {
     if (ctx) {
@@ -199,12 +212,26 @@
       master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.2);
       setTimeout(function () { if (!on) { clearInterval(timer); timer = null; tg = null; ctx.suspend(); } }, 1400);
     }
-    on = false; store('br-score', 'off'); paint();
+    on = false; store('br-score', 'off'); paint(); session();
+    if (mediaEl) setTimeout(function () { if (!on) mediaEl.pause(); }, 1300);
+  }
+  function session() {
+    if (!('mediaSession' in navigator)) return;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({ title: TRACKS[cur].name, artist: 'Blade Runner Archive', album: 'Original score',
+        artwork: [{ src: 'img/icon-180.png', sizes: '180x180', type: 'image/png' }] });
+      navigator.mediaSession.playbackState = on ? 'playing' : 'paused';
+    } catch (e) { /* older browsers */ }
+  }
+  if ('mediaSession' in navigator) {
+    var acts = { play: function () { if (!on) start(); }, pause: function () { if (on) stop(); },
+      previoustrack: function () { skip(-1); }, nexttrack: function () { skip(1); } };
+    Object.keys(acts).forEach(function (k) { try { navigator.mediaSession.setActionHandler(k, acts[k]); } catch (e) {} });
   }
   function skip(dir) {
     cur = (cur + dir + TRACKS.length) % TRACKS.length; store('br-track', String(cur));
     if (on && ctx) newTrack(cur, ctx.currentTime);
-    paint();
+    paint(); session();
   }
   function paint() {
     box.classList.toggle('playing', on);

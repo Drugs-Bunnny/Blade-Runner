@@ -50,7 +50,22 @@
       cx.fillStyle = '#1a2233'; cx.beginPath(); cx.moveTo(s.x - 16, sy); cx.lineTo(s.x + 16, sy); cx.lineTo(s.x + 11, sy + 6); cx.lineTo(s.x - 11, sy + 6); cx.fill();
       cx.fillStyle = (Math.floor(t / 300) + i) % 2 ? C.rust : C.cyan; cx.fillRect(s.x + (s.v > 0 ? 13 : -15), sy + 1, 2, 2); });
   }
-  function frame(t) { drawRain(); drawCity(t || 0); if (!reduce) requestAnimationFrame(frame); }
+  // Battery: draw the skyline only while the hero is on screen, cap the rain at
+  // about 30 frames a second, and stop everything while the page is hidden.
+  var heroVisible = true, last = 0, running = false;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { heroVisible = es[0].isIntersecting; }).observe(cc);
+  }
+  function frame(t) {
+    running = false;
+    if (document.hidden) return;
+    if (!reduce && t && t - last < 32) { running = true; requestAnimationFrame(frame); return; }
+    last = t || 0;
+    drawRain(); if (heroVisible || reduce) drawCity(t || 0);
+    if (!reduce) { running = true; requestAnimationFrame(frame); }
+  }
+  function kick() { if (!running && !document.hidden) frame(performance.now()); }
   function resize() { sizeRain(); sizeCity(); if (reduce) frame(0); }
   addEventListener('resize', resize); resize(); frame(0);
+  document.addEventListener('visibilitychange', kick);
 })();

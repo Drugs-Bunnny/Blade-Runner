@@ -1,31 +1,40 @@
 # Blade Runner Archive
 
-An unofficial fan archive of the Blade Runner saga, from 2009 to 2099. It covers every comic, film, short and anime in story order, with full-spoiler synopses: comics issue by issue, *Black Lotus* episode by episode, and the films act by act.
+An unofficial fan archive of the Blade Runner saga from 2009 to 2099. It covers every comic, film, game, short and anime in story order, with full-spoiler synopses: comics issue by issue, *Black Lotus* episode by episode, and the films and the 1997 game part by part.
 
-You can mark issues and episodes as read or watched, track progress for each story and era, and turn on a spoiler shield that blurs anything you haven't read yet.
+**Live site:** https://drugs-bunnny.github.io/Blade-Runner/
 
-The site is a single page in a neon-noir style. It has original poster art for each story, an original generative ambient score with five tracks, and city-street rain. Switching between eras swaps the content in place, so the music keeps playing.
+![The archive's front page: a neon Los Angeles skyline under the title Blade Runner Archive](docs/img/screen-hub.png)
 
-## Eras
+## What's in it
 
-| Era | Years | Stories |
+- **Three eras**
+  - Era I · Before the Blackout, 2009–2019: Origins, Tokyo Nexus, Blade Runner (1982), the 1997 game, Blade Runner 2019
+  - Era II · After the Blackout, 2022–2039: Black Out 2022, Blade Runner 2029, Black Lotus (anime and both comics), 2036: Nexus Dawn, Blade Runner 2039
+  - Era III · The Wallace Age, 2048–2099: 2048: Nowhere to Run, Blade Runner 2049, Blade Runner 2099
+- **Character files.** Dossiers for 18 people who appear in more than one story, each linking to every appearance in order.
+- **Reading tracker.** Mark each issue or episode as read, watched or played, see your progress for each story, era and the whole archive, and use Continue to jump to the next unread entry.
+- **Spoiler shield.** An optional mode that blurs everything you haven't marked yet. Tap any entry to reveal it.
+- **Original art and sound.** A neon poster for every story, five generative ambient tracks, and city-street rain. Everything is drawn and played live in the browser. The music keeps playing as you move around the page, and phones show lock-screen controls.
+
+| Era page | Character files | Phone |
 | --- | --- | --- |
-| I · Before the Blackout | 2009–2019 | Origins, Tokyo Nexus, Blade Runner (1982), Blade Runner 2019 |
-| II · After the Blackout | 2022–2039 | Black Out 2022, Blade Runner 2029, Black Lotus (anime and comics), 2036: Nexus Dawn, Blade Runner 2039 |
-| III · The Wallace Age | 2048–2099 | 2048: Nowhere to Run, Blade Runner 2049, Blade Runner 2099 |
+| ![Black Lotus section with its poster](docs/img/screen-era.png) | ![Character dossiers](docs/img/screen-files.png) | ![An issue card on a phone](docs/img/screen-phone.png) |
+
+Reading progress and the spoiler setting are saved in the visitor's own browser. Nothing is sent anywhere.
 
 ## Layout
 
 | Path | What it is |
 | --- | --- |
-| `src/origins.html` | The Origins section: case board, case files and themes, plus the shared styles and the skyline and rain animation |
-| `src/hub_body.html` | The hub: era cards, poster wall and reading order |
-| `src/era1_more.html`, `src/era2_body.html`, `src/era3_body.html` | The synopses for each era |
-| `src/score.js` | The music player and rain, generated with Web Audio |
-| `src/art.js` | The poster art, drawn on canvas |
-| `src/reader.js`, `src/reader.css` | The reading tracker and spoiler shield. Progress is saved in the visitor's own browser |
+| `src/pages/` | The page content: `archive.html` (the hub), `era1.html`–`era3.html` (the synopses and their sources) and `people.html` (character files) |
+| `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield) |
+| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `router.js` (switching views) |
+| `src/shell/` | Page furniture: hero text, sub-navigation, the music player, icon and social tags |
 | `build.py` | Assembles everything into one page |
-| `docs/index.html` | The built site, served by GitHub Pages |
+| `docs/` | The built site, served by GitHub Pages, plus its images |
+| `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
+| `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
 | `tools/rain-sampler.html` | A page for auditioning rain styles |
 
 ## Building
@@ -36,11 +45,13 @@ Requires Python 3 and nothing else.
 python3 build.py
 ```
 
-This writes `docs/index.html`. Commit it along with your source changes.
+This writes `docs/index.html` for GitHub Pages and `build/archive.html` for the Claude artifact copy. Commit `docs/` along with your source changes.
 
-## Publishing
+To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 
-In the repository settings, open **Pages**, set the source to **Deploy from a branch**, then choose branch `main` and folder `/docs`.
+```sh
+python3 tools/make_images.py
+```
 
 ## Credits
 
