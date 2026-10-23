@@ -29,8 +29,8 @@ NAV = [("era1", 'Era I<span class="yrs"> · 2009–2019</span>'),
        ("era3", 'Era III<span class="yrs"> · 2048–2099</span>'),
        ("people", 'Files')]
 
-STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css"]
-SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/search.js"]
+STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css", "styles/fx.css"]
+SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/search.js", "scripts/fx.js", "scripts/sfx.js"]
 
 
 def read(rel):
@@ -88,6 +88,7 @@ def build():
             f'<canvas id="rain" aria-hidden="true"></canvas>\n'
             f'<div class="scan" aria-hidden="true"></div>\n'
             f'{read("shell/player.html")}'
+            f'{read("shell/fx.html")}'
             f'{body}\n'
             f'<script>{scripts}\n{router}</script>')
 

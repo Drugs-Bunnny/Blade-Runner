@@ -17,6 +17,13 @@ An unofficial fan archive of the Blade Runner saga from 2009 to 2099. It covers 
 - **Search.** Search every synopsis, character file and story intro from the top bar, or press `/` or Ctrl+K. With the spoiler shield on, matches in unread entries are counted but not shown.
 - **Spoiler shield.** An optional mode that blurs everything you haven't marked yet. Tap any entry to reveal it.
 - **Original art and sound.** A neon poster for every story, five generative ambient tracks, and city-street rain. Everything is drawn and played live in the browser. The music keeps playing as you move around the page, and phones show lock-screen controls.
+- **Film touches.**
+  - Each era has its own sky: amber smog and flare stacks for Era I, neon rain and billboards for Era II, orange dust for Era III, with searchlights and a patrol spinner over the city.
+  - Tap a poster to "enhance" it on an ESPER screen.
+  - Finishing a story leaves an origami figure on its banner.
+  - A short LAPD terminal start-up plays once per visit, and the neon headings flicker now and then.
+  - Optional interface sounds (the Sounds chip in the player, off by default): a Voight-Kampff chirp when you mark an entry and a spinner passing when you change era.
+  - Reduced-motion settings turn the animation off.
 
 | Era page | Character files | Phone |
 | --- | --- | --- |
@@ -29,9 +36,9 @@ Reading progress and the spoiler setting are saved in the visitor's own browser.
 | Path | What it is |
 | --- | --- |
 | `src/pages/` | The page content: `archive.html` (the hub), `era1.html`–`era3.html` (the synopses and their sources) and `people.html` (character files) |
-| `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield) |
-| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `search.js` (search), `router.js` (switching views) |
-| `src/shell/` | Page furniture: hero text, sub-navigation, the music player, icon and social tags |
+| `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield), `fx.css` (film touches) |
+| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `search.js` (search), `fx.js` (ESPER, origami, start-up screen, neon flicker), `sfx.js` (interface sounds), `router.js` (switching views) |
+| `src/shell/` | Page furniture: hero text, sub-navigation, the music player, the start-up and ESPER overlays, icon and social tags |
 | `build.py` | Assembles everything into one page |
 | `docs/` | The built site, served by GitHub Pages, plus its images |
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
