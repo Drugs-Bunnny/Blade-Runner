@@ -14,6 +14,7 @@ An unofficial fan archive of the Blade Runner saga from 2009 to 2099. It covers 
   - Era III · The Wallace Age, 2048–2099: 2048: Nowhere to Run, Blade Runner 2049, Blade Runner 2099
 - **Character files.** Dossiers for 18 people who appear in more than one story, each linking to every appearance in order.
 - **Reading tracker.** Mark each issue or episode as read, watched or played, see your progress for each story, era and the whole archive, and use Continue to jump to the next unread entry.
+- **Search.** Search every synopsis, character file and story intro from the top bar, or press `/` or Ctrl+K. With the spoiler shield on, matches in unread entries are counted but not shown.
 - **Spoiler shield.** An optional mode that blurs everything you haven't marked yet. Tap any entry to reveal it.
 - **Original art and sound.** A neon poster for every story, five generative ambient tracks, and city-street rain. Everything is drawn and played live in the browser. The music keeps playing as you move around the page, and phones show lock-screen controls.
 
@@ -29,7 +30,7 @@ Reading progress and the spoiler setting are saved in the visitor's own browser.
 | --- | --- |
 | `src/pages/` | The page content: `archive.html` (the hub), `era1.html`–`era3.html` (the synopses and their sources) and `people.html` (character files) |
 | `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield) |
-| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `router.js` (switching views) |
+| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `search.js` (search), `router.js` (switching views) |
 | `src/shell/` | Page furniture: hero text, sub-navigation, the music player, icon and social tags |
 | `build.py` | Assembles everything into one page |
 | `docs/` | The built site, served by GitHub Pages, plus its images |

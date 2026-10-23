@@ -30,7 +30,7 @@ NAV = [("era1", 'Era I<span class="yrs"> · 2009–2019</span>'),
        ("people", 'Files')]
 
 STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css"]
-SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js"]
+SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/search.js"]
 
 
 def read(rel):
@@ -44,8 +44,12 @@ def nav_html(subnav):
         + "".join(f'<a href="#{anchor}">{text}</a>' for anchor, text in items)
         + "</div>"
         for view, items in subnav.items())
+    search = ('<button id="searchbtn" class="searchbtn" type="button" aria-label="Search the archive" aria-expanded="false" '
+              'aria-controls="searchpanel" title="Search (/)"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/>'
+              '<path d="M12.6 12.6 L17 17"/></svg></button>')
     return (f'<nav class="bar" aria-label="Archive"><div class="wrap">'
-            f'<a class="brand" href="#archive">BR · ARCHIVE</a>{links}</div>{subs}</nav>')
+            f'<a class="brand" href="#archive">BR<span class="yrs"> · ARCHIVE</span></a>{links}{search}</div>{subs}</nav>'
+            + read("shell/search.html"))
 
 
 def hero_html(kicker, title, sub, lede, signs):

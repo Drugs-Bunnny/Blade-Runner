@@ -139,7 +139,9 @@
   function count(ids) { var n = 0; ids.forEach(function (id) { if (read[id]) n++; }); return n; }
   function storyDone(key) { var l = byStory[key] || []; return l.length && count(l.map(function (a) { return a.id; })) === l.length; }
 
+  var listeners = [];
   function paint() {
+    listeners.forEach(function (fn) { try { fn(); } catch (e) {} });
     document.documentElement.classList.toggle('shield-on', shield);
     cards.forEach(function (a) {
       var r = !!read[a.id], verb = STORIES[a._story].verb, btn = a.querySelector('.rd-mark');
@@ -182,4 +184,12 @@
     });
   }
   paint();
+  // read-only view of the tracker, used by search
+  window.BRReader = {
+    isRead: function (id) { return !!read[id]; },
+    allRead: function (ids) { return ids.every(function (id) { return read[id]; }); },
+    storyDone: function (key) { return !!storyDone(key); },
+    shield: function () { return shield; },
+    onChange: function (fn) { listeners.push(fn); }
+  };
 })();
