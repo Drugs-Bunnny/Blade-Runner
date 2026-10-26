@@ -5,6 +5,7 @@
      era2     wet neon, heavy rain and big billboards
      era3     orange haze with falling snow
      people   cold teal light, searchlights over the records office
+     lore     violet dusk over the archive
    Everything is drawn on canvas; nothing is loaded. */
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -25,7 +26,8 @@
     era1:    { sky: ['#0d0906', '#2a1308', '#6a2e0a'], glow: '255,120,30', glowA: .55, haze: '150,80,30', beams: '255,200,140', flares: 6, burst: .7, boards: .6, rain: .6, drop: '255,200,150', lit: .2 },
     era2:    { sky: ['#04061a', '#0f0a2a', '#2c0a2e'], glow: '255,46,136', glowA: .32, haze: '70,40,140', beams: '120,230,255', flares: 1, burst: .1, boards: 1.8, rain: 1.5, drop: '140,190,255', lit: .26 },
     era3:    { sky: ['#2b1406', '#7a3810', '#d0701e'], glow: '255,170,80', glowA: .6, haze: '235,150,70', beams: '', flares: 0, burst: 0, boards: .35, rain: 0, snow: true, lit: .08, dust: true },
-    people:  { sky: ['#03080b', '#08161b', '#0f2a30'], glow: '34,229,255', glowA: .22, haze: '40,110,130', beams: '160,240,255', flares: 0, burst: 0, boards: .8, rain: 1, drop: '150,200,220', lit: .18 }
+    people:  { sky: ['#03080b', '#08161b', '#0f2a30'], glow: '34,229,255', glowA: .22, haze: '40,110,130', beams: '160,240,255', flares: 0, burst: 0, boards: .8, rain: 1, drop: '150,200,220', lit: .18 },
+    lore:    { sky: ['#06051a', '#160c2c', '#3a1636'], glow: '201,166,255', glowA: .3, haze: '110,70,160', beams: '220,200,255', flares: 1, burst: .1, boards: 1.2, rain: .8, drop: '190,170,255', lit: .22 }
   };
   var mood = MOODS.archive, moodName = 'archive';
 
@@ -69,7 +71,7 @@
 
   function layout() {
     var r = cc.getBoundingClientRect(); W = cc.width = Math.max(1, Math.round(r.width)); H = cc.height = Math.max(1, Math.round(r.height));
-    seed = ['archive', 'era1', 'era2', 'era3', 'people'].indexOf(moodName) + 1;
+    seed = ['archive', 'era1', 'era2', 'era3', 'people', 'lore'].indexOf(moodName) + 1;
     towers = []; boards = []; var x = -6, k = 0, slab = mood.snow;
     while (x < W) {
       var w = (slab ? 60 : 30) + rnd(k + 1) * (slab ? 90 : 60), h = H * (0.18 + rnd(k + 7) * (slab ? .32 : mood.eye ? .24 : 0.46));

@@ -26,14 +26,16 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap">')
 
 # Views, in order. The first one is shown on load.
-VIEWS = ["archive", "era1", "era2", "era3", "people"]
+VIEWS = ["archive", "era1", "era2", "era3", "people", "lore"]
 NAV = [("era1", 'Era I<span class="yrs"> · 2009–2019</span>'),
        ("era2", 'Era II<span class="yrs"> · 2022–2039</span>'),
        ("era3", 'Era III<span class="yrs"> · 2048–2099</span>'),
-       ("people", 'Files')]
+       ("people", 'Files'),
+       ("lore", 'Lore')]
 
-STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css", "styles/fx.css"]
-SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/search.js", "scripts/fx.js", "scripts/sfx.js"]
+STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css", "styles/fx.css", "styles/lore.css"]
+SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/lore-data.js",
+           "scripts/lore.js", "scripts/quiz.js", "scripts/search.js", "scripts/fx.js", "scripts/sfx.js"]
 
 
 def build_number():
@@ -127,7 +129,12 @@ def build():
                   '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
                   + head.replace("</style>\n", "\n" + read("shell/standalone.css") + "</style>\n", 1)
                   + '</head><body><canvas id="rain"' + rest + "\n</body></html>\n")
+    # installable app: manifest, offline service worker and its registration (Pages copy only)
+    standalone = standalone.replace('<meta name="theme-color"', '<link rel="manifest" href="manifest.webmanifest">\n<meta name="theme-color"', 1)
+    standalone = standalone.replace("\n</body></html>", "\n<script>" + read("pwa/register.js") + "</script>\n</body></html>", 1)
     (ROOT / "docs").mkdir(exist_ok=True)
+    (ROOT / "docs" / "manifest.webmanifest").write_text(read("pwa/manifest.json").replace("__DESC__", DESCRIPTION))
+    (ROOT / "docs" / "sw.js").write_text(read("pwa/sw.js").replace("__BUILD__", f"{number:03d}"))
     (ROOT / "docs" / "index.html").write_text(standalone)
     (ROOT / "docs" / ".nojekyll").write_text("")
     print(build_label)

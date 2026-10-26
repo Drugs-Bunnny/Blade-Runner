@@ -21,8 +21,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Blade Runner Archive</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="build" content="Build 010 · 23 Oct 2026">
+<meta name="build" content="Build 011 · 26 Oct 2026">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="12" fill="#070910"/%3E%3Cpath d="M6 32 Q32 8 58 32 Q32 56 6 32Z" fill="#0c111e" stroke="#22e5ff" stroke-width="3"/%3E%3Ccircle cx="32" cy="32" r="11" fill="none" stroke="#ff2e88" stroke-width="3"/%3E%3Ccircle cx="32" cy="32" r="5" fill="#070910" stroke="#ffb347" stroke-width="2.5"/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#070910">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -500,13 +501,200 @@ canvas.cover { cursor: zoom-in; }
 /* ---------- build stamp ---------- */
 footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #5d6a8c; }
 
+/* ================= Lore view ================= */
+#lore { --c: var(--cyan); }
+.lore-intro { color: var(--dim); margin: 0; }
+.chip-btn { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border: 1px solid var(--line); background: none; color: var(--dim); cursor: pointer; border-radius: 999px; }
+.chip-btn[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); box-shadow: 0 0 10px -3px var(--glow-amber); }
+.lv { font-size: .88rem; color: var(--dim); border: 1px dashed var(--line); padding: 8px 10px; margin-top: 8px; }
+.lv-show { background: none; border: 0; color: var(--cyan); font: inherit; text-decoration: underline; cursor: pointer; padding: 0; }
+
+/* ---- timeline ---- */
+.tl-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.tl-scale { position: relative; height: 46px; margin: 0 10px 34px; }
+.tls-line { position: absolute; left: 0; right: 0; top: 14px; height: 2px; background: linear-gradient(90deg, var(--amber) 0 33%, var(--pink) 38% 75%, var(--cyan) 82%); opacity: .55; }
+.tls-break { position: absolute; top: 6px; width: 10px; height: 18px; margin-left: -5px; background: var(--night); border-left: 2px solid var(--dim); border-right: 2px solid var(--dim); transform: skewX(-20deg); }
+.tls-tick { position: absolute; top: 26px; transform: translateX(-50%); font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; color: var(--dim); }
+.tls-dot { position: absolute; top: 8px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--night); border: 2px solid var(--ec); box-shadow: 0 0 8px var(--ec); }
+.tls-dot:hover, .tls-dot:focus-visible { background: var(--ec); outline: none; }
+.e1 { --ec: var(--amber); } .e2 { --ec: var(--pink); } .e3 { --ec: var(--cyan); }
+.tl { list-style: none; margin: 0; padding: 0; position: relative; }
+.tl::before { content: ""; position: absolute; left: 88px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--amber), var(--pink) 50%, var(--cyan)); opacity: .35; }
+.tl-year { display: grid; grid-template-columns: 76px 1fr; gap: 26px; margin-bottom: 22px; position: relative; scroll-margin-top: 140px; }
+.tl-year::before { content: ""; position: absolute; left: 82px; top: 8px; width: 14px; height: 14px; border-radius: 50%; background: var(--night); border: 2px solid var(--ec); box-shadow: 0 0 10px var(--ec); }
+.tl-y { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; color: var(--ec); text-align: right; line-height: 1.1; text-shadow: 0 0 12px var(--ec); }
+.tl-evs { display: grid; gap: 10px; padding-left: 14px; }
+.tl-ev { border: 1px solid var(--line); background: rgba(12,17,30,.78); padding: 12px 16px; }
+.tl-ev.k-world { border-left: 3px solid var(--ec); }
+.tl-ev.k-story { border-left: 3px solid var(--line); }
+.tl-k { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+.tl-ev h3 { font-size: 1.05rem; margin: 2px 0 4px; }
+.tl-ev h3 a { color: var(--ink); text-decoration: none; }
+.tl-ev h3 a:hover { color: var(--ec); }
+.tl-ev h3 a::after { content: " →"; color: var(--ec); }
+.tl-ev p { margin: 0; color: var(--dim); font-size: .95rem; }
+.tl-gap { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); padding: 2px 0 22px 108px; opacity: .8; }
+.tl-gap span::before { content: "⋮ "; }
+
+/* ---- glossary ---- */
+.gl-find { width: 100%; max-width: 380px; font: inherit; color: var(--ink); background: var(--deep); border: 1px solid var(--line); padding: 10px 12px; margin-bottom: 18px; }
+.gl-find:focus { outline: none; border-color: var(--cyan); }
+.gl-list { columns: 2 340px; column-gap: 18px; }
+.gl { break-inside: avoid; border: 1px solid var(--line); background: rgba(12,17,30,.78); padding: 14px 16px; margin-bottom: 14px; scroll-margin-top: 140px; }
+.gl h3 { font-size: 1.05rem; color: var(--cyan); margin-bottom: 6px; letter-spacing: .03em; }
+.gl p { margin: 0 0 10px; }
+.gl.hit, .gl:target { border-color: var(--amber); }
+.gl-dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0 0 12px; font-size: .9rem; }
+.gl-dl dt { font-family: var(--font-mono); color: var(--amber); white-space: nowrap; }
+.gl-dl dd { margin: 0; color: var(--dim); }
+.gl-dl.sm { font-size: .84rem; }
+
+/* terms in the synopses */
+button.term { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: help; text-decoration: underline dotted rgba(34,229,255,.7); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
+.termpop { position: absolute; z-index: 60; background: #0b1120; border: 1px solid var(--cyan); box-shadow: 0 10px 40px -10px #000, 0 0 18px -6px var(--glow-cyan); padding: 12px 14px; font-size: .92rem; --c: var(--cyan); }
+.termpop p { margin: 6px 0 8px; }
+.tp-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 700; color: var(--cyan); letter-spacing: .04em; }
+.tp-x { background: none; border: 1px solid var(--line); color: var(--dim); width: 28px; height: 28px; cursor: pointer; flex: none; }
+.tp-more { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); text-decoration: none; }
+
+/* ---- connections ---- */
+.cx-legend { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
+.cx-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--kc); box-shadow: 0 0 6px var(--kc); }
+.k-h { --kc: var(--amber); } .k-r { --kc: var(--cyan); } .k-m { --kc: #c9a6ff; }
+.cx { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+.cx-stage { border: 1px solid var(--line); background: radial-gradient(ellipse at 50% 45%, rgba(34,229,255,.06), transparent 70%), rgba(7,9,16,.7); }
+.cx-svg { display: block; width: 100%; height: auto; }
+.cx-links line { stroke: rgba(149,162,196,.32); stroke-width: 1.2; transition: stroke .2s, opacity .2s; }
+.cx-links line.on { stroke: var(--amber); stroke-width: 2; }
+.cx-links line.dim { opacity: .18; }
+.cx-n { cursor: pointer; outline: none; }
+.cx-n .hit { fill: transparent; }
+.cx-n circle:not(.hit) { fill: var(--night); stroke: var(--kc); stroke-width: 2.5; filter: drop-shadow(0 0 4px var(--kc)); }
+.cx-n text { font-family: var(--font-mono); font-size: 12px; fill: var(--ink); text-anchor: middle; letter-spacing: .04em; paint-order: stroke; stroke: #070910; stroke-width: 4px; stroke-linejoin: round; }
+.cx-n.sel circle:not(.hit) { fill: var(--kc); }
+.cx-n.sel text, .cx-n.near text { fill: #fff; font-weight: 700; }
+.cx-n.dim { opacity: .3; }
+.cx-n:focus-visible circle:not(.hit) { stroke-width: 4; }
+.cx-panel, .mp-panel { border: 1px solid var(--line); background: rgba(12,17,30,.85); padding: 14px 16px; min-height: 120px; }
+.cx-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.cx-h h3 { font-size: 1.15rem; color: var(--kc); }
+.cx-h span { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.cx-list { list-style: none; margin: 10px 0; padding: 0; display: grid; gap: 8px; }
+.cx-list li { display: grid; gap: 1px; font-size: .9rem; }
+.cx-list button { justify-self: start; background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--amber); cursor: pointer; text-align: left; }
+.cx-list span { color: var(--dim); }
+.cx-file { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); text-decoration: none; }
+.cx-hidden { margin-top: 10px; }
+
+/* ---- map ---- */
+.mp { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+.mp-stage { border: 1px solid var(--line); }
+.mp-svg { display: block; width: 100%; height: auto; }
+.mp-sea { fill: #04070f; }
+.mp-grid { stroke: rgba(34,229,255,.07); stroke-width: 1; }
+.mp-land { fill: #121b31; }
+.mp-coast { fill: none; stroke: var(--cyan); stroke-width: 1.6; opacity: .7; filter: drop-shadow(0 0 3px var(--cyan)); }
+.mp-isle { stroke: var(--cyan); stroke-width: 1; opacity: .9; }
+.mp-sea-l { font-family: var(--font-mono); font-size: 13px; letter-spacing: .5em; fill: rgba(34,229,255,.35); }
+.mp-area { font-family: var(--font-mono); font-size: 13px; letter-spacing: .4em; fill: rgba(149,162,196,.35); }
+.mp-area.sm { font-size: 11px; }
+.mp-note { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; fill: rgba(149,162,196,.5); text-anchor: end; }
+.mp-rose circle { fill: none; stroke: rgba(149,162,196,.35); }
+.mp-rose path { fill: rgba(255,179,71,.6); }
+.mp-rose text { font-family: var(--font-mono); font-size: 11px; fill: var(--dim); text-anchor: middle; }
+.mp-pin, .mp-inset { cursor: pointer; outline: none; }
+.mp-pin .hit { fill: transparent; }
+.mp-pin .ring { fill: rgba(255,46,136,.18); stroke: var(--pink); stroke-width: 1.6; }
+.mp-pin .dot { fill: var(--pink); }
+.mp-pin.big .ring { fill: rgba(255,179,71,.2); stroke: var(--amber); }
+.mp-pin.big .dot { fill: var(--amber); }
+.mp-pin text { font-family: var(--font-mono); letter-spacing: .04em; fill: var(--ink); paint-order: stroke; stroke: #070910; stroke-width: 4px; stroke-linejoin: round; }
+.mp-pin.big text { font-weight: 700; fill: var(--amber); }
+.mp-pin:hover .ring, .mp-pin:focus-visible .ring, .mp-pin.sel .ring { stroke-width: 3; filter: drop-shadow(0 0 6px var(--pink)); }
+.mp-pin.sel text { fill: #fff; }
+@media (prefers-reduced-motion: no-preference) { .mp-pin .ring { animation: mppulse 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; } }
+@keyframes mppulse { 50% { transform: scale(1.25); opacity: .6; } }
+.mp-inset rect { fill: rgba(12,17,30,.92); stroke: var(--line); }
+.mp-inset:hover rect, .mp-inset:focus-visible rect, .mp-inset.sel rect { stroke: var(--cyan); }
+.mp-in-h { font-family: var(--font-display); font-weight: 700; letter-spacing: .2em; fill: var(--cyan); }
+.mp-in-s { font-family: var(--font-mono); letter-spacing: .1em; fill: var(--dim); }
+.mp-panel h3 { font-size: 1.15rem; color: var(--amber); }
+.mp-panel h4 { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); margin: 18px 0 8px; }
+.mp-panel p { margin: 8px 0 12px; }
+.mp-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.mp-back { background: none; border: 1px solid var(--line); color: var(--dim); font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; padding: 4px 8px; cursor: pointer; }
+.mp-picks { display: flex; flex-wrap: wrap; gap: 6px; }
+.mp-picks button { background: none; border: 1px solid var(--line); color: var(--ink); font-size: .85rem; padding: 5px 9px; cursor: pointer; }
+.mp-picks button:hover { border-color: var(--pink); }
+.mp-spots, .mp-un { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; font-size: .9rem; }
+.mp-spots li { display: grid; gap: 4px; }
+.mp-un .apps { display: inline-flex; margin-left: 4px; }
+
+@media (max-width: 860px) {
+  .cx, .mp { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .tl::before { left: 54px; }
+  .tl-year { grid-template-columns: 44px 1fr; gap: 18px; }
+  .tl-year::before { left: 48px; }
+  .tl-y { font-size: 1rem; }
+  .tl-evs { padding-left: 8px; }
+  .tl-gap { padding-left: 74px; }
+  .tl-scale { margin: 0 6px 30px; }
+  .tls-tick { font-size: .58rem; }
+  .gl-list { columns: 1; }
+}
+
+/* ================= Voight-Kampff quiz ================= */
+.vk-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); background: none; border: 1px solid var(--cyan); padding: 7px 11px; cursor: pointer; }
+.vk-btn:hover:not(:disabled) { background: rgba(34,229,255,.1); box-shadow: 0 0 12px -4px var(--glow-cyan); }
+.vk-btn:disabled { color: var(--dim); border-color: var(--line); border-style: dashed; cursor: default; }
+.vk-btn.passed { color: var(--amber); border-color: var(--amber); }
+.vk-eye { width: 16px; height: 10px; border: 1.5px solid currentColor; border-radius: 50% / 50%; position: relative; flex: none; }
+.vk-eye::after { content: ""; position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 50%; background: currentColor; }
+.arcprog .vk-btn { margin-top: 8px; }
+.vk { position: fixed; inset: 0; z-index: 80; background: rgba(2,5,8,.9); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+.vk-box { width: min(560px, 100%); border: 1px solid #2c5a52; background: #050c0e; box-shadow: 0 0 50px -12px rgba(80,255,200,.3); padding: 16px 18px 20px; }
+.vk-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .2em; color: #8ff7d9; }
+.vk-x { background: none; border: 1px solid #2c5a52; color: #8ff7d9; width: 34px; height: 34px; cursor: pointer; }
+.vk-scope { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: center; margin: 14px 0; padding: 10px; border: 1px solid #16332e; background: repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 1px, transparent 1px 3px), #031012; }
+.vk-iris { --p: .4; width: 120px; height: 72px; border-radius: 50%; background: radial-gradient(circle, #000 0 calc(var(--p) * 24%), #1e5d55 calc(var(--p) * 24% + 1%), #3fb59c 32%, #0f3530 46%, #e9efe8 47%, #c9d3cc 70%, #6d7a74); position: relative; overflow: hidden; transition: background .6s; box-shadow: inset 0 0 14px #000; }
+.vk-iris i { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(143,247,217,.6); animation: vkscan 2.4s linear infinite; }
+@keyframes vkscan { 0% { top: 0; } 100% { top: 100%; } }
+.vk-meters { display: grid; gap: 10px; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: #6fbfa7; }
+.vk-meters div { display: grid; grid-template-columns: 52px 1fr; align-items: center; gap: 8px; }
+.vk-meters b { height: 8px; border: 1px solid #1d4a42; display: block; }
+.vk-meters b i { display: block; height: 100%; width: 30%; background: linear-gradient(90deg, #3fb59c, #ffb347 70%, #ff5a4d); transition: width .7s cubic-bezier(.2,.8,.2,1); }
+.vk-n { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #6fbfa7; }
+.vk-q { font-size: 1.1rem; margin: 6px 0 14px; color: #e6f5ef; }
+.vk-opts { display: grid; gap: 8px; }
+.vk-o { text-align: left; font: inherit; color: #d8eee6; background: rgba(20,50,45,.35); border: 1px solid #1d4a42; padding: 10px 12px; cursor: pointer; }
+.vk-o:hover:not(:disabled), .vk-o:focus-visible { border-color: #8ff7d9; outline: none; }
+.vk-o.right { border-color: #3fe0a6; background: rgba(63,224,166,.15); }
+.vk-o.wrong { border-color: var(--rust); background: rgba(255,90,77,.14); }
+.vk-o:disabled { cursor: default; }
+.vk-next, .vk-acts button { margin-top: 14px; font-family: var(--font-mono); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; color: #050c0e; background: #8ff7d9; border: 0; padding: 10px 16px; cursor: pointer; }
+.vk-acts { display: flex; gap: 10px; flex-wrap: wrap; }
+.vk-acts .vk-done { background: none; color: #8ff7d9; border: 1px solid #2c5a52; }
+.vk-res { text-align: center; padding: 8px 0; }
+.vk-verdict { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 9vw, 3rem); letter-spacing: .2em; }
+.vk-res.ok .vk-verdict { color: #8ff7d9; text-shadow: 0 0 18px rgba(80,255,200,.5); }
+.vk-res.no .vk-verdict { color: var(--amber); text-shadow: 0 0 18px var(--glow-amber); }
+.vk-res .vk-acts { justify-content: center; }
+@media (max-width: 480px) { .vk-scope { grid-template-columns: 90px 1fr; } .vk-iris { width: 90px; height: 54px; } }
+@media (prefers-reduced-motion: reduce) { .vk-iris i { animation: none; } .vk-meters b i, .vk-iris { transition: none; } }
+
+/* ================= install ================= */
+.install-btn { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); background: none; border: 1px solid var(--amber); padding: 8px 12px; cursor: pointer; margin-top: 14px; }
+
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} img{max-width:100%} [hidden]{display:none!important}</style>
 </head><body><canvas id="rain" aria-hidden="true"></canvas>
 <div class="scan" aria-hidden="true"></div>
 <div id="score" role="region" aria-label="Ambient score player"><button id="scoreprev" class="sb" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="2" height="10"/><polygon points="14,3 5,8 14,13"/></svg></button><button id="scorebtn" class="sb main" type="button" aria-pressed="false" aria-label="Play score"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">▶</span></button><button id="scorenext" class="sb" type="button" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="12" y="3" width="2" height="10"/><polygon points="2,3 11,8 2,13"/></svg></button><div class="meta"><span id="scoretitle">01 / 05</span><div class="row"><input id="scorevol" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Volume"><button id="scorerain" class="chip" type="button" aria-pressed="true">Rain</button><button id="scorefx" class="chip" type="button" aria-pressed="false" title="Interface sounds off">Sounds</button></div><span id="scorehint">Original score</span></div></div>
-<div id="boot" class="boot" data-build="010" hidden aria-hidden="true"><div class="boot-in"><div class="boot-lines"></div><div class="boot-skip">Tap to skip</div></div></div>
+<div id="boot" class="boot" data-build="011" hidden aria-hidden="true"><div class="boot-in"><div class="boot-lines"></div><div class="boot-skip">Tap to skip</div></div></div>
 <div id="esper" class="esper" hidden role="dialog" aria-modal="true" aria-label="ESPER image enhancement"><div class="esper-box"><div class="esper-head"><span>ESPER · 34-B</span><button class="esper-close" type="button" aria-label="Close">✕</button></div><canvas></canvas><div class="esper-read" aria-live="polite"></div><a class="esper-go" hidden>Open story →</a></div></div>
-<nav class="bar" aria-label="Archive"><div class="wrap"><a class="brand" href="#archive">BR<span class="yrs"> · ARCHIVE</span></a><a href="#era1" data-nav="era1">Era I<span class="yrs"> · 2009–2019</span></a><a href="#era2" data-nav="era2">Era II<span class="yrs"> · 2022–2039</span></a><a href="#era3" data-nav="era3">Era III<span class="yrs"> · 2048–2099</span></a><a href="#people" data-nav="people">Files</a><button id="searchbtn" class="searchbtn" type="button" aria-label="Search the archive" aria-expanded="false" aria-controls="searchpanel" title="Search (/)"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.6 12.6 L17 17"/></svg></button></div><div class="wrap sub" data-for="era1" hidden><a href="#origins">Origins · 2009</a><a href="#board">Origins case board</a><a href="#files">Origins case files</a><a href="#empathy">Origins themes</a><a href="#tokyo">Tokyo Nexus · 2015</a><a href="#film82">Blade Runner · 1982</a><a href="#game97">Game · 1997</a><a href="#br2019">2019 · comic</a></div><div class="wrap sub" data-for="era2" hidden><a href="#blackout">Black Out · 2022</a><a href="#br2029">2029 · comic</a><a href="#lotus">Black Lotus · anime</a><a href="#ll1">Leaving L.A.</a><a href="#lv1">Las Vegas</a><a href="#dawn">Nexus Dawn · 2036</a><a href="#br2039">2039 · comic</a></div><div class="wrap sub" data-for="era3" hidden><a href="#nowhere">Nowhere to Run · 2048</a><a href="#film49">Blade Runner 2049</a><a href="#br2099">Blade Runner 2099</a></div><div class="wrap sub" data-for="people" hidden><a href="#p-tyrell">Eldon Tyrell</a><a href="#p-cal">Cal Moreaux</a><a href="#p-deckard">Rick Deckard</a><a href="#p-rachael">Rachael</a><a href="#p-gaff">Gaff</a><a href="#p-ash">Ash</a><a href="#p-wojciech">Lydia Wojciech</a><a href="#p-cleo">Cleo Selwyn</a><a href="#p-isobel">Isobel Selwyn</a><a href="#p-hythe">Hythe</a><a href="#p-freysa">Freysa</a><a href="#p-yotun">Yotun</a><a href="#p-elle">Elle</a><a href="#p-davis">Alani Davis</a><a href="#p-wallace">Niander Wallace</a><a href="#p-luv">Luv</a><a href="#p-sapper">Sapper Morton</a><a href="#p-k">K</a></div></nav><div id="searchpanel" class="searchpanel" hidden role="dialog" aria-modal="true" aria-label="Search the archive">
+<nav class="bar" aria-label="Archive"><div class="wrap"><a class="brand" href="#archive">BR<span class="yrs"> · ARCHIVE</span></a><a href="#era1" data-nav="era1">Era I<span class="yrs"> · 2009–2019</span></a><a href="#era2" data-nav="era2">Era II<span class="yrs"> · 2022–2039</span></a><a href="#era3" data-nav="era3">Era III<span class="yrs"> · 2048–2099</span></a><a href="#people" data-nav="people">Files</a><a href="#lore" data-nav="lore">Lore</a><button id="searchbtn" class="searchbtn" type="button" aria-label="Search the archive" aria-expanded="false" aria-controls="searchpanel" title="Search (/)"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.6 12.6 L17 17"/></svg></button></div><div class="wrap sub" data-for="era1" hidden><a href="#origins">Origins · 2009</a><a href="#board">Origins case board</a><a href="#files">Origins case files</a><a href="#empathy">Origins themes</a><a href="#tokyo">Tokyo Nexus · 2015</a><a href="#film82">Blade Runner · 1982</a><a href="#game97">Game · 1997</a><a href="#br2019">2019 · comic</a></div><div class="wrap sub" data-for="era2" hidden><a href="#blackout">Black Out · 2022</a><a href="#br2029">2029 · comic</a><a href="#lotus">Black Lotus · anime</a><a href="#ll1">Leaving L.A.</a><a href="#lv1">Las Vegas</a><a href="#dawn">Nexus Dawn · 2036</a><a href="#br2039">2039 · comic</a></div><div class="wrap sub" data-for="era3" hidden><a href="#nowhere">Nowhere to Run · 2048</a><a href="#film49">Blade Runner 2049</a><a href="#br2099">Blade Runner 2099</a></div><div class="wrap sub" data-for="people" hidden><a href="#p-tyrell">Eldon Tyrell</a><a href="#p-cal">Cal Moreaux</a><a href="#p-deckard">Rick Deckard</a><a href="#p-rachael">Rachael</a><a href="#p-gaff">Gaff</a><a href="#p-ash">Ash</a><a href="#p-wojciech">Lydia Wojciech</a><a href="#p-cleo">Cleo Selwyn</a><a href="#p-isobel">Isobel Selwyn</a><a href="#p-hythe">Hythe</a><a href="#p-freysa">Freysa</a><a href="#p-yotun">Yotun</a><a href="#p-elle">Elle</a><a href="#p-davis">Alani Davis</a><a href="#p-wallace">Niander Wallace</a><a href="#p-luv">Luv</a><a href="#p-sapper">Sapper Morton</a><a href="#p-k">K</a></div><div class="wrap sub" data-for="lore" hidden><a href="#timeline">Timeline</a><a href="#glossary">Glossary</a><a href="#connections">Connections</a><a href="#map">Locations</a></div></nav><div id="searchpanel" class="searchpanel" hidden role="dialog" aria-modal="true" aria-label="Search the archive">
   <div class="sp-box">
     <div class="sp-row">
       <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.6 12.6 L17 17"/></svg>
@@ -559,7 +747,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
 </section>
 
 <section id="files-cta" style="padding-block-start:0">
-  <div class="wrap"><a class="files-link" href="#people"><span><b>Character files</b><br><span>18 people who cross from one story to the next, each with every appearance in order.</span></span><em>Open files →</em></a></div>
+  <div class="wrap"><a class="files-link" href="#people"><span><b>Character files</b><br><span>18 people who cross from one story to the next, each with every appearance in order.</span></span><em>Open files →</em></a><a class="files-link" href="#lore"><span><b>Lore</b><br><span>A timeline from 2007 to 2099, a glossary, a web of who knows whom, and a map of where it all happens.</span></span><em>Open lore →</em></a></div>
 </section>
 
 <section id="posters">
@@ -608,7 +796,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
     <p class="prose" style="color:var(--dim);font-size:.9rem;margin-top:16px">Do Androids Dream of Electric Sheep? and K. W. Jeter's sequel novels follow their own separate timeline.</p>
   </div>
 </section>
-<footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.avpcentral.com/blade-runner-timeline" target="_blank" rel="noopener">AvP Central: Blade Runner timeline 2009–2099</a></li><li><a href="https://www.howtolovecomics.com/2025/06/04/blade-runner-comics-universe-chronological-reading-order/" target="_blank" rel="noopener">How to Love Comics: comics reading order</a></li><li><a href="https://titan-comics.com/c/2085-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 010 · 23 Oct 2026</p></div></footer>
+<footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.avpcentral.com/blade-runner-timeline" target="_blank" rel="noopener">AvP Central: Blade Runner timeline 2009–2099</a></li><li><a href="https://www.howtolovecomics.com/2025/06/04/blade-runner-comics-universe-chronological-reading-order/" target="_blank" rel="noopener">How to Love Comics: comics reading order</a></li><li><a href="https://titan-comics.com/c/2085-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><button type="button" class="install-btn" hidden>Install as an app</button><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="era1" data-view="era1" hidden><section id="origins" style="padding-block-end:0">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">起源</span><div class="num">2009</div><h2>Blade Runner: Origins</h2>
@@ -999,7 +1187,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
       <li><a href="https://www.nerdly.co.uk/2022/04/22/blade-runner-origins-11-review/" target="_blank" rel="noopener">Nerdly: #11 review</a></li>
       <li><a href="https://www.nerdly.co.uk/2022/06/01/blade-runner-origins-12-review-titan-comics/" target="_blank" rel="noopener">Nerdly: #12 review</a></li>
       <li><a href="https://scifibulletin.com/comics/blade-runner-review-blade-runner-origins-8/" target="_blank" rel="noopener">SciFi Bulletin: #8 review</a></li>
-    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner" target="_blank" rel="noopener">Wikipedia: Blade Runner (1982), plot</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Wikipedia: Blade Runner (1997 video game)</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Off-world Wiki: Blade Runner (1997 video game)</a></li><li><a href="https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BladeRunner" target="_blank" rel="noopener">TV Tropes: Blade Runner (video game)</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 010 · 23 Oct 2026</p></div></footer>
+    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner" target="_blank" rel="noopener">Wikipedia: Blade Runner (1982), plot</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Wikipedia: Blade Runner (1997 video game)</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Off-world Wiki: Blade Runner (1997 video game)</a></li><li><a href="https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BladeRunner" target="_blank" rel="noopener">TV Tropes: Blade Runner (video game)</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="era2" data-view="era2" hidden><section id="blackout">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">停電</span><div class="num">2022</div><h2>Black Out 2022</h2>
@@ -1280,7 +1468,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Wikipedia: Blade Runner Black Out 2022</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Off-world Wiki: Black Out 2022</a></li><li><a href="https://en.wikipedia.org/wiki/2036:_Nexus_Dawn" target="_blank" rel="noopener">Wikipedia: 2036: Nexus Dawn</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 010 · 23 Oct 2026</p></div></footer>
+<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Wikipedia: Blade Runner Black Out 2022</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Off-world Wiki: Black Out 2022</a></li><li><a href="https://en.wikipedia.org/wiki/2036:_Nexus_Dawn" target="_blank" rel="noopener">Wikipedia: 2036: Nexus Dawn</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="era3" data-view="era3" hidden><section id="nowhere">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">逃げ場なし</span><div class="num">2048</div><h2>2048: Nowhere to Run</h2>
@@ -1337,7 +1525,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run" target="_blank" rel="noopener">Wikipedia: 2048: Nowhere to Run</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_2049" target="_blank" rel="noopener">Wikipedia: Blade Runner 2049, plot</a></li><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 010 · 23 Oct 2026</p></div></footer>
+<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run" target="_blank" rel="noopener">Wikipedia: 2048: Nowhere to Run</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_2049" target="_blank" rel="noopener">Wikipedia: Blade Runner 2049, plot</a></li><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="people" data-view="people" hidden><section id="files-index">
   <div class="wrap">
     <div class="sec-head"><div class="label">LAPD records · cross-referenced</div><h2>Character files</h2><p class="prose" style="color:var(--dim);margin:0">The people who turn up in more than one story, in order of first appearance. Each file links to every entry they appear in. With the spoiler shield on, a file stays blurred until you’ve read all of its appearances.</p></div>
@@ -1417,7 +1605,52 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
     </div>
   </div>
 </section>
-<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era.</p><p class="build">Build 010 · 23 Oct 2026</p></div></footer>
+<div class="wrap pager"><a href="#era3">← Era III</a><a href="#lore">Lore →</a></div>
+<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
+</div><div class="view" id="lore" data-view="lore" hidden><section id="timeline">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">2007 – 2099 · ninety years in one line</div><h2>Timeline</h2><p class="prose lore-intro">What the world looks like at each point in the saga, and where every story sits in it. Tap a year on the scale to jump there; tap an event to open its story.</p></div>
+    <div class="tl-filter" role="group" aria-label="Show">
+      <button type="button" class="chip-btn" data-tl="all" aria-pressed="true">Everything</button>
+      <button type="button" class="chip-btn" data-tl="world" aria-pressed="false">World events</button>
+      <button type="button" class="chip-btn" data-tl="story" aria-pressed="false">Stories</button>
+    </div>
+    <div class="tl-scale" aria-label="Jump to a year"></div>
+    <ol class="tl"></ol>
+  </div>
+</section>
+
+<section id="glossary">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">LAPD briefing · terms</div><h2>Glossary</h2><p class="prose lore-intro">The words the saga takes for granted. In the synopses, terms with a dotted underline open a short definition when you tap them.</p></div>
+    <input class="gl-find" type="search" placeholder="Filter terms" aria-label="Filter the glossary">
+    <div class="gl-list"></div>
+  </div>
+</section>
+
+<section id="connections">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Cross-referenced · who knows whom</div><h2>Connections</h2><p class="prose lore-intro">How the people in the character files are tied together, along with a few who don't have files. Tap a name to see their connections.</p></div>
+    <div class="cx-legend"><span class="k-h">Human</span><span class="k-r">Replicant</span><span class="k-m">Somewhere in between</span></div>
+    <div class="cx">
+      <div class="cx-stage"><svg class="cx-svg" role="img" aria-label="Map of connections between characters"></svg></div>
+      <aside class="cx-panel" aria-live="polite"></aside>
+    </div>
+    <p class="cx-hidden dimline"></p>
+  </div>
+</section>
+
+<section id="map">
+  <div class="wrap">
+    <div class="sec-head"><div class="label">Survey · California, Tokyo and beyond</div><h2>Locations</h2><p class="prose lore-intro">An original map of the places the saga visits. It's drawn for clarity, not to scale. Tap a marker to see the stories set there.</p></div>
+    <div class="mp">
+      <div class="mp-stage"></div>
+      <aside class="mp-panel" aria-live="polite"></aside>
+    </div>
+  </div>
+</section>
+<div class="wrap pager"><a href="#people">← Files</a><a href="#archive">Archive →</a></div>
+<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era. The date on the tree in Blade Runner 2049 is from the film's <a href="https://m.imdb.com/title/tt1856101/plotsummary" target="_blank" rel="noopener">IMDb plot summary</a>.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
 </div></main>
 <script>/* The city behind the page: weather on the full-screen overlay, and the skyline in
    the hero. Each view has its own mood:
@@ -1426,6 +1659,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
      era2     wet neon, heavy rain and big billboards
      era3     orange haze with falling snow
      people   cold teal light, searchlights over the records office
+     lore     violet dusk over the archive
    Everything is drawn on canvas; nothing is loaded. */
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1446,7 +1680,8 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
     era1:    { sky: ['#0d0906', '#2a1308', '#6a2e0a'], glow: '255,120,30', glowA: .55, haze: '150,80,30', beams: '255,200,140', flares: 6, burst: .7, boards: .6, rain: .6, drop: '255,200,150', lit: .2 },
     era2:    { sky: ['#04061a', '#0f0a2a', '#2c0a2e'], glow: '255,46,136', glowA: .32, haze: '70,40,140', beams: '120,230,255', flares: 1, burst: .1, boards: 1.8, rain: 1.5, drop: '140,190,255', lit: .26 },
     era3:    { sky: ['#2b1406', '#7a3810', '#d0701e'], glow: '255,170,80', glowA: .6, haze: '235,150,70', beams: '', flares: 0, burst: 0, boards: .35, rain: 0, snow: true, lit: .08, dust: true },
-    people:  { sky: ['#03080b', '#08161b', '#0f2a30'], glow: '34,229,255', glowA: .22, haze: '40,110,130', beams: '160,240,255', flares: 0, burst: 0, boards: .8, rain: 1, drop: '150,200,220', lit: .18 }
+    people:  { sky: ['#03080b', '#08161b', '#0f2a30'], glow: '34,229,255', glowA: .22, haze: '40,110,130', beams: '160,240,255', flares: 0, burst: 0, boards: .8, rain: 1, drop: '150,200,220', lit: .18 },
+    lore:    { sky: ['#06051a', '#160c2c', '#3a1636'], glow: '201,166,255', glowA: .3, haze: '110,70,160', beams: '220,200,255', flares: 1, burst: .1, boards: 1.2, rain: .8, drop: '190,170,255', lit: .22 }
   };
   var mood = MOODS.archive, moodName = 'archive';
 
@@ -1490,7 +1725,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
 
   function layout() {
     var r = cc.getBoundingClientRect(); W = cc.width = Math.max(1, Math.round(r.width)); H = cc.height = Math.max(1, Math.round(r.height));
-    seed = ['archive', 'era1', 'era2', 'era3', 'people'].indexOf(moodName) + 1;
+    seed = ['archive', 'era1', 'era2', 'era3', 'people', 'lore'].indexOf(moodName) + 1;
     towers = []; boards = []; var x = -6, k = 0, slab = mood.snow;
     while (x < W) {
       var w = (slab ? 60 : 30) + rnd(k + 1) * (slab ? 90 : 60), h = H * (0.18 + rnd(k + 7) * (slab ? .32 : mood.eye ? .24 : 0.46));
@@ -2238,7 +2473,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
   var bars = [];
   Array.prototype.forEach.call(document.querySelectorAll('.view'), function (view) {
     var scope = cards.filter(function (a) { return view.contains(a); });
-    var all = view.id === 'archive'; if (all) scope = cards;
+    var all = view.id === 'archive', whole = all || !scope.length; if (whole) scope = cards; // Files and Lore have no entries of their own
     var bar = document.createElement('section'); bar.className = 'readerbar';
     bar.innerHTML = '<div class="wrap"><div class="rb">' +
       '<div class="rb-prog"></div>' +
@@ -2248,7 +2483,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
       '</div><p class="rb-note"></p></div>';
     view.insertBefore(bar, view.firstChild);
     var m = meter('rb-meter'); bar.querySelector('.rb-prog').appendChild(m);
-    meters.push({ el: m, ids: scope.map(function (a) { return a.id; }), label: all ? 'Whole archive' : 'This era' });
+    meters.push({ el: m, ids: scope.map(function (a) { return a.id; }), label: whole ? 'Whole archive' : 'This era' });
     bars.push({ el: bar, scope: scope, all: all });
     bar.querySelector('.rb-shield').addEventListener('click', function () { shield = !shield; save(SKEY, shield ? '1' : '0'); revealed = {}; paint(); });
     var reset = bar.querySelector('.rb-reset');
@@ -2322,6 +2557,686 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
   };
 })();
 
+/* Lore data: glossary, timeline, connections, places and Voight-Kampff quizzes.
+   Facts come from the synopses on this site. "s" lists the stories (reader keys) a line spoils;
+   with the spoiler shield on, it stays hidden until those stories are finished. */
+window.BR_LORE = {
+
+  // ---------- glossary ----------
+  // "a": words to underline in the synopses (first use in each entry). A lowercase alias also matches
+  // a capitalised first letter. "(the )X" means X only counts after "the ", which is not underlined. "auto: false" keeps a term on the glossary page only.
+  terms: [
+    { id: 'replicant', t: 'Replicant', auto: false, a: ['replicant'],
+      d: 'A bioengineered person, made by the Tyrell Corporation and later the Wallace Corporation, who looks, bleeds and feels like a human. Replicants were built for labour and war in the off-world colonies, and in 2019 they are banned from Earth on pain of death.',
+      see: [['#f1', 'Blade Runner · I'], ['#i1', 'Origins #1']] },
+    { id: 'blade-runner', t: 'Blade Runner', auto: false, a: [],
+      d: 'An LAPD officer who hunts down and retires replicants. The unit was founded in 2009, and Origins tells how it came to exist. By 2039 the force has its first replicant Blade Runner.',
+      see: [['#origins', 'Origins'], ['#d1', '2039 #1']] },
+    { id: 'retire', t: 'Retire', a: ['retire', 'retires', 'retiring'],
+      d: 'Blade Runner slang for killing a replicant. The word makes the job sound like paperwork.',
+      see: [['#f1', 'Blade Runner · I']] },
+    { id: 'nexus', t: 'Nexus models', a: ['Nexus 3', 'Nexus 4', 'Nexus 5', 'Nexus-6', 'Nexus-7', 'Nexus-8', 'Nexus-9', 'Nexus-8s', 'Nexus-9s', 'Nexus 3s', 'Nexus 4s', 'Nexus-6s'],
+      d: 'The generations of replicant, each sold as an improvement on the last.',
+      list: [['Nexus 3', 'strong, deliberately dim soldiers (2009)'], ['Nexus 4', 'servants and teachers working on Earth (2009)'], ['Nexus 5', 'Tyrell’s secret prototype (2009)'],
+        ['Nexus-6', 'the 2019 models, built with a four-year lifespan'], ['Nexus-7', 'an experimental model'], ['Nexus-8', 'open-ended lifespans; Tyrell’s last line before the Blackout'],
+        ['Nexus-9', 'Wallace’s obedient replicants, approved after 2036']],
+      see: [['#i1', 'Origins #1'], ['#f1', 'Blade Runner · I'], ['#blackout', 'Black Out 2022'], ['#dawn', 'Nexus Dawn']] },
+    { id: 'voight-kampff', t: 'Voight-Kampff test', a: ['Voight-Kampff'],
+      d: 'An interview that asks emotionally loaded questions while a machine watches the eye for tiny involuntary reactions, to tell a replicant from a human. A newer model can take a hundred questions or more to expose. Origins tells how the first machine came to be built.',
+      see: [['#f1', 'Blade Runner · I'], ['#i12', 'Origins #12']], s: [] },
+    { id: 'baseline', t: 'Baseline test', a: ['baseline test'],
+      d: 'The check a Nexus-9 Blade Runner sits after a job in 2049: rapid call-and-response lines that show whether the replicant has stayed emotionally steady. Fail it, and they may be retired.',
+      see: [['#g2', '2049 · II']] },
+    { id: 'esper', t: 'ESPER', a: ['ESPER'],
+      d: 'A voice-controlled photo-analysis machine that can zoom deep into a picture and pick out details. Blade Runners use it to read evidence. Tap any poster on this site to try one.',
+      see: [['#gm1', 'The game · I']] },
+    { id: 'spinner', t: 'Spinner', a: ['spinner', 'spinners'],
+      d: 'A flying car. Police spinners patrol the city; private ones carry the rich between towers.',
+      see: [['#i2', 'Origins #2']] },
+    { id: 'off-world', t: 'Off-world colonies', a: ['off-world', 'colonies'],
+      d: 'Settlements beyond Earth, built on replicant labour. The comics visit a mining colony, Ramanuja station and the colony of Arcadia.',
+      see: [['#b5', '2019 #5'], ['#b8', '2019 #8']], s: ['b'] },
+    { id: 'blackout', t: 'The Blackout', a: ['Blackout'],
+      d: 'The 2022 attack that wiped Earth’s electronic records, including the register of every living replicant. Making replicants was banned afterwards, and Tyrell went bankrupt.',
+      see: [['#bo', 'Black Out 2022']] },
+    { id: 'ban', t: 'The replicant ban', a: ['replicant ban'],
+      d: 'After the Blackout, making replicants is banned in 2022. In 2036 Niander Wallace persuades lawmakers to lift the ban for his Nexus-9s.',
+      see: [['#bo', 'Black Out 2022'], ['#dawn1', 'Nexus Dawn']] },
+    { id: 'tyrell-corp', t: 'Tyrell Corporation', a: ['Tyrell Corporation'],
+      d: 'Eldon Tyrell’s company, which made the Nexus replicants up to the Nexus-8. It goes bankrupt after the Blackout, and its ruined headquarters still stand decades later.',
+      see: [['#origins', 'Origins'], ['#b9', '2019 #9']] },
+    { id: 'wallace-corp', t: 'Wallace Corporation', a: ['Wallace Corporation'],
+      d: 'The Wallace family’s company. It takes over what is left of Tyrell and, under Niander Wallace, builds the obedient Nexus-9s.',
+      see: [['#l7', 'Black Lotus · E07'], ['#g2', '2049 · II']] },
+    { id: 'kalanthia', t: 'Kalanthia', a: ['Kalanthia'],
+      d: 'A war fought with Tyrell’s combat replicants on the battlefield. Cal Moreaux survives the siege of Kalanthia in 2007, and so do Mead and Stix of Tokyo Nexus.',
+      see: [['#i1', 'Origins #1'], ['#tokyo', 'Tokyo Nexus']] },
+    { id: 'underground', t: 'Replicant Underground', a: ['Replicant Underground', '(the )Underground'],
+      d: 'A network that hides replicants and smuggles them out of Los Angeles. In 2019 it runs through people known as the Lung, the Bones and the Heart. By 2029 Freysa leads it.',
+      see: [['#b2', '2019 #2'], ['#br2029', 'Blade Runner 2029']] },
+    { id: 'resistance', t: 'Replicant resistance', a: ['Resistance', 'resistance'],
+      d: 'Freysa’s movement, which wants more for replicants than a hiding place. By 2049 it is waiting for the child born to a replicant.',
+      see: [['#b11', '2019 #11'], ['#g3', '2049 · III']], s: ['g'] },
+    { id: 'sea-wall', t: 'Sepulveda Sea Wall', a: ['Sea Wall', 'sea wall'],
+      d: 'The great barrier that keeps the Pacific out of Los Angeles, built by replicant hands. It is a battleground in 2029 and again in 2049.',
+      see: [['#c1', '2029 #1'], ['#c4', '2029 #4'], ['#g4', '2049 · IV']] },
+    { id: 'sector-6b', t: 'Sector 6B', a: ['Sector 6B'],
+      d: 'The slum district where Cal and Nia Moreaux grew up, and the battleground of Origins’ third volume.',
+      see: [['#i9', 'Origins #9']] },
+    { id: 'la-plume', t: 'La Plume Sauvage', a: ['La Plume Sauvage'],
+      d: 'Divina’s safe house for replicants in 2009, burned more than once.',
+      see: [['#i5', 'Origins #5'], ['#i10', 'Origins #10']] },
+    { id: 'el-santuario', t: 'El Santuario', a: ['El Santuario'],
+      d: 'An island of free replicants off Baja California, reached through the Underground’s smugglers.',
+      see: [['#b3', '2019 #3'], ['#b4', '2019 #4']] },
+    { id: 'edens', t: 'Edens', a: ['Edens'],
+      d: 'The town where Eldon Tyrell grew up.',
+      see: [['#c12', '2029 #12']], s: ['c'] },
+    { id: 'cheshire', t: 'Cheshire', a: ['Cheshire'],
+      d: 'A rival company in Tokyo that hires former Tyrell scientists to build bootleg replicants.',
+      see: [['#tn2', 'Tokyo Nexus #2'], ['#tn3', 'Tokyo Nexus #3']] },
+    { id: 'aurora', t: 'Aurora Program', a: ['Aurora Program'],
+      d: 'Military data that could mass-produce replicants bred for killing. Mead and Stix took it with them when they left the army.',
+      see: [['#tn4', 'Tokyo Nexus #4']], s: ['tn'] },
+    { id: 'memories', t: 'Implanted memories', a: ['implanted', 'memory designer'],
+      d: 'A past built for a replicant, so that it has something to hold on to. Rachael carries memories taken from Tyrell’s niece. Elle’s were written and edited for her. In 2049 Dr. Ana Stelline designs them.',
+      see: [['#f1', 'Blade Runner · I'], ['#l7', 'Black Lotus · E07'], ['#g2', '2049 · II']], s: ['l'] },
+    { id: 'serial', t: 'Serial number', a: ['serial number', 'serial-numbered', 'serial code'],
+      d: 'A registered replicant carries a serial number in the eye. Losing the eye is the surest way to disappear.',
+      see: [['#bo', 'Black Out 2022'], ['#b7', '2019 #7'], ['#l3', 'Black Lotus · E03']] },
+    { id: 'origami', t: 'Origami', a: ['origami'],
+      d: 'Gaff’s calling card. He folds small paper figures and leaves them where they will be found.',
+      see: [['#f4', 'Blade Runner · IV'], ['#d9', '2039 #9']] },
+    { id: 'dolls', t: '“Dolls”', a: ['dolls', 'Doll Squad'],
+      d: 'What the desert hunters in Black Lotus call the replicants they shoot for sport. Wallace Jr. later names his hunting team the Doll Squad.',
+      see: [['#l4', 'Black Lotus · E04'], ['#lv1', 'Las Vegas #1']] }
+  ],
+
+  // ---------- timeline ----------
+  // k: "world" for events that change the setting, "story" for a story's span. y is used for sorting and the scale.
+  events: [
+    { y: 2007, k: 'world', t: 'The siege of Kalanthia', d: 'Cal Moreaux survives when two of Tyrell’s combat replicants clear a room of enemy soldiers. Mead and Stix fight in the same war.', go: '#i1' },
+    { y: 2008, k: 'world', t: 'A teacher in a new body', d: 'Nia Moreaux is critically hurt in an explosion, and her mind is moved into a Nexus 5 prototype.', go: '#i10', s: ['i'] },
+    { y: 2009, k: 'story', t: 'Origins', d: 'A Tyrell scientist’s “suicide”, an escaped Nexus 5 and a burning slum lead to the founding of the LAPD Blade Runner unit.', go: '#origins' },
+    { y: 2009, k: 'world', t: 'The first Blade Runner', d: 'Cal Moreaux shoots his sister on live television, by her own plan, and becomes the unit’s first member. The Voight-Kampff machine is built from Effie Koropey’s research.', go: '#i12', s: ['i'] },
+    { y: 2015, k: 'story', t: 'Tokyo Nexus', d: 'Two veterans of Kalanthia, a marine and a combat replicant, are caught between the Yakuza, a Blade Runner from L.A. and a maker of bootleg replicants.', go: '#tokyo' },
+    { y: 2017, k: 'world', t: 'Yotun gets away', d: 'A Nexus-6 called Yotun overpowers Ash and escapes. He should be dead within four years.', go: '#c1' },
+    { y: 2018, k: 'world', t: 'Mack', d: 'Ash shoots a replicant called Mack off a rooftop. He survives.', go: '#d7', s: ['d'] },
+    { y: 2019, k: 'story', t: 'Blade Runner', d: 'November. Four Nexus-6s come home looking for more life, and Deckard is pulled out of retirement to hunt them.', go: '#film82' },
+    { y: 2019, k: 'world', t: 'Tyrell dies', d: 'Roy Batty kills his maker when Tyrell can’t give him more life. Deckard leaves the city with Rachael.', go: '#f3', s: ['f'] },
+    { y: 2019, k: 'story', t: 'The game', d: 'A rookie, Ray McCoy, works the Runciter animal murders out of the same precinct as Deckard.', go: '#game97' },
+    { y: 2019, k: 'story', t: 'Blade Runner 2019', d: 'Ash is hired to find a tycoon’s missing wife and daughter, quietly.', go: '#br2019' },
+    { y: 2021, k: 'world', t: 'A child is born', d: 'Rachael gives birth and dies. The date, 6.10.21, is carved into a tree on a farm outside Los Angeles.', go: '#g1', s: ['g'] },
+    { y: 2022, k: 'world', t: 'The Blackout', d: 'A detonation over Los Angeles wipes the city’s records, including every registered replicant. Making replicants is banned, and Tyrell goes bankrupt.', go: '#bo' },
+    { y: 2026, k: 'world', t: 'Hiding off-world', d: 'Ash and Cleo live on a mining colony as “Darja and Ian Kady” until rogue Nexus-8s storm it.', go: '#b5', s: ['b'] },
+    { y: 2027, k: 'world', t: 'Ash rejoins the LAPD', d: 'She retires replicants on paper and secretly smuggles them out.', go: '#br2029' },
+    { y: 2029, k: 'story', t: 'Blade Runner 2029', d: 'A Nexus-6 who should have died years ago is gathering followers.', go: '#br2029' },
+    { y: 2029, k: 'world', t: 'Yotun’s uprising', d: 'The sea wall is blown and LAPD headquarters burns. Yotun dies in Edens, Eldon Tyrell’s hometown.', go: '#c12', s: ['c'] },
+    { y: 2032, k: 'story', t: 'Black Lotus', d: 'October. A replicant wakes with no memory and a locked device, and starts hunting the people who hunted her.', go: '#lotus' },
+    { y: 2032, k: 'world', t: 'The Wallaces', d: 'Niander Wallace Sr. is killed by the replicant his son made. The son is blinded.', go: '#l13', s: ['l'] },
+    { y: 2033, k: 'story', t: 'Leaving L.A. and Las Vegas', d: 'After the anime, Elle rides into the desert: a mining town at war with a co-op, then a replicant kingdom in the ruins of Las Vegas.', go: '#ll1', when: 'After 2032' },
+    { y: 2036, k: 'world', t: 'Nexus Dawn', d: 'Niander Wallace shows lawmakers a Nexus-9 that will die on his order. The ban is lifted.', go: '#dawn', s: ['dawn'] },
+    { y: 2039, k: 'story', t: 'Blade Runner 2039', d: 'Wallace gives the LAPD its first replicant Blade Runner, and goes after research on replicant birth.', go: '#br2039' },
+    { y: 2048, k: 'story', t: 'Nowhere to Run', d: 'An old Nexus-8 farming outside the city gives himself away at the market.', go: '#nowhere' },
+    { y: 2049, k: 'story', t: 'Blade Runner 2049', d: 'A replicant Blade Runner finds bones under a dead tree.', go: '#film49' },
+    { y: 2049, k: 'world', t: 'The miracle', d: 'K finds Deckard in Las Vegas and brings him to meet his daughter, Dr. Ana Stelline.', go: '#g4', s: ['g'] },
+    { y: 2099, k: 'story', t: 'Blade Runner 2099', d: 'Humans have become second-class citizens to replicants. A Blade Runner near the end of her life takes on one more case.', go: '#br2099' }
+  ],
+
+  // ---------- connections ----------
+  // k: h human, r replicant, m somewhere in between. f: character file id, if there is one.
+  people: [
+    { id: 'tyrell', n: 'Eldon Tyrell', k: 'h', f: 'p-tyrell' }, { id: 'cal', n: 'Cal Moreaux', k: 'h', f: 'p-cal' }, { id: 'nia', n: 'Nia Moreaux', k: 'm', note: 'A human mind in a Nexus 5 body', s: ['i'] },
+    { id: 'deckard', n: 'Rick Deckard', k: 'm', f: 'p-deckard', note: 'Human or replicant? The films never say.' }, { id: 'rachael', n: 'Rachael', k: 'r', f: 'p-rachael' },
+    { id: 'roy', n: 'Roy Batty', k: 'r' }, { id: 'gaff', n: 'Gaff', k: 'h', f: 'p-gaff' }, { id: 'ash', n: 'Ash', k: 'h', f: 'p-ash' },
+    { id: 'wojciech', n: 'Lydia Wojciech', k: 'h', f: 'p-wojciech' }, { id: 'selwyn', n: 'Alexander Selwyn', k: 'h' }, { id: 'cleo', n: 'Cleo Selwyn', k: 'h', f: 'p-cleo' },
+    { id: 'isobel', n: 'Isobel Selwyn', k: 'r', f: 'p-isobel' }, { id: 'hythe', n: 'Hythe', k: 'r', f: 'p-hythe' }, { id: 'freysa', n: 'Freysa', k: 'r', f: 'p-freysa' },
+    { id: 'yotun', n: 'Yotun', k: 'r', f: 'p-yotun' }, { id: 'elle', n: 'Elle', k: 'r', f: 'p-elle' }, { id: 'davis', n: 'Alani Davis', k: 'h', f: 'p-davis' },
+    { id: 'wallace', n: 'Niander Wallace', k: 'h', f: 'p-wallace' }, { id: 'luv', n: 'Luv', k: 'r', f: 'p-luv' }, { id: 'rash', n: 'Rash', k: 'r', s: ['d'] },
+    { id: 'sapper', n: 'Sapper Morton', k: 'r', f: 'p-sapper' }, { id: 'k', n: 'K', k: 'r', f: 'p-k' }, { id: 'stelline', n: 'Ana Stelline', k: 'm', note: 'Born to a replicant', s: ['g'] }
+  ],
+  links: [
+    ['tyrell', 'rachael', 'Made her, and gave her his niece’s memories', ['f']],
+    ['tyrell', 'roy', 'Maker and creation. Roy kills him', ['f']],
+    ['tyrell', 'yotun', 'Brothers', ['c']],
+    ['tyrell', 'selwyn', 'Gave him a replicant copy of his dead wife', ['b']],
+    ['deckard', 'roy', 'Hunter and hunted. Roy saves his life', ['f']],
+    ['deckard', 'rachael', 'Fall in love and leave together', ['f']],
+    ['deckard', 'gaff', 'Colleagues. Gaff lets Rachael live', ['f']],
+    ['rachael', 'stelline', 'Mother and daughter', ['g']],
+    ['deckard', 'stelline', 'Father and daughter', ['g']],
+    ['k', 'deckard', 'K finds him in Las Vegas', ['g']],
+    ['k', 'stelline', 'She made his memory. It was hers', ['g']],
+    ['k', 'luv', 'Enemies. K drowns her', ['g']],
+    ['k', 'sapper', 'K retires him', ['g']],
+    ['k', 'freysa', 'She tells him the truth about the child', ['g']],
+    ['k', 'rachael', 'K finds her bones', ['g']],
+    ['wallace', 'luv', 'Maker and enforcer', ['d']],
+    ['wallace', 'elle', 'Made her to kill his father. She blinds him', ['l']],
+    ['wallace', 'deckard', 'Takes him captive', ['g']],
+    ['wallace', 'ash', 'She trades him Selwyn’s research', ['d']],
+    ['wallace', 'davis', 'Recruits her into the Doll Squad', ['lv']],
+    ['elle', 'davis', 'Davis suspects her, then ends up at her side', ['l', 'lv']],
+    ['cal', 'nia', 'Brother and sister. He shoots her on live TV, by her plan', ['i']],
+    ['cal', 'ash', 'Owes her a favour', ['d']],
+    ['gaff', 'ash', 'Points her toward Wallace, with an origami frog', ['d']],
+    ['ash', 'freysa', 'Partners', []],
+    ['ash', 'wojciech', 'Her captain, later a quiet ally', []],
+    ['ash', 'cleo', 'Hired to find her, protects her instead', ['b']],
+    ['ash', 'yotun', 'He escaped her in 2017. She hunts him in 2029', []],
+    ['ash', 'luv', 'Luv hunts her across California', ['d']],
+    ['ash', 'rash', 'Rash is built from Ash’s DNA', ['d']],
+    ['selwyn', 'cleo', 'Father. Planned to hand her to Tyrell', ['b']],
+    ['selwyn', 'isobel', 'Had her made. She kills him', ['b']],
+    ['selwyn', 'hythe', 'His Blade Runner, then his copies of her', ['b']],
+    ['cleo', 'isobel', 'Daughter and replicant mother', ['b']],
+    ['isobel', 'hythe', 'Shoots the first Hythe', ['b']],
+    ['freysa', 'yotun', 'Loses an eye to him, and kills him', ['c']],
+    ['freysa', 'sapper', 'Served together off-world', ['d']],
+    ['rash', 'hythe', 'Rash shoots her', ['d']],
+    ['rash', 'luv', 'Partners, until Rash turns', ['d']],
+    ['rash', 'cleo', 'Goes to the colonies to protect her', ['d']]
+  ],
+
+  // ---------- places ----------
+  // x, y on a 700 x 620 drawing (California, not to scale). "in": stories set there.
+  places: [
+    { id: 'la', n: 'Los Angeles', sn: 'L.A.', x: 252, y: 332, big: true, d: 'Where almost every story begins.',
+      spots: [['Tyrell pyramid', [['#i1', 'Origins'], ['#f3', 'Blade Runner · III'], ['#b9', '2019 #9'], ['#l13', 'Black Lotus · E13'], ['#d12', '2039 #12']]],
+        ['Sector 6B', [['#i9', 'Origins #9']]],
+        ['Bradbury Building', [['#f4', 'Blade Runner · IV']]],
+        ['Runciter’s, Chinatown and Animoid Row', [['#gm1', 'The game · I'], ['#gm2', 'The game · II']]],
+        ['Sepulveda Sea Wall', [['#c1', '2029 #1'], ['#c4', '2029 #4'], ['#d4', '2039 #4'], ['#g4', '2049 · IV']]],
+        ['LAPD headquarters', [['#c7', '2029 #7'], ['#c8', '2029 #8']]],
+        ['Wallace Corporation', [['#l9', 'Black Lotus · E09'], ['#g2', '2049 · II']]],
+        ['The city market', [['#run1', 'Nowhere to Run']]]] },
+    { id: 'farm', n: 'Sapper’s farm', sn: 'Farm', x: 290, y: 292, d: 'A protein farm outside the city, with a dead tree.', go: [['#run1', 'Nowhere to Run'], ['#g1', '2049 · I']] },
+    { id: 'sf', n: 'San Francisco', sn: 'San Francisco', x: 56, y: 52, d: 'Emptied by an earthquake by 2039.', go: [['#d7', '2039 #7'], ['#d8', '2039 #8']] },
+    { id: 'catalina', n: 'Catalina', sn: 'Catalina', x: 220, y: 396, d: 'Where the Ferryman brings people to Ash in 2039.', go: [['#d1', '2039 #1']] },
+    { id: 'sandiego', n: 'San Diego wasteland', sn: 'San Diego', x: 312, y: 428, d: 'Scrap fields and an orphanage with a furnace.', go: [['#g2', '2049 · II']] },
+    { id: 'baja', n: 'Baja and El Santuario', sn: 'Baja', x: 330, y: 540, d: 'A beach in Baja, and the island of free replicants beyond it.', go: [['#b3', '2019 #3'], ['#b4', '2019 #4']] },
+    { id: 'frack', n: 'Fracktown and the co-op', sn: 'Fracktown', x: 388, y: 344, d: 'A fracking town and the Inland Empire clean-energy co-op.', go: [['#ll1', 'Leaving L.A. #1'], ['#ll4', 'Leaving L.A. #4']] },
+    { id: 'mojave', n: 'Mojave and Death Valley', sn: 'Death Valley', x: 470, y: 210, d: 'The ruins of the Death Valley Spa, where Elle’s early memories stir.', go: [['#lv1', 'Las Vegas #1']] },
+    { id: 'hunt', n: 'The desert hunt', sn: 'Desert hunt', x: 620, y: 170, d: 'The Nevada desert where the hunters shot replicants for sport.', go: [['#l4', 'Black Lotus · E04'], ['#l8', 'Black Lotus · E08']] },
+    { id: 'vegas', n: 'Las Vegas', sn: 'Las Vegas', x: 602, y: 282, d: 'Irradiated ruins, a replicant kingdom, and Deckard’s hiding place.', go: [['#lv2', 'Las Vegas #2'], ['#lv4', 'Las Vegas #4'], ['#g3', '2049 · III']] }
+  ],
+  insets: [
+    { id: 'tokyo', n: 'Tokyo', d: 'A missing sister, the Yakuza and the bootleg-replicant maker Cheshire.', go: [['#tn1', 'Tokyo Nexus #1'], ['#tn3', 'Tokyo Nexus #3 · Cosmoworld'], ['#tn4', 'Tokyo Nexus #4']] },
+    { id: 'offworld', n: 'Off-world', d: 'A mining colony, Ramanuja station and its worst borough, the Maze, and the colony of Arcadia.', go: [['#b5', '2019 #5'], ['#b7', '2019 #7'], ['#b8', '2019 #8'], ['#d12', '2039 #12']] }
+  ],
+  unmapped: [
+    { n: 'Kalanthia', d: 'The 2007 siege. The comics don’t say where it was.', go: [['#i1', 'Origins #1']] },
+    { n: 'Edens', d: 'Eldon Tyrell’s hometown, reached by spinner.', go: [['#c12', '2029 #12']], s: ['c'] },
+    { n: 'Mesa Echo Erebus', d: 'The battle where Yotun carried Freysa out of an explosion.', go: [['#c7', '2029 #7']] }
+  ],
+
+  // ---------- Voight-Kampff quizzes ----------
+  // The first option is the right one; options are shuffled when shown.
+  quiz: {
+    i: [['What case is Cal Moreaux handed at the start?', 'The apparent suicide of Dr. Lydia Kine', 'A missing Nexus 4 servant', 'A bombing in Sector 6B', 'A theft from Tyrell’s lab'],
+        ['Who turns out to be the escaped Nexus 5?', 'Nia, Cal’s sister', 'Asa', 'Desiree', 'Isaac'],
+        ['What did Cal line his coat with as a boy?', 'Metal plates', 'Old newspapers', 'Spinner panels', 'Rubber'],
+        ['Who shoots Effie Koropey in the museum?', 'Ilora Stahl', 'Filip', 'Sergeant Gutman', 'Asa'],
+        ['What does Cal ask Asa to build at the end?', 'A Voight-Kampff machine', 'A new body for Nia', 'A spinner', 'A memory implant']],
+    tn: [['Who are Mead and Stix?', 'A former marine and a combat replicant', 'Two Yakuza enforcers', 'Tyrell scientists on the run', 'Blade Runners from L.A.'],
+         ['Who hires them?', 'Sayo, looking for her missing sister', 'Alura, the Yakuza boss', 'Rumika', 'Cheshire'],
+         ['What does Cheshire build?', 'Bootleg replicants', 'Spinners', 'Weapons for the army', 'Memory implants'],
+         ['What did Mead and Stix take when they left the military?', 'The data for the Aurora Program', 'A Nexus 5', 'Tyrell’s replicant register', 'A military spinner']],
+    f: [['What happens when Holden tests Leon?', 'Leon shoots him', 'Leon passes', 'Leon confesses', 'Leon runs from the room'],
+        ['How long are Nexus-6s built to live?', 'Four years', 'Ten years', 'One year', 'As long as a human'],
+        ['Whose memories does Rachael carry?', 'Tyrell’s niece’s', 'Tyrell’s daughter’s', 'Deckard’s', 'Gaff’s'],
+        ['What does Roy ask Tyrell for?', 'More life', 'Freedom', 'Passage off-world', 'His memories back'],
+        ['What does Deckard find on the floor at the end?', 'An origami unicorn', 'A snake scale', 'A photograph', 'Gaff’s gun']],
+    gm: [['Who is Ray McCoy?', 'A rookie Blade Runner', 'Deckard’s captain', 'A replicant arms dealer', 'Runciter’s nephew'],
+         ['What starts his case?', 'Animals slaughtered at Runciter’s pet shop', 'A murder at Tyrell', 'A stolen spinner', 'A bomb at the precinct'],
+         ['Which two are always replicants?', 'Clovis and Zuben', 'Lucy and Dektora', 'Gordo and Izo', 'Guzza and Steele'],
+         ['Who frames McCoy?', 'Lieutenant Guzza', 'Crystal Steele', 'Gaff', 'Clovis'],
+         ['How many endings can the game have?', 'Thirteen', 'Three', 'Seven', 'One']],
+    b: [['What does Ash hide under her clothes?', 'A brace for her failing spine', 'A replicant serial number', 'A tracking device', 'A second badge'],
+        ['Who wants his wife and daughter found?', 'Alexander Selwyn', 'Eldon Tyrell', 'Harry Bryant', 'The Lung'],
+        ['What is Isobel?', 'A replicant copy of Selwyn’s dead wife', 'Selwyn’s sister', 'A Blade Runner', 'An Underground smuggler'],
+        ['What is El Santuario?', 'An island of free replicants', 'A Tyrell lab', 'An off-world colony', 'A nightclub'],
+        ['Who kills Alexander Selwyn?', 'Isobel', 'Ash', 'Hythe', 'Cleo']],
+    bo: [['What does Ren redirect to set off the Blackout?', 'A test missile', 'A spinner', 'A power line', 'A satellite'],
+         ['What does Iggy remove afterwards?', 'His right eye', 'His fingerprints', 'A tracking chip', 'His memories'],
+         ['What is banned after the Blackout?', 'Making replicants', 'Spinners', 'Blade Runners', 'Leaving Earth']],
+    c: [['Who is Yotun?', 'A Nexus-6 who escaped Ash in 2017', 'A Wallace prototype', 'Freysa’s brother', 'A Blade Runner gone rogue'],
+        ['How does Yotun outlive his four years?', 'His followers give him their blood', 'He swaps bodies', 'A Tyrell cure', 'He sleeps in a tank'],
+        ['What does he blow up after taking the airship?', 'The Sepulveda Sea Wall', 'Tyrell’s pyramid', 'The spinner plant', 'The Diamant'],
+        ['Who does Yotun say was his older brother?', 'Eldon Tyrell', 'Niander Wallace', 'Alexander Selwyn', 'Roy Batty'],
+        ['What is in the box buried in Edens?', 'The bones of an owl', 'A diary', 'A replicant eye', 'An origami unicorn']],
+    l: [['What does Elle’s data device show?', 'Senator Bannister meeting Niander Wallace Sr.', 'Her own birth', 'Tyrell’s last will', 'A map of the desert'],
+        ['What did the desert hunters call replicants?', '“Dolls”', '“Toys”', '“Skins”', '“Ghosts”'],
+        ['Who made Elle, and why?', 'Wallace Jr., to kill his father', 'Doctor M, as an experiment', 'Joseph, to protect him', 'Tyrell, before the Blackout'],
+        ['What does Elle do to Wallace Jr. at the end?', 'Slashes his eyes', 'Kills him', 'Lets him go untouched', 'Erases his memories'],
+        ['How does Joseph save her?', 'He blows up the replicant factory', 'He reports her dead to Marlowe', 'He flies her off-world', 'He takes her test for her']],
+    ll: [['Where does Elle haul her broken bike?', 'Fracktown', 'Las Vegas', 'San Diego', 'Catalina'],
+         ['What does Miguel give her?', 'A katana', 'A new bike', 'A map', 'His badge'],
+         ['What was Miguel before he ran the co-op?', 'A Blade Runner', 'A Yakuza fixer', 'A Tyrell engineer', 'A senator']],
+    lv: [['What is Wallace Jr.’s hunting team called?', 'The Doll Squad', 'The Lotus Hunters', 'The Paradise Guard', 'The Semita'],
+         ['Who rules the Paradise casino?', 'Cleopatra and Nefertiti', 'Julius and Nero', 'Menzes', 'Kozlov'],
+         ['Who holds the tunnels under the casinos?', 'The Semita', 'The Doll Squad', 'Caesar’s soldiers', 'The LAPD']],
+    dawn: [['What does Niander Wallace want from the lawmakers?', 'The replicant ban lifted', 'Tyrell’s patents', 'A seat in the Senate', 'Money for the colonies'],
+           ['What does his Nexus-9 do to prove its obedience?', 'Cuts its own throat on his order', 'Shoots a guard', 'Takes a Voight-Kampff test', 'Recites its serial number'],
+           ['What is his argument?', 'Earth can only survive on cheap replicant labour', 'Replicants are already human', 'The colonies are failing', 'Tyrell owes him']],
+    d: [['Who is the LAPD’s first replicant Blade Runner?', 'Luv', 'Rash', 'Hythe', 'K'],
+        ['What is Rash?', 'A replicant built from Ash’s DNA', 'Luv’s twin', 'A copy of Isobel', 'A Nexus-6 survivor'],
+        ['What does Gaff leave Ash?', 'An origami frog', 'An origami unicorn', 'A gun', 'A key'],
+        ['Who does Ash go to for a way to reach Wallace?', 'Cal Moreaux', 'Lydia Wojciech', 'Sapper Morton', 'The Ferryman'],
+        ['What does Ash give Wallace at the end?', 'Selwyn’s research', 'Cleo', 'Isobel', 'Her own cure']],
+    run: [['What does Sapper give Ella?', 'A book: The Power and the Glory', 'An apple', 'An origami figure', 'Money for food'],
+          ['What gives him away to the LAPD?', 'He drops his identity papers', 'His serial number is scanned', 'Ella reports him', 'A camera catches his eye'],
+          ['How does he make his living?', 'As a farmer', 'As a soldier for hire', 'As a cook', 'As a medic']],
+    g: [['What does K find under the dead tree?', 'A box of bones', 'A wooden horse', 'A diary', 'Deckard'],
+        ['What does K remember hiding in a furnace?', 'A wooden horse', 'A photograph', 'A gun', 'A letter'],
+        ['What happens when K takes his baseline test?', 'He fails it badly', 'He passes perfectly', 'Joi takes it for him', 'Luv rigs it'],
+        ['Where has Deckard been hiding?', 'The ruins of Las Vegas', 'San Francisco', 'Off-world', 'The San Diego wasteland'],
+        ['Who is Rachael’s child?', 'Dr. Ana Stelline', 'K', 'Joi', 'Freysa']]
+  }
+};
+
+/* The Lore view: timeline, glossary (with tap-to-define terms in the synopses), connections web and map.
+   Everything is drawn from window.BR_LORE. Lines that spoil a story respect the reader's spoiler shield. */
+(function () {
+  var L = window.BR_LORE; if (!L) return;
+  var R = window.BRReader;
+  var NAMES = { i: 'Origins', tn: 'Tokyo Nexus', f: 'Blade Runner', gm: 'the game', b: 'Blade Runner 2019', bo: 'Black Out 2022', c: 'Blade Runner 2029',
+    l: 'Black Lotus', ll: 'Leaving L.A.', lv: 'Las Vegas', dawn: 'Nexus Dawn', d: 'Blade Runner 2039', run: 'Nowhere to Run', g: 'Blade Runner 2049' };
+  var revealed = {};
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function locked(s, key) {
+    if (!s || !s.length || !R || !R.shield() || revealed[key]) return false;
+    return s.some(function (k) { return !R.storyDone(k); });
+  }
+  function needs(s) { return s.filter(function (k) { return !R.storyDone(k); }).map(function (k) { return NAMES[k] || k; }).join(' and '); }
+  function veil(s, key) {
+    return '<div class="lv"><span>Hidden by the spoiler shield until you finish ' + esc(needs(s)) + '.</span> <button type="button" class="lv-show" data-key="' + esc(key) + '">Show anyway</button></div>';
+  }
+  function links(list) { return list.map(function (g) { return '<a class="app" href="' + g[0] + '">' + esc(g[1]) + '</a>'; }).join(''); }
+  var view = document.getElementById('lore'); if (!view) return;
+  view.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.lv-show'); if (!b) return;
+    revealed[b.getAttribute('data-key')] = true; paintAll();
+  });
+
+  /* ================= glossary ================= */
+  var TERMS = {}; L.terms.forEach(function (t) { TERMS[t.id] = t; });
+  var sorted = L.terms.slice().sort(function (a, b) { var k = function (t) { return t.t.replace(/^[^A-Za-z]+|^The /g, ''); }; return k(a).localeCompare(k(b)); });
+  var glList = view.querySelector('.gl-list'), glFind = view.querySelector('.gl-find');
+  function termBody(t) {
+    if (locked(t.s, 'gl:' + t.id)) return veil(t.s, 'gl:' + t.id);
+    var h = '<p>' + esc(t.d) + '</p>';
+    if (t.list) h += '<dl class="gl-dl">' + t.list.map(function (r) { return '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl>';
+    return h;
+  }
+  function paintGlossary() {
+    var q = (glFind.value || '').trim().toLowerCase();
+    glList.innerHTML = sorted.map(function (t) {
+      var hay = (t.t + ' ' + t.d + ' ' + (t.a || []).join(' ')).toLowerCase();
+      return '<article class="gl" id="gl-' + t.id + '"' + (q && hay.indexOf(q) < 0 ? ' hidden' : '') + '><h3>' + esc(t.t) + '</h3>' + termBody(t) +
+        (t.see && t.see.length ? '<div class="apps"><span class="apps-l">See</span>' + links(t.see) + '</div>' : '') + '</article>';
+    }).join('');
+  }
+  glFind.addEventListener('input', function () {
+    var q = glFind.value.trim().toLowerCase();
+    Array.prototype.forEach.call(glList.children, function (el) { el.hidden = !!q && el.textContent.toLowerCase().indexOf(q) < 0; });
+  });
+
+  /* ---- underline terms in the synopses: the first use of each term in each entry ---- */
+  var matchers = [];
+  L.terms.forEach(function (t) {
+    if (t.auto === false) return;
+    t.a.slice().sort(function (x, y) { return y.length - x.length; }).forEach(function (a) {
+      var pre = '', m0 = /^\(([^)]*)\)(.*)$/.exec(a); if (m0) { pre = m0[1]; a = m0[2]; }
+      var q = function (x) { return x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }, src = q(a), ps = q(pre);
+      if (/^[a-z]/.test(a)) src = '[' + a[0] + a[0].toUpperCase() + ']' + src.slice(1);
+      if (/^[a-z]/.test(pre)) ps = '[' + pre[0] + pre[0].toUpperCase() + ']' + ps.slice(1);
+      matchers.push({ id: t.id, re: new RegExp('(^|[^A-Za-z0-9-])(' + ps + ')(' + src + ')(?![A-Za-z0-9])') });
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('article.issue'), function (art) {
+    var used = {}, paras = art.querySelectorAll('.ib p, .ib .quote');
+    Array.prototype.forEach.call(paras, function (p) {
+      var walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, null), nodes = [], n;
+      while ((n = walker.nextNode())) if (!n.parentNode.closest('a, button, .term')) nodes.push(n);
+      nodes.forEach(function (node) {
+        var guard = 0;
+        while (node && guard++ < 6) {
+          var best = null;
+          matchers.forEach(function (m) {
+            if (used[m.id]) return;
+            var r = m.re.exec(node.nodeValue); if (!r) return;
+            var at = r.index + r[1].length + r[2].length;
+            if (!best || at < best.at) best = { at: at, len: r[3].length, id: m.id };
+          });
+          if (!best) break;
+          used[best.id] = true;
+          var mid = node.splitText(best.at), rest = mid.splitText(best.len);
+          var b = document.createElement('button'); b.type = 'button'; b.className = 'term'; b.setAttribute('data-term', best.id);
+          b.setAttribute('aria-expanded', 'false'); b.textContent = mid.nodeValue;
+          mid.parentNode.replaceChild(b, mid); node = rest;
+        }
+      });
+    });
+  });
+  // the definition pop-up
+  var pop = document.createElement('div'); pop.className = 'termpop'; pop.hidden = true; pop.setAttribute('role', 'dialog'); document.body.appendChild(pop);
+  var popFor = null;
+  function closePop() { if (popFor) popFor.setAttribute('aria-expanded', 'false'); pop.hidden = true; popFor = null; }
+  function openPop(btn) {
+    var t = TERMS[btn.getAttribute('data-term')]; if (!t) return;
+    if (popFor === btn) { closePop(); return; }
+    closePop(); popFor = btn; btn.setAttribute('aria-expanded', 'true');
+    pop.setAttribute('aria-label', t.t);
+    pop.innerHTML = '<div class="tp-h"><span>' + esc(t.t) + '</span><button type="button" class="tp-x" aria-label="Close">✕</button></div>' + termBody(t).replace('<dl class="gl-dl">', '<dl class="gl-dl sm">') +
+      '<a class="tp-more" href="#gl-' + t.id + '">Glossary →</a>';
+    pop.hidden = false;
+    var r = btn.getBoundingClientRect(), w = Math.min(340, innerWidth - 24);
+    pop.style.width = w + 'px';
+    pop.style.left = Math.max(12, Math.min(innerWidth - w - 12, r.left + r.width / 2 - w / 2)) + 'px';
+    var below = r.bottom + 10, h = pop.offsetHeight;
+    pop.style.top = (below + h > innerHeight - 90 && r.top - h - 10 > 50 ? r.top - h - 10 : below) + window.pageYOffset + 'px';
+    pop.querySelector('.tp-x').focus({ preventScroll: true });
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('button.term');
+    if (t) { e.preventDefault(); openPop(t); return; }
+    if (pop.hidden) return;
+    var show = e.target.closest && e.target.closest('.termpop .lv-show');
+    if (show) { revealed[show.getAttribute('data-key')] = true; var b = popFor; closePop(); openPop(b); paintAll(); return; }
+    if (e.target.closest && (e.target.closest('.tp-x') || e.target.closest('.tp-more'))) { var back = popFor; closePop(); if (back && e.target.closest('.tp-x')) back.focus(); return; }
+    if (!pop.contains(e.target)) closePop();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) { var b = popFor; closePop(); if (b) b.focus(); } });
+  window.addEventListener('br:view', closePop);
+  window.addEventListener('resize', function () { if (!pop.hidden && popFor && !popFor.getClientRects().length) closePop(); });
+
+  /* ================= timeline ================= */
+  var tl = view.querySelector('.tl'), scale = view.querySelector('.tl-scale'), filter = 'all';
+  function era(y) { return y <= 2019 ? 'e1' : y <= 2039 ? 'e2' : 'e3'; }
+  function paintTimeline() {
+    var ev = L.events.slice().sort(function (a, b) { return a.y - b.y; }), years = [], by = {};
+    ev.forEach(function (e) { if (!by[e.y]) { by[e.y] = []; years.push(e.y); } by[e.y].push(e); });
+    var html = '';
+    years.forEach(function (y, i) {
+      if (i && y - years[i - 1] >= 5) html += '<li class="tl-gap" aria-hidden="true"><span>' + (y - years[i - 1]) + ' years</span></li>';
+      var items = by[y].filter(function (e) { return filter === 'all' || e.k === filter; });
+      html += '<li class="tl-year ' + era(y) + '" id="tl-' + y + '"' + (items.length ? '' : ' hidden') + '><div class="tl-y">' + esc(by[y][0].when || y) + '</div><div class="tl-evs">' +
+        items.map(function (e, n) {
+          var key = 'tl:' + y + ':' + n, lock = locked(e.s, key);
+          return '<div class="tl-ev k-' + e.k + '"><div class="tl-k">' + (e.k === 'world' ? 'The world' : 'Story') + '</div><h3><a href="' + e.go + '">' + esc(e.t) + '</a></h3>' +
+            (lock ? veil(e.s, key) : '<p>' + esc(e.d) + '</p>') + '</div>';
+        }).join('') + '</div></li>';
+    });
+    tl.innerHTML = html;
+    // the scale: 2005-2050 takes most of the width, then a break to 2099
+    function pos(y) { return y <= 2050 ? (y - 2005) / 45 * 84 : 90 + (y - 2090) / 10 * 8; }
+    var s = '<div class="tls-line"></div><div class="tls-break" style="left:87%"></div>';
+    [2010, 2020, 2030, 2040, 2050].forEach(function (d) { s += '<span class="tls-tick" style="left:' + pos(d) + '%">' + d + '</span>'; });
+    s += '<span class="tls-tick" style="left:' + pos(2099) + '%">2099</span>';
+    years.forEach(function (y) { s += '<a class="tls-dot ' + era(y) + '" href="#tl-' + y + '" style="left:' + pos(y) + '%" aria-label="' + y + '" title="' + y + '"></a>'; });
+    scale.innerHTML = s;
+  }
+  view.querySelector('.tl-filter').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tl]'); if (!b) return;
+    filter = b.getAttribute('data-tl');
+    Array.prototype.forEach.call(this.querySelectorAll('[data-tl]'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    paintTimeline();
+  });
+
+  /* ================= connections ================= */
+  var cxSvg = view.querySelector('.cx-svg'), cxPanel = view.querySelector('.cx-panel'), cxHidden = view.querySelector('.cx-hidden');
+  var PEOPLE = {}; L.people.forEach(function (p) { PEOPLE[p.id] = p; });
+  var KIND = { h: 'Human', r: 'Replicant', m: 'Somewhere in between' };
+  var sel = null, layoutKey = '', pos = {};
+  function visibleGraph() {
+    var nodes = L.people.filter(function (p) { return !locked(p.s, 'cx:' + p.id); }), ok = {};
+    nodes.forEach(function (p) { ok[p.id] = true; });
+    var shown = [], hidden = 0;
+    L.links.forEach(function (l, i) {
+      if (!ok[l[0]] || !ok[l[1]]) { hidden++; return; }
+      if (locked(l[3], 'cx:l' + i)) { hidden++; return; }
+      shown.push(l);
+    });
+    return { nodes: nodes, links: shown, hidden: hidden };
+  }
+  function layout(nodes, links, W, H) {
+    // a small, seeded force layout so the picture is the same on every visit
+    var P = {}, seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    nodes.forEach(function (n, i) { var a = i / nodes.length * Math.PI * 2; P[n.id] = { x: W / 2 + Math.cos(a) * W * .3 + rnd() * 10, y: H / 2 + Math.sin(a) * H * .3 + rnd() * 10, vx: 0, vy: 0 }; });
+    var ideal = Math.sqrt(W * H / nodes.length) * .8;
+    for (var it = 0; it < 420; it++) {
+      var cool = 1 - it / 420;
+      nodes.forEach(function (a) {
+        var pa = P[a.id];
+        nodes.forEach(function (b) {
+          if (a === b) return; var pb = P[b.id], dx = pa.x - pb.x, dy = pa.y - pb.y, d2 = dx * dx + dy * dy + .01, d = Math.sqrt(d2);
+          var f = ideal * ideal / d2 * .9; pa.vx += dx / d * f; pa.vy += dy / d * f;
+        });
+        pa.vx += (W / 2 - pa.x) * .006; pa.vy += (H / 2 - pa.y) * .007;
+      });
+      links.forEach(function (l) {
+        var a = P[l[0]], b = P[l[1]], dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) + .01, f = (d - ideal) * .06;
+        a.vx += dx / d * f; a.vy += dy / d * f; b.vx -= dx / d * f; b.vy -= dy / d * f;
+      });
+      nodes.forEach(function (n) {
+        var p = P[n.id], lim = 18 * cool + 1, v = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if (v > lim) { p.vx *= lim / v; p.vy *= lim / v; }
+        p.x = Math.max(56, Math.min(W - 56, p.x + p.vx)); p.y = Math.max(24, Math.min(H - 30, p.y + p.vy)); p.vx *= .5; p.vy *= .5;
+      });
+    }
+    // nudge apart any names whose labels would overlap (label sits under the dot)
+    var box = function (n) { var p = P[n.id], w = n.n.length * 7.4 + 6; return { l: p.x - w / 2, r: p.x + w / 2, t: p.y - 9, b: p.y + 27 }; };
+    for (var pass = 0; pass < 160; pass++) {
+      var moved = false;
+      for (var i = 0; i < nodes.length; i++) for (var j = i + 1; j < nodes.length; j++) {
+        var A = box(nodes[i]), B = box(nodes[j]), ox = Math.min(A.r, B.r) - Math.max(A.l, B.l), oy = Math.min(A.b, B.b) - Math.max(A.t, B.t);
+        if (ox <= 0 || oy <= 0) continue;
+        var pa = P[nodes[i].id], pb = P[nodes[j].id]; moved = true;
+        if (oy < ox) { var dy = (oy / 2 + 1) * (pa.y < pb.y ? -1 : 1); pa.y += dy; pb.y -= dy; }
+        else { var dx = (ox / 2 + 1) * (pa.x < pb.x ? -1 : 1); pa.x += dx; pb.x -= dx; }
+      }
+      nodes.forEach(function (n) { var p = P[n.id], w = n.n.length * 3.7 + 4; p.x = Math.max(w, Math.min(W - w, p.x)); p.y = Math.max(16, Math.min(H - 30, p.y)); });
+      if (!moved) break;
+    }
+    return P;
+  }
+  function paintConnections() {
+    var g = visibleGraph(), narrow = cxSvg.parentNode.clientWidth < 560, W = narrow ? 380 : 760, H = narrow ? 640 : 560;
+    var key = g.nodes.map(function (n) { return n.id; }).join() + '|' + g.links.length + '|' + W;
+    if (key !== layoutKey) { pos = layout(g.nodes, g.links, W, H); layoutKey = key; }
+    if (sel && !g.nodes.some(function (n) { return n.id === sel; })) sel = null;
+    var near = {}; if (sel) { near[sel] = true; g.links.forEach(function (l) { if (l[0] === sel) near[l[1]] = true; if (l[1] === sel) near[l[0]] = true; }); }
+    cxSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var s = '<g class="cx-links">' + g.links.map(function (l) {
+      var a = pos[l[0]], b = pos[l[1]], on = sel && (l[0] === sel || l[1] === sel);
+      return '<line x1="' + a.x.toFixed(1) + '" y1="' + a.y.toFixed(1) + '" x2="' + b.x.toFixed(1) + '" y2="' + b.y.toFixed(1) + '" class="' + (on ? 'on' : sel ? 'dim' : '') + '"/>';
+    }).join('') + '</g><g class="cx-nodes">';
+    s += g.nodes.map(function (n) {
+      var p = pos[n.id], cls = 'cx-n k-' + n.k + (sel ? (n.id === sel ? ' sel' : near[n.id] ? ' near' : ' dim') : '');
+      return '<g class="' + cls + '" data-id="' + n.id + '" tabindex="0" role="button" aria-label="' + esc(n.n) + '" transform="translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ')">' +
+        '<circle r="14" class="hit"/><circle r="' + (n.f ? 7 : 5.5) + '"/><text y="22">' + esc(n.n) + '</text></g>';
+    }).join('') + '</g>';
+    cxSvg.innerHTML = s;
+    cxHidden.textContent = g.hidden ? g.hidden + (g.hidden === 1 ? ' connection is' : ' connections are') + ' hidden by the spoiler shield.' : '';
+    // the side panel
+    if (!sel) { cxPanel.innerHTML = '<p class="dimline">Tap a name to see how they are connected.</p>'; return; }
+    var p = PEOPLE[sel], mine = g.links.filter(function (l) { return l[0] === sel || l[1] === sel; });
+    var hiddenMine = L.links.filter(function (l) { return (l[0] === sel || l[1] === sel); }).length - mine.length;
+    cxPanel.innerHTML = '<div class="cx-h k-' + p.k + '"><h3>' + esc(p.n) + '</h3><span>' + KIND[p.k] + '</span></div>' + (p.note ? '<p class="dimline">' + esc(p.note) + '</p>' : '') +
+      '<ul class="cx-list">' + mine.map(function (l) { var o = PEOPLE[l[0] === sel ? l[1] : l[0]];
+        return '<li><button type="button" data-go="' + o.id + '">' + esc(o.n) + '</button><span>' + esc(l[2]) + '</span></li>'; }).join('') + '</ul>' +
+      (hiddenMine > 0 ? '<p class="dimline">' + hiddenMine + ' more hidden by the spoiler shield.</p>' : '') +
+      (p.f ? '<a class="cx-file" href="#' + p.f + '">Open character file →</a>' : '');
+  }
+  function pick(id) { sel = sel === id ? null : id; paintConnections(); }
+  cxSvg.addEventListener('click', function (e) { var n = e.target.closest('.cx-n'); pick(n ? n.getAttribute('data-id') : null); });
+  cxSvg.addEventListener('keydown', function (e) { var n = e.target.closest('.cx-n'); if (n && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pick(n.getAttribute('data-id')); var f = cxSvg.querySelector('.cx-n[data-id="' + sel + '"]'); if (f) f.focus(); } });
+  cxPanel.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) { sel = b.getAttribute('data-go'); paintConnections(); } });
+
+  /* ================= map ================= */
+  var mpStage = view.querySelector('.mp-stage'), mpPanel = view.querySelector('.mp-panel'), place = null;
+  var COAST = '45,0 40,40 58,70 82,118 108,170 136,224 160,262 196,276 232,306 252,330 272,362 296,400 312,436 330,480 340,530 362,580 384,620';
+  function mapSvg(narrow) {
+    var fs = narrow ? 26 : 14, fsBig = narrow ? 30 : 17, iw = narrow ? 220 : 150, ih = narrow ? 84 : 66;
+    var s = '<svg viewBox="0 0 700 620" class="mp-svg" role="img" aria-label="Map of California, Nevada and Baja, with insets for Tokyo and the off-world colonies">' +
+      '<defs><pattern id="mpgrid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0V35" fill="none" class="mp-grid"/></pattern>' +
+      '<radialGradient id="mpglow"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient></defs>' +
+      '<rect width="700" height="620" class="mp-sea"/><rect width="700" height="620" fill="url(#mpgrid)"/>' +
+      '<polygon points="' + COAST + ' 700,620 700,0" class="mp-land"/>' +
+      '<polyline points="' + COAST + '" class="mp-coast"/>' +
+      '<ellipse cx="220" cy="398" rx="13" ry="5" class="mp-land mp-isle"/><ellipse cx="318" cy="548" rx="9" ry="4" class="mp-land mp-isle"/>' +
+      '<circle cx="252" cy="332" r="46" fill="url(#mpglow)"/>' +
+      '<text x="60" y="300" class="mp-sea-l" transform="rotate(-62 60 300)">PACIFIC OCEAN</text>' +
+      '<text x="470" y="120" class="mp-area">NEVADA</text><text x="300" y="150" class="mp-area">CALIFORNIA</text><text x="470" y="560" class="mp-area">MEXICO</text>' +
+      '<text x="520" y="250" class="mp-area sm">MOJAVE</text>' +
+      '<g class="mp-rose" transform="translate(640 560)"><circle r="22"/><path d="M0 -28 L5 0 L0 28 L-5 0Z"/><text y="-32">N</text></g>' +
+      '<text x="690" y="612" class="mp-note">NOT TO SCALE</text>';
+    // insets for places off this map
+    L.insets.forEach(function (ins, i) {
+      var y = (narrow ? 420 : 450) + i * (ih + 14);
+      s += '<g class="mp-inset" data-id="' + ins.id + '" tabindex="0" role="button" aria-label="' + esc(ins.n) + '"><rect x="12" y="' + y + '" width="' + iw + '" height="' + ih + '" rx="3"/>' +
+        '<text x="26" y="' + (y + ih * .4) + '" class="mp-in-h" style="font-size:' + (narrow ? 26 : 16) + 'px">' + esc(ins.n.toUpperCase()) + '</text><text x="26" y="' + (y + ih * .76) + '" class="mp-in-s" style="font-size:' + (narrow ? 19 : 11) + 'px">' + (ins.id === 'tokyo' ? '9,000 km west' : 'Beyond Earth') + ' ›</text></g>';
+    });
+    L.places.forEach(function (p) {
+      var left = p.x > (narrow ? 420 : 520), tx = left ? -(narrow ? 18 : 14) : (narrow ? 18 : 14);
+      s += '<g class="mp-pin' + (p.big ? ' big' : '') + '" data-id="' + p.id + '" tabindex="0" role="button" aria-label="' + esc(p.n) + '" transform="translate(' + p.x + ' ' + p.y + ')">' +
+        '<circle r="' + (narrow ? 30 : 20) + '" class="hit"/><circle r="' + (p.big ? 9 : 6) * (narrow ? 1.5 : 1) + '" class="ring"/><circle r="' + (p.big ? 4 : 3) * (narrow ? 1.5 : 1) + '" class="dot"/>' +
+        '<text x="' + tx + '" y="' + (narrow ? 9 : 5) + '" text-anchor="' + (left ? 'end' : 'start') + '" style="font-size:' + (p.big ? fsBig : fs) + 'px">' + esc(narrow ? p.sn || p.n : p.n) + '</text></g>';
+    });
+    return s + '</svg>';
+  }
+  var mapNarrow = null;
+  function paintMap() {
+    var narrow = (mpStage.clientWidth || innerWidth) < 560;
+    if (narrow !== mapNarrow) { mpStage.innerHTML = mapSvg(narrow); mapNarrow = narrow; }
+    Array.prototype.forEach.call(mpStage.querySelectorAll('[data-id]'), function (g) { g.classList.toggle('sel', g.getAttribute('data-id') === place); });
+    var all = L.places.concat(L.insets), p = null; all.forEach(function (x) { if (x.id === place) p = x; });
+    if (!p) {
+      mpPanel.innerHTML = '<p class="dimline">Tap a marker, or pick a place:</p><div class="mp-picks">' + all.map(function (x) { return '<button type="button" data-pick="' + x.id + '">' + esc(x.n) + '</button>'; }).join('') + '</div>' +
+        '<h4>Not on the map</h4><ul class="mp-un">' + L.unmapped.map(function (u, i) {
+          var key = 'mp:u' + i; return '<li><strong>' + esc(u.n) + '</strong> ' + (locked(u.s, key) ? veil(u.s, key) : esc(u.d) + ' <span class="apps">' + links(u.go) + '</span>') + '</li>';
+        }).join('') + '</ul>';
+      return;
+    }
+    var body = '<div class="mp-h"><h3>' + esc(p.n) + '</h3><button type="button" class="mp-back">All places</button></div><p>' + esc(p.d) + '</p>';
+    if (p.spots) body += '<ul class="mp-spots">' + p.spots.map(function (sp) { return '<li><strong>' + esc(sp[0]) + '</strong><span class="apps">' + links(sp[1]) + '</span></li>'; }).join('') + '</ul>';
+    else body += '<div class="apps">' + links(p.go) + '</div>';
+    mpPanel.innerHTML = body;
+  }
+  function pickPlace(id) { place = place === id ? null : id; paintMap(); }
+  mpStage.addEventListener('click', function (e) { var g = e.target.closest('[data-id]'); pickPlace(g ? g.getAttribute('data-id') : null); });
+  mpStage.addEventListener('keydown', function (e) { var g = e.target.closest('[data-id]'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickPlace(g.getAttribute('data-id')); } });
+  mpPanel.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pick]'); if (b) { place = b.getAttribute('data-pick'); paintMap(); return; }
+    if (e.target.closest('.mp-back')) { place = null; paintMap(); }
+  });
+
+  /* ================= wiring ================= */
+  function paintAll() { paintGlossary(); paintTimeline(); paintConnections(); paintMap(); }
+  paintAll();
+  if (R) R.onChange(function () { setTimeout(paintAll, 0); });
+  var lastNarrow = null;
+  window.addEventListener('resize', function () { var n = cxSvg.parentNode.clientWidth < 560; if (n !== lastNarrow) { lastNarrow = n; if (!view.hidden) { paintConnections(); paintMap(); } } });
+  window.addEventListener('br:view', function (e) { if (e.detail && e.detail.view === 'lore') { lastNarrow = null; setTimeout(function () { paintConnections(); paintMap(); }, 0); } });
+})();
+
+/* Voight-Kampff quizzes: finishing a story unlocks a short test on what happened in it.
+   Best scores are kept in this browser (localStorage "br-vk"). */
+(function () {
+  var L = window.BR_LORE, R = window.BRReader; if (!L || !L.quiz || !R) return;
+  var Q = L.quiz, KEY = 'br-vk', best = {};
+  try { best = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} }
+  function sfx(n) { window.dispatchEvent(new CustomEvent('br:sfx', { detail: n })); }
+  var ANCHOR = { i: '#origins', tn: '#tokyo', f: '#film82', gm: '#game97', b: '#br2019', bo: '#blackout', c: '#br2029', l: '#lotus',
+    ll: '#ll1', lv: '#lv1', dawn: '#dawn', d: '#br2039', run: '#nowhere', g: '#film49' };
+  var NAME = { i: 'Origins', tn: 'Tokyo Nexus', f: 'Blade Runner', gm: 'Blade Runner (game)', b: 'Blade Runner 2019', bo: 'Black Out 2022', c: 'Blade Runner 2029',
+    l: 'Black Lotus', ll: 'Leaving L.A.', lv: 'Las Vegas', dawn: 'Nexus Dawn', d: 'Blade Runner 2039', run: 'Nowhere to Run', g: 'Blade Runner 2049' };
+  var VERB = { f: 'watching', bo: 'watching', l: 'watching', dawn: 'watching', run: 'watching', g: 'watching', gm: 'playing' };
+
+  // one button per story, next to its progress meter
+  var buttons = {};
+  Object.keys(Q).forEach(function (k) {
+    var anchor = document.querySelector(ANCHOR[k]); if (!anchor) return;
+    var host = null;
+    if (k === 'll' || k === 'lv') { var grp = anchor.parentElement, prev = grp && grp.previousElementSibling; host = prev && prev.classList.contains('arcprog') ? prev : null; }
+    else { var b = anchor.querySelector('.vol-banner'); host = b && (b.querySelector('.bt') || b); }
+    if (!host) return;
+    var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'vk-btn'; btn.setAttribute('data-story', k);
+    host.appendChild(btn); buttons[k] = btn;
+    btn.addEventListener('click', function () { if (R.storyDone(k)) open(k); });
+  });
+  function paintButtons() {
+    Object.keys(buttons).forEach(function (k) {
+      var b = buttons[k], done = R.storyDone(k), n = Q[k].length, sc = best[k];
+      b.disabled = !done; b.classList.toggle('passed', sc !== undefined && sc >= pass(n));
+      b.innerHTML = '<span class="vk-eye" aria-hidden="true"></span>' + (!done ? 'Voight-Kampff test · unlocks after ' + (VERB[k] || 'reading') + ' all of it'
+        : sc === undefined ? 'Take the Voight-Kampff test' : (sc >= pass(n) ? '✓ Passed' : 'Inconclusive') + ' · ' + sc + ' / ' + n + ' · retake');
+    });
+  }
+  function pass(n) { return Math.ceil(n * .8); }
+  R.onChange(function () { setTimeout(paintButtons, 0); }); paintButtons();
+
+  // ---------- the test ----------
+  var dlg = document.createElement('div'); dlg.id = 'vk'; dlg.className = 'vk'; dlg.hidden = true;
+  dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.setAttribute('aria-label', 'Voight-Kampff test');
+  dlg.innerHTML = '<div class="vk-box"><div class="vk-top"><span class="vk-title"></span><button type="button" class="vk-x" aria-label="Close">✕</button></div>' +
+    '<div class="vk-scope" aria-hidden="true"><div class="vk-iris"><i></i></div><div class="vk-meters"><div><span>Pupil</span><b><i></i></b></div><div><span>Blush</span><b><i></i></b></div></div></div>' +
+    '<div class="vk-body" aria-live="polite"></div></div>';
+  document.body.appendChild(dlg);
+  var body = dlg.querySelector('.vk-body'), title = dlg.querySelector('.vk-title'), meters = dlg.querySelectorAll('.vk-meters b i'), iris = dlg.querySelector('.vk-iris');
+  var story = null, qs = [], at = 0, score = 0, opener = null;
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function needle(a, b) { meters[0].style.width = a + '%'; meters[1].style.width = b + '%'; iris.style.setProperty('--p', (0.32 + a / 300).toFixed(2)); }
+  function open(k) {
+    story = k; at = 0; score = 0; opener = document.activeElement;
+    qs = shuffle(Q[k]).map(function (q) { return { q: q[0], right: q[1], opts: shuffle(q.slice(1)) }; });
+    title.textContent = 'V-K · ' + NAME[k].toUpperCase();
+    dlg.hidden = false; document.documentElement.classList.add('searching'); ask();
+  }
+  function close() { dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
+  function ask() {
+    var q = qs[at]; needle(20 + Math.random() * 20, 15 + Math.random() * 15);
+    body.innerHTML = '<div class="vk-n">Question ' + (at + 1) + ' of ' + qs.length + '</div><p class="vk-q">' + q.q + '</p><div class="vk-opts">' +
+      q.opts.map(function (o, i) { return '<button type="button" class="vk-o" data-i="' + i + '">' + o + '</button>'; }).join('') + '</div>';
+    body.querySelector('.vk-o').focus();
+    sfx('esper');
+  }
+  function answer(i) {
+    var q = qs[at], ok = q.opts[i] === q.right;
+    if (ok) score++;
+    needle(ok ? 25 + Math.random() * 10 : 70 + Math.random() * 25, ok ? 20 : 60 + Math.random() * 30);
+    Array.prototype.forEach.call(body.querySelectorAll('.vk-o'), function (b, n) {
+      b.disabled = true; if (q.opts[n] === q.right) b.classList.add('right'); else if (n === i) b.classList.add('wrong');
+    });
+    sfx(ok ? 'mark' : 'unmark');
+    var next = document.createElement('button'); next.type = 'button'; next.className = 'vk-next';
+    next.textContent = at + 1 < qs.length ? 'Next question' : 'See the result';
+    body.appendChild(next); next.focus();
+  }
+  function result() {
+    var n = qs.length, passed = score >= pass(n);
+    if (best[story] === undefined || score > best[story]) { best[story] = score; save(); }
+    needle(passed ? 22 : 88, passed ? 18 : 80);
+    body.innerHTML = '<div class="vk-res ' + (passed ? 'ok' : 'no') + '"><div class="vk-verdict">' + (passed ? 'HUMAN' : 'INCONCLUSIVE') + '</div>' +
+      '<p>' + score + ' of ' + n + ' correct. ' + (passed ? 'Empathic response within normal limits.' : 'Subject requires further testing. ' + pass(n) + ' of ' + n + ' passes.') + '</p>' +
+      '<div class="vk-acts"><button type="button" class="vk-again">Retest</button><button type="button" class="vk-done">Close</button></div></div>';
+    body.querySelector(passed ? '.vk-done' : '.vk-again').focus();
+    sfx(passed ? 'complete' : 'unmark'); paintButtons();
+  }
+  body.addEventListener('click', function (e) {
+    var o = e.target.closest('.vk-o'); if (o && !o.disabled) { answer(+o.getAttribute('data-i')); return; }
+    if (e.target.closest('.vk-next')) { at++; if (at < qs.length) ask(); else result(); return; }
+    if (e.target.closest('.vk-again')) { open(story); return; }
+    if (e.target.closest('.vk-done')) close();
+  });
+  dlg.querySelector('.vk-x').addEventListener('click', close);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlg.hidden) close(); });
+  window.BRQuiz = { open: open };
+})();
+
 /* Search across synopses, character files and story intros.
    The index is built from the page itself, so it never goes out of date. */
 (function () {
@@ -2331,7 +3246,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
   // story prefix -> label used in results (issue ids look like "b12", "l3", "gm2")
   var STORY = { i: 'Origins', tn: 'Tokyo Nexus', f: 'Blade Runner', gm: 'The game', b: '2019', bo: 'Black Out 2022',
     c: '2029', l: 'Black Lotus', ll: 'Leaving L.A.', lv: 'Las Vegas', dawn: 'Nexus Dawn', d: '2039', run: 'Nowhere to Run', g: '2049' };
-  var ERA = { era1: 'Era I', era2: 'Era II', era3: 'Era III', people: 'Files', archive: 'Archive' };
+  var ERA = { era1: 'Era I', era2: 'Era II', era3: 'Era III', people: 'Files', archive: 'Archive', lore: 'Lore' };
 
   function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\u2018\u2019]/g, "'"); }
   // match terms only at the start of a word: "isob" finds Isobel, "nia" doesn't find Niander's middle
@@ -2367,6 +3282,12 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
     items.push({ id: f.id, kind: 'file', where: 'Origins case file', title: text(f.querySelector('h3')), sub: text(f.querySelector('.kind')),
       text: text(f.querySelector('p')), lock: ['story:i'], view: 'era1' });
   });
+  // glossary terms (drawn by lore.js just before this runs)
+  var LORE = window.BR_LORE;
+  if (LORE) LORE.terms.forEach(function (t) {
+    items.push({ id: 'gl-' + t.id, kind: 'term', where: 'Glossary', title: t.t, sub: '', text: t.d + (t.list ? ' ' + t.list.map(function (r) { return r.join(': '); }).join('. ') : ''),
+      lock: (t.s || []).map(function (k) { return 'story:' + k; }), view: 'lore' });
+  });
   items.forEach(function (it) { it.nTitle = words(it.title); it.nWhere = words(it.where); it.nAll = words(it.where + ' ' + it.title + ' ' + it.sub + ' ' + it.text); it.nText = words(it.text); });
 
   function locked(it) {
@@ -2386,7 +3307,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
       if (terms.length > 1 && it.nAll.indexOf(phrase) >= 0) score += 8;
       // a whole-word hit beats a prefix hit: "nia" ranks Nia above Niander
       terms.forEach(function (t) { if (it.nTitle.indexOf(' ' + t + ' ') >= 0) score += 5; else if (it.nAll.indexOf(' ' + t + ' ') >= 0) score += 2; });
-      if (it.kind === 'file') score += 2;
+      if (it.kind === 'file' || it.kind === 'term') score += 2;
       if (it.kind === 'story') score += 1;
       out.push({ it: it, score: score, order: items.indexOf(it) });
     });
@@ -2428,7 +3349,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
       var it = r.it, li = document.createElement('li'), a = document.createElement('a');
       a.href = '#' + it.id; a.className = 'sr'; a.id = 'sr-' + n; a.setAttribute('role', 'option');
       a.innerHTML = '<span class="sr-top"><span class="sr-where">' + esc(it.where) + '</span><span class="sr-era">' + esc(ERA[it.view] || '') + '</span></span>' +
-        '<span class="sr-title">' + esc(it.title) + (it.sub && it.kind !== 'story' ? ' <small>' + esc(it.sub) + '</small>' : '') + '</span>' +
+        '<span class="sr-title">' + esc(it.title) + (it.sub && it.kind !== 'story' && it.kind !== 'term' ? ' <small>' + esc(it.sub) + '</small>' : '') + '</span>' +
         '<span class="sr-snip">' + snippet(it, terms) + '</span>';
       li.appendChild(a); list.appendChild(li);
     });
@@ -2688,7 +3609,7 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
 })();
 
 (function () {
-  var HEROES = {"archive": ["Los Angeles · 2009 – 2099 · Case archive", "BLADE RUNNER", "ARCHIVE", "Every comic, film, game, short and anime in the Blade Runner saga, told in story order across three eras. From the first Blade Runner to the city fifty years after K.", ["レプリカント", "ロサンゼルス"]], "era1": ["Era I · 2009 – 2019 · Before the Blackout", "ERA I", "2009 — 2019", "The first Blade Runner, two war veterans in Tokyo, Deckard's hunt, a rookie's case running alongside it, and Ash's first job. Five stories, from the birth of the unit to the year of the film.", ["起源", "東京"]], "era2": ["Era II · 2022 – 2039 · After the Blackout", "ERA II", "2022 — 2039", "The records burn and Tyrell falls. Ash fights a replicant who refuses to die, Elle hunts the men who hunted her, and Wallace rises to take Tyrell's place.", ["黒蓮", "停電"]], "era3": ["Era III · 2048 – 2099 · The Wallace Age", "ERA III", "2048 — 2099", "A replicant Blade Runner finds bones under a dead tree, and the world that follows fifty years on.", ["奇跡", "二〇九九"]], "people": ["LAPD records · cross-referenced", "CASE FILES", "WHO'S WHO", "The people who cross from one story to the next: Blade Runners, replicants and the men who make them, each with every appearance in story order.", ["記録", "人物"]]};
+  var HEROES = {"archive": ["Los Angeles · 2009 – 2099 · Case archive", "BLADE RUNNER", "ARCHIVE", "Every comic, film, game, short and anime in the Blade Runner saga, told in story order across three eras. From the first Blade Runner to the city fifty years after K.", ["レプリカント", "ロサンゼルス"]], "era1": ["Era I · 2009 – 2019 · Before the Blackout", "ERA I", "2009 — 2019", "The first Blade Runner, two war veterans in Tokyo, Deckard's hunt, a rookie's case running alongside it, and Ash's first job. Five stories, from the birth of the unit to the year of the film.", ["起源", "東京"]], "era2": ["Era II · 2022 – 2039 · After the Blackout", "ERA II", "2022 — 2039", "The records burn and Tyrell falls. Ash fights a replicant who refuses to die, Elle hunts the men who hunted her, and Wallace rises to take Tyrell's place.", ["黒蓮", "停電"]], "era3": ["Era III · 2048 – 2099 · The Wallace Age", "ERA III", "2048 — 2099", "A replicant Blade Runner finds bones under a dead tree, and the world that follows fifty years on.", ["奇跡", "二〇九九"]], "people": ["LAPD records · cross-referenced", "CASE FILES", "WHO'S WHO", "The people who cross from one story to the next: Blade Runners, replicants and the men who make them, each with every appearance in story order.", ["記録", "人物"]], "lore": ["LAPD records · background briefing", "THE LORE", "OF THE CITY", "Ninety years on one line, the words the saga takes for granted, who is tied to whom, and where it all happens.", ["歴史", "地図"]]};
   var views = document.querySelectorAll('.view'), hero = document.querySelector('.hero');
   function show(v) {
     Array.prototype.forEach.call(views, function (el) { el.hidden = el.id !== v; });
@@ -2730,6 +3651,20 @@ footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68r
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   route(location.hash.slice(1), false);
   window.addEventListener('load', function () { if (location.hash) route(location.hash.slice(1), false); });
+})();
+</script>
+<script>/* GitHub Pages copy only: offline support and an "Install as an app" button where the browser offers it. */
+(function () {
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+  var offer = null, btns = document.querySelectorAll('.install-btn');
+  function show(on) { Array.prototype.forEach.call(btns, function (b) { b.hidden = !on; }); }
+  addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); offer = e; show(true); });
+  addEventListener('appinstalled', function () { offer = null; show(false); });
+  Array.prototype.forEach.call(btns, function (b) {
+    b.addEventListener('click', function () { if (!offer) return; offer.prompt(); offer.userChoice.then(function () { offer = null; show(false); }); });
+  });
 })();
 </script>
 </body></html>

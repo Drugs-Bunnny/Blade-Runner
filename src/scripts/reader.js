@@ -110,7 +110,7 @@
   var bars = [];
   Array.prototype.forEach.call(document.querySelectorAll('.view'), function (view) {
     var scope = cards.filter(function (a) { return view.contains(a); });
-    var all = view.id === 'archive'; if (all) scope = cards;
+    var all = view.id === 'archive', whole = all || !scope.length; if (whole) scope = cards; // Files and Lore have no entries of their own
     var bar = document.createElement('section'); bar.className = 'readerbar';
     bar.innerHTML = '<div class="wrap"><div class="rb">' +
       '<div class="rb-prog"></div>' +
@@ -120,7 +120,7 @@
       '</div><p class="rb-note"></p></div>';
     view.insertBefore(bar, view.firstChild);
     var m = meter('rb-meter'); bar.querySelector('.rb-prog').appendChild(m);
-    meters.push({ el: m, ids: scope.map(function (a) { return a.id; }), label: all ? 'Whole archive' : 'This era' });
+    meters.push({ el: m, ids: scope.map(function (a) { return a.id; }), label: whole ? 'Whole archive' : 'This era' });
     bars.push({ el: bar, scope: scope, all: all });
     bar.querySelector('.rb-shield').addEventListener('click', function () { shield = !shield; save(SKEY, shield ? '1' : '0'); revealed = {}; paint(); });
     var reset = bar.querySelector('.rb-reset');

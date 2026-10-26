@@ -7,7 +7,7 @@
   // story prefix -> label used in results (issue ids look like "b12", "l3", "gm2")
   var STORY = { i: 'Origins', tn: 'Tokyo Nexus', f: 'Blade Runner', gm: 'The game', b: '2019', bo: 'Black Out 2022',
     c: '2029', l: 'Black Lotus', ll: 'Leaving L.A.', lv: 'Las Vegas', dawn: 'Nexus Dawn', d: '2039', run: 'Nowhere to Run', g: '2049' };
-  var ERA = { era1: 'Era I', era2: 'Era II', era3: 'Era III', people: 'Files', archive: 'Archive' };
+  var ERA = { era1: 'Era I', era2: 'Era II', era3: 'Era III', people: 'Files', archive: 'Archive', lore: 'Lore' };
 
   function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\u2018\u2019]/g, "'"); }
   // match terms only at the start of a word: "isob" finds Isobel, "nia" doesn't find Niander's middle
@@ -43,6 +43,12 @@
     items.push({ id: f.id, kind: 'file', where: 'Origins case file', title: text(f.querySelector('h3')), sub: text(f.querySelector('.kind')),
       text: text(f.querySelector('p')), lock: ['story:i'], view: 'era1' });
   });
+  // glossary terms (drawn by lore.js just before this runs)
+  var LORE = window.BR_LORE;
+  if (LORE) LORE.terms.forEach(function (t) {
+    items.push({ id: 'gl-' + t.id, kind: 'term', where: 'Glossary', title: t.t, sub: '', text: t.d + (t.list ? ' ' + t.list.map(function (r) { return r.join(': '); }).join('. ') : ''),
+      lock: (t.s || []).map(function (k) { return 'story:' + k; }), view: 'lore' });
+  });
   items.forEach(function (it) { it.nTitle = words(it.title); it.nWhere = words(it.where); it.nAll = words(it.where + ' ' + it.title + ' ' + it.sub + ' ' + it.text); it.nText = words(it.text); });
 
   function locked(it) {
@@ -62,7 +68,7 @@
       if (terms.length > 1 && it.nAll.indexOf(phrase) >= 0) score += 8;
       // a whole-word hit beats a prefix hit: "nia" ranks Nia above Niander
       terms.forEach(function (t) { if (it.nTitle.indexOf(' ' + t + ' ') >= 0) score += 5; else if (it.nAll.indexOf(' ' + t + ' ') >= 0) score += 2; });
-      if (it.kind === 'file') score += 2;
+      if (it.kind === 'file' || it.kind === 'term') score += 2;
       if (it.kind === 'story') score += 1;
       out.push({ it: it, score: score, order: items.indexOf(it) });
     });
@@ -104,7 +110,7 @@
       var it = r.it, li = document.createElement('li'), a = document.createElement('a');
       a.href = '#' + it.id; a.className = 'sr'; a.id = 'sr-' + n; a.setAttribute('role', 'option');
       a.innerHTML = '<span class="sr-top"><span class="sr-where">' + esc(it.where) + '</span><span class="sr-era">' + esc(ERA[it.view] || '') + '</span></span>' +
-        '<span class="sr-title">' + esc(it.title) + (it.sub && it.kind !== 'story' ? ' <small>' + esc(it.sub) + '</small>' : '') + '</span>' +
+        '<span class="sr-title">' + esc(it.title) + (it.sub && it.kind !== 'story' && it.kind !== 'term' ? ' <small>' + esc(it.sub) + '</small>' : '') + '</span>' +
         '<span class="sr-snip">' + snippet(it, terms) + '</span>';
       li.appendChild(a); list.appendChild(li);
     });

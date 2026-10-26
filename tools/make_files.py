@@ -100,6 +100,7 @@ page = f'''<section id="files-index">
     </div>
   </div>
 </section>
+<div class="wrap pager"><a href="#era3">← Era III</a><a href="#lore">Lore →</a></div>
 <footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era.</p></div></footer>
 '''
 (REPO / 'src/pages/people.html').write_text(page)
