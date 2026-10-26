@@ -12,7 +12,7 @@ An unofficial fan archive of the Blade Runner saga from 2009 to 2099. It covers 
   - Era I · Before the Blackout, 2009–2019: Origins, Tokyo Nexus, Tokyo Nexus: To Lose Is to Win, Blade Runner (1982), the 1997 game, Blade Runner 2019
   - Era II · After the Blackout, 2022–2039: Black Out 2022, Blade Runner 2029, Black Lotus (anime and both comics), 2036: Nexus Dawn, Blade Runner 2039
   - Era III · The Wallace Age, 2048–2099: 2048: Nowhere to Run, Blade Runner 2049, Blade Runner 2099
-- **Character files.** Dossiers for 18 people who appear in more than one story, each linking to every appearance in order.
+- **Character files.** Dossiers for 22 people who appear in more than one story, each linking to every appearance in order.
 - **Lore.** A section of its own with four parts:
   - A timeline from 2007 to 2099, with world events and where each story sits.
   - A glossary of terms like the Nexus models, the Blackout and the Voight-Kampff test. Terms in the synopses have a dotted underline; tap one for its definition.

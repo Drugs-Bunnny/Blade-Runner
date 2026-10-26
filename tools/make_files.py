@@ -6,7 +6,7 @@ REPO = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path(__file__
 
 # story prefix -> (short label, colour token)
 STORY = {
-    'i': ('Origins', 'amber'), 'tn': ('Tokyo Nexus', 'pink'), 'f': ('Blade Runner', 'amber'), 'gm': ('Game', 'cyan'),
+    'i': ('Origins', 'amber'), 'tn': ('Tokyo Nexus', 'pink'), 'tw': ('To Lose Is to Win', 'pink'), 'f': ('Blade Runner', 'amber'), 'gm': ('Game', 'cyan'),
     'b': ('2019', 'cyan'), 'bo': ('Black Out', 'dim'), 'c': ('2029', 'cyan'), 'l': ('Black Lotus', 'pink'),
     'll': ('Leaving L.A.', 'pink'), 'lv': ('Las Vegas', 'pink'), 'dawn': ('Nexus Dawn', 'dim'), 'd': ('2039', 'amber'),
     'run': ('Nowhere to Run', 'dim'), 'g': ('2049', 'amber'),
@@ -32,6 +32,18 @@ PEOPLE = [
   ('cal', 'Cal Moreaux', 'Human · ex-soldier', 'Alive in 2039', 'amber',
    'A veteran of Kalanthia and a cold-case detective from the slums. Blackmailed into hunting the Nexus 5, he finds it is his sister Nia, and shoots her on live television, by her own plan, to become the first Blade Runner. Thirty years on he is a figure in the city’s underworld, and owes Ash a favour.',
    ['i1', 'i4', 'i6', 'i11', 'i12', 'd9', 'd10', 'd11']),
+  ('mead', 'Mead', 'Human · ex-Corporate Marine', 'Last seen in Tokyo, 2015', 'pink',
+   'A marine who fought beside Stix on Kalanthia and was left for dead there, betrayed by her own commanding officer. In Tokyo the two run an unlicensed detective agency. On the trail of a missing sister she refuses to believe Stix is a killer, and calls him the most human replicant she has ever met. In the sequel, Madame Nomura hires her to find out who murdered her daughters.',
+   ['tn1', 'tn2', 'tn3', 'tn4', 'tw1', 'tw2', 'tw3', 'tw4']),
+  ('stix', 'Stix', 'Replicant · combat model', 'Last seen in Tokyo, 2015', 'cyan',
+   'Mead’s partner, a combat replicant from Kalanthia. Framed for killings by bootleg replicants that fight just like him, he takes work from the Yakuza boss Alura in return for a longer life. In the sequel he guards Cheshire’s scientists, and faces Rumika in the Undercity over the last Aurora Yoke.',
+   ['tn1', 'tn3', 'tn4', 'tw1', 'tw2', 'tw4']),
+  ('rumika', 'Rumika', 'Blade Runner · sent from Los Angeles', 'Last seen in Tokyo, 2015', 'rust',
+   'A Blade Runner who arrives in Tokyo hunting Stix, drops the hunt once Mead convinces her, and is ordered to arrest or kill the ex-Tyrell scientists at Cheshire. In the sequel she follows the Aurora technology all the way to a duel on Shiwa Shrine Road. Titan also spells her name Rumiko.',
+   ['tn2', 'tn3', 'tn4', 'tw1', 'tw2', 'tw3', 'tw4']),
+  ('alura', 'Alura', 'Yakuza boss', 'Active in 2015', 'amber',
+   'The Yakuza boss who shoots Takumi Nomura and offers Stix a longer life in return for his services. Her organisation protects the ex-Tyrell scientists behind Cheshire, and she wants the Aurora data.',
+   ['tn4', 'tw1']),
   ('deckard', 'Rick Deckard', 'Blade Runner', 'Alive in 2049', 'amber',
    'Pulled out of retirement to hunt Roy Batty’s group in 2019. He falls for Rachael and leaves the city with her. Thirty years later K finds him hiding in the ruins of Las Vegas, and brings him to meet the daughter he never knew.',
    ['f1', 'f2', 'f4', 'g3', 'g4']),

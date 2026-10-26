@@ -131,7 +131,8 @@ window.BR_LORE = {
   // ---------- connections ----------
   // k: h human, r replicant, m somewhere in between. f: character file id, if there is one.
   people: [
-    { id: 'tyrell', n: 'Eldon Tyrell', k: 'h', f: 'p-tyrell' }, { id: 'cal', n: 'Cal Moreaux', k: 'h', f: 'p-cal' }, { id: 'nia', n: 'Nia Moreaux', k: 'm', note: 'A human mind in a Nexus 5 body', s: ['i'] },
+    { id: 'tyrell', n: 'Eldon Tyrell', k: 'h', f: 'p-tyrell' }, { id: 'cal', n: 'Cal Moreaux', k: 'h', f: 'p-cal' }, { id: 'mead', n: 'Mead', k: 'h', f: 'p-mead' }, { id: 'stix', n: 'Stix', k: 'r', f: 'p-stix' },
+    { id: 'nia', n: 'Nia Moreaux', k: 'm', note: 'A human mind in a Nexus 5 body', s: ['i'] },
     { id: 'deckard', n: 'Rick Deckard', k: 'm', f: 'p-deckard', note: 'Human or replicant? The films never say.' }, { id: 'rachael', n: 'Rachael', k: 'r', f: 'p-rachael' },
     { id: 'roy', n: 'Roy Batty', k: 'r' }, { id: 'gaff', n: 'Gaff', k: 'h', f: 'p-gaff' }, { id: 'ash', n: 'Ash', k: 'h', f: 'p-ash' },
     { id: 'wojciech', n: 'Lydia Wojciech', k: 'h', f: 'p-wojciech' }, { id: 'selwyn', n: 'Alexander Selwyn', k: 'h' }, { id: 'cleo', n: 'Cleo Selwyn', k: 'h', f: 'p-cleo' },
@@ -141,6 +142,7 @@ window.BR_LORE = {
     { id: 'sapper', n: 'Sapper Morton', k: 'r', f: 'p-sapper' }, { id: 'k', n: 'K', k: 'r', f: 'p-k' }, { id: 'stelline', n: 'Ana Stelline', k: 'm', note: 'Born to a replicant', s: ['g'] }
   ],
   links: [
+    ['mead', 'stix', 'Partners, left for dead together on Kalanthia', []],
     ['tyrell', 'rachael', 'Made her, and gave her his niece’s memories', ['f']],
     ['tyrell', 'roy', 'Maker and creation. Roy kills him', ['f']],
     ['tyrell', 'yotun', 'Brothers', ['c']],
