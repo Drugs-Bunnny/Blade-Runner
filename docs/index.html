@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Blade Runner Archive</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="build" content="Build 011 · 26 Oct 2026">
+<meta name="build" content="Build 012 · 26 Oct 2026">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="12" fill="#070910"/%3E%3Cpath d="M6 32 Q32 8 58 32 Q32 56 6 32Z" fill="#0c111e" stroke="#22e5ff" stroke-width="3"/%3E%3Ccircle cx="32" cy="32" r="11" fill="none" stroke="#ff2e88" stroke-width="3"/%3E%3Ccircle cx="32" cy="32" r="5" fill="#070910" stroke="#ffb347" stroke-width="2.5"/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#070910">
@@ -688,11 +688,44 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
 /* ================= install ================= */
 .install-btn { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); background: none; border: 1px solid var(--amber); padding: 8px 12px; cursor: pointer; margin-top: 14px; }
 
+/* ---------- progress sync (GitHub Pages copy) ---------- */
+.rb-sync { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--ink); border: 1px solid var(--line); padding: 8px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.rb-sync:hover { border-color: var(--cyan); }
+.rb-sync .dot, .sd-state .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dim); flex: none; display: inline-block; }
+.rb-sync[data-state="idle"] .dot, .sd-state[data-state="idle"] .dot { background: #3fe0a6; box-shadow: 0 0 6px #3fe0a6; }
+.rb-sync[data-state="busy"] .dot, .sd-state[data-state="busy"] .dot { background: var(--cyan); animation: syncpulse 1s ease-in-out infinite; }
+.rb-sync[data-state="error"] .dot, .sd-state[data-state="error"] .dot { background: var(--rust); box-shadow: 0 0 6px var(--rust); }
+@keyframes syncpulse { 50% { opacity: .3; } }
+.syncdlg { position: fixed; inset: 0; z-index: 85; background: rgba(2,5,8,.88); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+.sd-box { width: min(520px, 100%); background: var(--deep); border: 1px solid var(--line); box-shadow: 0 20px 60px -20px #000, 0 0 30px -14px var(--glow-cyan); padding: 18px 20px 22px; }
+.sd-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.sd-top h2 { font-size: 1.3rem; color: var(--cyan); letter-spacing: .04em; }
+.sd-x { background: none; border: 1px solid var(--line); color: var(--dim); width: 34px; height: 34px; cursor: pointer; flex: none; }
+.sd-body p { margin: 8px 0; }
+.sd-body h3 { font-size: 1rem; margin: 20px 0 4px; color: var(--amber); }
+.sd-steps { padding-left: 20px; display: grid; gap: 14px; margin: 14px 0; }
+.sd-steps li { display: grid; gap: 4px; }
+.sd-steps a { color: var(--cyan); font-weight: 600; }
+.sd-steps span { color: var(--dim); }
+.sd-form, .sd-code { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+.sd-in { flex: 1 1 200px; min-width: 0; font-family: var(--font-mono); font-size: .85rem; color: var(--ink); background: var(--night); border: 1px solid var(--line); padding: 10px 12px; }
+.sd-in:focus { outline: none; border-color: var(--cyan); }
+.sd-go, .sd-now { font-family: var(--font-mono); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; background: var(--cyan); color: var(--night); border: 0; padding: 10px 16px; cursor: pointer; }
+.sd-go:disabled { opacity: .6; cursor: default; }
+.sd-copy, .sd-reveal, .sd-off { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; background: none; color: var(--ink); border: 1px solid var(--line); padding: 9px 12px; cursor: pointer; }
+.sd-off { margin-top: 14px; color: var(--rust); border-color: rgba(255,90,77,.5); }
+.sd-acts { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin: 12px 0 4px; }
+.sd-acts a { color: var(--cyan); font-size: .9rem; }
+.sd-state { display: flex; gap: 10px; align-items: baseline; }
+.sd-err { color: var(--rust); }
+.sd-small { font-size: .84rem; color: var(--dim); }
+@media (prefers-reduced-motion: reduce) { .rb-sync[data-state="busy"] .dot, .sd-state[data-state="busy"] .dot { animation: none; } }
+
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} img{max-width:100%} [hidden]{display:none!important}</style>
 </head><body><canvas id="rain" aria-hidden="true"></canvas>
 <div class="scan" aria-hidden="true"></div>
 <div id="score" role="region" aria-label="Ambient score player"><button id="scoreprev" class="sb" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="2" height="10"/><polygon points="14,3 5,8 14,13"/></svg></button><button id="scorebtn" class="sb main" type="button" aria-pressed="false" aria-label="Play score"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">▶</span></button><button id="scorenext" class="sb" type="button" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="12" y="3" width="2" height="10"/><polygon points="2,3 11,8 2,13"/></svg></button><div class="meta"><span id="scoretitle">01 / 05</span><div class="row"><input id="scorevol" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Volume"><button id="scorerain" class="chip" type="button" aria-pressed="true">Rain</button><button id="scorefx" class="chip" type="button" aria-pressed="false" title="Interface sounds off">Sounds</button></div><span id="scorehint">Original score</span></div></div>
-<div id="boot" class="boot" data-build="011" hidden aria-hidden="true"><div class="boot-in"><div class="boot-lines"></div><div class="boot-skip">Tap to skip</div></div></div>
+<div id="boot" class="boot" data-build="012" hidden aria-hidden="true"><div class="boot-in"><div class="boot-lines"></div><div class="boot-skip">Tap to skip</div></div></div>
 <div id="esper" class="esper" hidden role="dialog" aria-modal="true" aria-label="ESPER image enhancement"><div class="esper-box"><div class="esper-head"><span>ESPER · 34-B</span><button class="esper-close" type="button" aria-label="Close">✕</button></div><canvas></canvas><div class="esper-read" aria-live="polite"></div><a class="esper-go" hidden>Open story →</a></div></div>
 <nav class="bar" aria-label="Archive"><div class="wrap"><a class="brand" href="#archive">BR<span class="yrs"> · ARCHIVE</span></a><a href="#era1" data-nav="era1">Era I<span class="yrs"> · 2009–2019</span></a><a href="#era2" data-nav="era2">Era II<span class="yrs"> · 2022–2039</span></a><a href="#era3" data-nav="era3">Era III<span class="yrs"> · 2048–2099</span></a><a href="#people" data-nav="people">Files</a><a href="#lore" data-nav="lore">Lore</a><button id="searchbtn" class="searchbtn" type="button" aria-label="Search the archive" aria-expanded="false" aria-controls="searchpanel" title="Search (/)"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.6 12.6 L17 17"/></svg></button></div><div class="wrap sub" data-for="era1" hidden><a href="#origins">Origins · 2009</a><a href="#board">Origins case board</a><a href="#files">Origins case files</a><a href="#empathy">Origins themes</a><a href="#tokyo">Tokyo Nexus · 2015</a><a href="#film82">Blade Runner · 1982</a><a href="#game97">Game · 1997</a><a href="#br2019">2019 · comic</a></div><div class="wrap sub" data-for="era2" hidden><a href="#blackout">Black Out · 2022</a><a href="#br2029">2029 · comic</a><a href="#lotus">Black Lotus · anime</a><a href="#ll1">Leaving L.A.</a><a href="#lv1">Las Vegas</a><a href="#dawn">Nexus Dawn · 2036</a><a href="#br2039">2039 · comic</a></div><div class="wrap sub" data-for="era3" hidden><a href="#nowhere">Nowhere to Run · 2048</a><a href="#film49">Blade Runner 2049</a><a href="#br2099">Blade Runner 2099</a></div><div class="wrap sub" data-for="people" hidden><a href="#p-tyrell">Eldon Tyrell</a><a href="#p-cal">Cal Moreaux</a><a href="#p-deckard">Rick Deckard</a><a href="#p-rachael">Rachael</a><a href="#p-gaff">Gaff</a><a href="#p-ash">Ash</a><a href="#p-wojciech">Lydia Wojciech</a><a href="#p-cleo">Cleo Selwyn</a><a href="#p-isobel">Isobel Selwyn</a><a href="#p-hythe">Hythe</a><a href="#p-freysa">Freysa</a><a href="#p-yotun">Yotun</a><a href="#p-elle">Elle</a><a href="#p-davis">Alani Davis</a><a href="#p-wallace">Niander Wallace</a><a href="#p-luv">Luv</a><a href="#p-sapper">Sapper Morton</a><a href="#p-k">K</a></div><div class="wrap sub" data-for="lore" hidden><a href="#timeline">Timeline</a><a href="#glossary">Glossary</a><a href="#connections">Connections</a><a href="#map">Locations</a></div></nav><div id="searchpanel" class="searchpanel" hidden role="dialog" aria-modal="true" aria-label="Search the archive">
   <div class="sp-box">
@@ -796,7 +829,7 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
     <p class="prose" style="color:var(--dim);font-size:.9rem;margin-top:16px">Do Androids Dream of Electric Sheep? and K. W. Jeter's sequel novels follow their own separate timeline.</p>
   </div>
 </section>
-<footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.avpcentral.com/blade-runner-timeline" target="_blank" rel="noopener">AvP Central: Blade Runner timeline 2009–2099</a></li><li><a href="https://www.howtolovecomics.com/2025/06/04/blade-runner-comics-universe-chronological-reading-order/" target="_blank" rel="noopener">How to Love Comics: comics reading order</a></li><li><a href="https://titan-comics.com/c/2085-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><button type="button" class="install-btn" hidden>Install as an app</button><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
+<footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.avpcentral.com/blade-runner-timeline" target="_blank" rel="noopener">AvP Central: Blade Runner timeline 2009–2099</a></li><li><a href="https://www.howtolovecomics.com/2025/06/04/blade-runner-comics-universe-chronological-reading-order/" target="_blank" rel="noopener">How to Love Comics: comics reading order</a></li><li><a href="https://titan-comics.com/c/2085-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><button type="button" class="install-btn" hidden>Install as an app</button><p class="build">Build 012 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="era1" data-view="era1" hidden><section id="origins" style="padding-block-end:0">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">起源</span><div class="num">2009</div><h2>Blade Runner: Origins</h2>
@@ -1187,7 +1220,7 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
       <li><a href="https://www.nerdly.co.uk/2022/04/22/blade-runner-origins-11-review/" target="_blank" rel="noopener">Nerdly: #11 review</a></li>
       <li><a href="https://www.nerdly.co.uk/2022/06/01/blade-runner-origins-12-review-titan-comics/" target="_blank" rel="noopener">Nerdly: #12 review</a></li>
       <li><a href="https://scifibulletin.com/comics/blade-runner-review-blade-runner-origins-8/" target="_blank" rel="noopener">SciFi Bulletin: #8 review</a></li>
-    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner" target="_blank" rel="noopener">Wikipedia: Blade Runner (1982), plot</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Wikipedia: Blade Runner (1997 video game)</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Off-world Wiki: Blade Runner (1997 video game)</a></li><li><a href="https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BladeRunner" target="_blank" rel="noopener">TV Tropes: Blade Runner (video game)</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
+    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner" target="_blank" rel="noopener">Wikipedia: Blade Runner (1982), plot</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Wikipedia: Blade Runner (1997 video game)</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Off-world Wiki: Blade Runner (1997 video game)</a></li><li><a href="https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BladeRunner" target="_blank" rel="noopener">TV Tropes: Blade Runner (video game)</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 012 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="era2" data-view="era2" hidden><section id="blackout">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">停電</span><div class="num">2022</div><h2>Black Out 2022</h2>
@@ -1468,7 +1501,7 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Wikipedia: Blade Runner Black Out 2022</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Off-world Wiki: Black Out 2022</a></li><li><a href="https://en.wikipedia.org/wiki/2036:_Nexus_Dawn" target="_blank" rel="noopener">Wikipedia: 2036: Nexus Dawn</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
+<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Wikipedia: Blade Runner Black Out 2022</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Off-world Wiki: Black Out 2022</a></li><li><a href="https://en.wikipedia.org/wiki/2036:_Nexus_Dawn" target="_blank" rel="noopener">Wikipedia: 2036: Nexus Dawn</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 012 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="era3" data-view="era3" hidden><section id="nowhere">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">逃げ場なし</span><div class="num">2048</div><h2>2048: Nowhere to Run</h2>
@@ -1525,7 +1558,7 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run" target="_blank" rel="noopener">Wikipedia: 2048: Nowhere to Run</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_2049" target="_blank" rel="noopener">Wikipedia: Blade Runner 2049, plot</a></li><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
+<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run" target="_blank" rel="noopener">Wikipedia: 2048: Nowhere to Run</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_2049" target="_blank" rel="noopener">Wikipedia: Blade Runner 2049, plot</a></li><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 012 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="people" data-view="people" hidden><section id="files-index">
   <div class="wrap">
     <div class="sec-head"><div class="label">LAPD records · cross-referenced</div><h2>Character files</h2><p class="prose" style="color:var(--dim);margin:0">The people who turn up in more than one story, in order of first appearance. Each file links to every entry they appear in. With the spoiler shield on, a file stays blurred until you’ve read all of its appearances.</p></div>
@@ -1606,7 +1639,7 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
   </div>
 </section>
 <div class="wrap pager"><a href="#era3">← Era III</a><a href="#lore">Lore →</a></div>
-<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
+<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era.</p><p class="build">Build 012 · 26 Oct 2026</p></div></footer>
 </div><div class="view" id="lore" data-view="lore" hidden><section id="timeline">
   <div class="wrap">
     <div class="sec-head"><div class="label">2007 – 2099 · ninety years in one line</div><h2>Timeline</h2><p class="prose lore-intro">What the world looks like at each point in the saga, and where every story sits in it. Tap a year on the scale to jump there; tap an event to open its story.</p></div>
@@ -1650,7 +1683,7 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
   </div>
 </section>
 <div class="wrap pager"><a href="#people">← Files</a><a href="#archive">Archive →</a></div>
-<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era. The date on the tree in Blade Runner 2049 is from the film's <a href="https://m.imdb.com/title/tt1856101/plotsummary" target="_blank" rel="noopener">IMDb plot summary</a>.</p><p class="build">Build 011 · 26 Oct 2026</p></div></footer>
+<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era. The date on the tree in Blade Runner 2049 is from the film's <a href="https://m.imdb.com/title/tt1856101/plotsummary" target="_blank" rel="noopener">IMDb plot summary</a>.</p><p class="build">Build 012 · 26 Oct 2026</p></div></footer>
 </div></main>
 <script>/* The city behind the page: weather on the full-screen overlay, and the skyline in
    the hero. Each view has its own mood:
@@ -2547,13 +2580,20 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
     });
   }
   paint();
-  // read-only view of the tracker, used by search
+  // the tracker's API, used by search, lore, quizzes and sync
   window.BRReader = {
     isRead: function (id) { return !!read[id]; },
     allRead: function (ids) { return ids.every(function (id) { return read[id]; }); },
     storyDone: function (key) { return !!storyDone(key); },
     shield: function () { return shield; },
-    onChange: function (fn) { listeners.push(fn); }
+    onChange: function (fn) { listeners.push(fn); },
+    // used by sync: every read entry id, and replacing the whole set at once
+    readIds: function () { return Object.keys(read); },
+    replace: function (ids) {
+      var known = {}; cards.forEach(function (a) { known[a.id] = true; });
+      read = {}; ids.forEach(function (id) { if (known[id]) read[id] = true; });
+      save(KEY, JSON.stringify(Object.keys(read))); paint();
+    }
   };
 })();
 
@@ -3147,7 +3187,7 @@ window.BR_LORE = {
   var L = window.BR_LORE, R = window.BRReader; if (!L || !L.quiz || !R) return;
   var Q = L.quiz, KEY = 'br-vk', best = {};
   try { best = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} window.dispatchEvent(new Event('br:scores')); }
   function sfx(n) { window.dispatchEvent(new CustomEvent('br:sfx', { detail: n })); }
   var ANCHOR = { i: '#origins', tn: '#tokyo', f: '#film82', gm: '#game97', b: '#br2019', bo: '#blackout', c: '#br2029', l: '#lotus',
     ll: '#ll1', lv: '#lv1', dawn: '#dawn', d: '#br2039', run: '#nowhere', g: '#film49' };
@@ -3234,7 +3274,17 @@ window.BR_LORE = {
   dlg.querySelector('.vk-x').addEventListener('click', close);
   dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlg.hidden) close(); });
-  window.BRQuiz = { open: open };
+  window.BRQuiz = {
+    open: open,
+    scores: function () { return JSON.parse(JSON.stringify(best)); },
+    // keep the better of two scores for each story (used by sync)
+    merge: function (other) {
+      var changed = false;
+      Object.keys(other || {}).forEach(function (k) { var v = +other[k]; if (Q[k] && v >= 0 && v <= Q[k].length && (best[k] === undefined || v > best[k])) { best[k] = v; changed = true; } });
+      if (changed) { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} paintButtons(); }
+      return changed;
+    }
+  };
 })();
 
 /* Search across synopses, character files and story intros.
@@ -3653,7 +3703,196 @@ window.BR_LORE = {
   window.addEventListener('load', function () { if (location.hash) route(location.hash.slice(1), false); });
 })();
 </script>
-<script>/* GitHub Pages copy only: offline support and an "Install as an app" button where the browser offers it. */
+<script>/* Progress sync across devices (GitHub Pages copy only).
+   Reading progress and Voight-Kampff scores are kept in a private gist in the reader's own GitHub account,
+   using a token they paste in once per device. Each read/unread change is timestamped, so two devices that
+   changed different things merge cleanly, and the most recent change to the same entry wins. */
+(function () {
+  var R = window.BRReader; if (!R || !window.fetch) return;
+  var TK = 'br-sync-token', GK = 'br-sync-gist', SK = 'br-sync-stamps', LK = 'br-sync-last';
+  var FILE = 'blade-runner-archive-progress.json', DESC = 'Blade Runner Archive: reading progress (kept in step by the site)';
+  var TOKEN_URL = 'https://github.com/settings/tokens/new?scopes=gist&description=Blade%20Runner%20Archive%20sync';
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function put(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+
+  var token = get(TK), gist = get(GK), last = +get(LK) || 0;
+  var stamps = {}; try { stamps = JSON.parse(get(SK) || '{}') || {}; } catch (e) { stamps = {}; }
+  var applying = false, busy = false, again = false, timer = null, state = token ? 'idle' : 'off', message = '';
+
+  // ---------- change log ----------
+  function setOf(ids) { var o = {}; ids.forEach(function (id) { o[id] = true; }); return o; }
+  var prev = setOf(R.readIds());
+  // entries read before sync was set up count as "read, a long time ago", so they merge as a union
+  Object.keys(prev).forEach(function (id) { if (!stamps[id]) stamps[id] = [1, 1]; });
+  function saveStamps() { put(SK, JSON.stringify(stamps)); }
+  saveStamps();
+  function noteChanges() {
+    if (applying) return;
+    var cur = setOf(R.readIds()), now = Date.now(), changed = false;
+    Object.keys(cur).forEach(function (id) { if (!prev[id]) { stamps[id] = [1, now]; changed = true; } });
+    Object.keys(prev).forEach(function (id) { if (!cur[id]) { stamps[id] = [0, now]; changed = true; } });
+    prev = cur;
+    if (changed) { saveStamps(); soon(); }
+  }
+  R.onChange(function () { setTimeout(noteChanges, 0); });
+  window.addEventListener('br:scores', function () { soon(); });
+
+  // ---------- state in the gist ----------
+  function snapshot() {
+    var read = {}; Object.keys(stamps).sort().forEach(function (id) { read[id] = stamps[id]; });
+    var vk = window.BRQuiz ? window.BRQuiz.scores() : {}, vks = {}; Object.keys(vk).sort().forEach(function (k) { vks[k] = vk[k]; });
+    return { v: 1, read: read, vk: vks };
+  }
+  function merge(remote) {
+    if (!remote || remote.v !== 1) return;
+    Object.keys(remote.read || {}).forEach(function (id) {
+      var r = remote.read[id]; if (!Array.isArray(r) || r.length !== 2) return;
+      if (!stamps[id] || r[1] > stamps[id][1]) stamps[id] = [r[0] ? 1 : 0, +r[1] || 0];
+    });
+    saveStamps();
+    var want = Object.keys(stamps).filter(function (id) { return stamps[id][0] === 1; }).sort(), have = R.readIds().sort();
+    if (want.join() !== have.join()) { applying = true; try { R.replace(want); } finally { applying = false; } prev = setOf(R.readIds()); }
+    if (window.BRQuiz && remote.vk) window.BRQuiz.merge(remote.vk);
+  }
+
+  // ---------- GitHub ----------
+  function api(method, path, body, tok) {
+    return fetch('https://api.github.com' + path, {
+      method: method, cache: 'no-store',
+      headers: { Authorization: 'Bearer ' + (tok || token), Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function (res) {
+      if (!res.ok) { var e = new Error('github ' + res.status); e.status = res.status; throw e; }
+      return res.status === 204 ? null : res.json();
+    });
+  }
+  function content(obj) { var f = {}; f[FILE] = { content: JSON.stringify(obj, null, 1) }; return f; }
+  function findGist(tok) {
+    if (gist) return Promise.resolve(gist);
+    return api('GET', '/gists?per_page=100', null, tok).then(function (list) {
+      var hit = (list || []).filter(function (g) { return g.files && g.files[FILE]; })[0];
+      if (hit) return hit.id;
+      return api('POST', '/gists', { description: DESC, public: false, files: content(snapshot()) }, tok).then(function (g) { return g.id; });
+    }).then(function (id) { gist = id; put(GK, id); return id; });
+  }
+  function readGist() {
+    return api('GET', '/gists/' + gist).then(function (g) {
+      var f = g.files && g.files[FILE];
+      if (!f) return null;
+      if (f.truncated && f.raw_url) return fetch(f.raw_url, { cache: 'no-store' }).then(function (r) { return r.json(); });
+      try { return JSON.parse(f.content); } catch (e) { return null; }
+    });
+  }
+  function sync() {
+    if (!token) return Promise.resolve();
+    if (busy) { again = true; return Promise.resolve(); }
+    busy = true; clearTimeout(timer); show('busy');
+    return findGist().then(readGist).then(function (remote) {
+      merge(remote);
+      var mine = snapshot();
+      if (!remote || JSON.stringify({ v: remote.v, read: sortKeys(remote.read), vk: sortKeys(remote.vk) }) !== JSON.stringify(mine)) {
+        return api('PATCH', '/gists/' + gist, { files: content(mine) });
+      }
+    }).then(function () {
+      last = Date.now(); put(LK, String(last)); show('idle');
+    }).catch(function (e) {
+      if (e.status === 404) { gist = null; put(GK, null); }   // gist deleted on GitHub: make a new one next time
+      if (e.status === 401) show('error', 'GitHub didn’t accept the token. It may have expired or been revoked. Connect again with a new one.');
+      else if (e.status === 403 || e.status === 404) show('error', 'GitHub refused access to the gist. Check that the token has the “gist” permission.');
+      else show('error', navigator.onLine === false ? 'You’re offline. Progress will sync when you’re back online.' : 'Couldn’t reach GitHub. Will try again shortly.');
+      if (!e.status) timer = setTimeout(sync, 60000);
+    }).then(function () { busy = false; if (again) { again = false; sync(); } });
+  }
+  function sortKeys(o) { var r = {}; Object.keys(o || {}).sort().forEach(function (k) { r[k] = o[k]; }); return r; }
+  function soon() { if (!token) return; clearTimeout(timer); timer = setTimeout(sync, 2500); }
+
+  if (token) setTimeout(sync, 800);
+  document.addEventListener('visibilitychange', function () {
+    if (!token) return;
+    if (document.visibilityState === 'visible' && Date.now() - last > 20000) sync();
+    if (document.visibilityState === 'hidden' && timer) { clearTimeout(timer); sync(); }
+  });
+  window.addEventListener('online', function () { if (token) sync(); });
+
+  // ---------- interface ----------
+  var buttons = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.readerbar .rb'), function (rb) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'rb-sync';
+    b.innerHTML = '<span class="dot" aria-hidden="true"></span><span class="t"></span>';
+    b.addEventListener('click', openDialog);
+    var shieldBtn = rb.querySelector('.rb-shield'); rb.insertBefore(b, shieldBtn ? shieldBtn.nextSibling : null);
+    buttons.push(b);
+  });
+  function time(t) { var d = new Date(t); return (d.toDateString() === new Date().toDateString() ? '' : d.toLocaleDateString([], { day: 'numeric', month: 'short' }) + ' ') + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
+  function show(s, msg) {
+    state = s; message = msg || '';
+    var label = !token ? 'Sync' : s === 'busy' ? 'Syncing…' : s === 'error' ? 'Sync problem' : last ? 'Synced ' + time(last) : 'Sync on';
+    buttons.forEach(function (b) { b.querySelector('.t').textContent = label; b.setAttribute('data-state', token ? s : 'off'); });
+    if (!dlg.hidden) paintDialog();
+  }
+
+  var dlg = document.createElement('div'); dlg.className = 'syncdlg'; dlg.hidden = true;
+  dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.setAttribute('aria-labelledby', 'sync-h');
+  dlg.innerHTML = '<div class="sd-box"><div class="sd-top"><h2 id="sync-h">Sync across devices</h2><button type="button" class="sd-x" aria-label="Close">✕</button></div><div class="sd-body"></div></div>';
+  document.body.appendChild(dlg);
+  var body = dlg.querySelector('.sd-body'), opener = null;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function setupCode() { return 'BRSYNC1.' + btoa(JSON.stringify({ t: token, g: gist })); }
+  function paintDialog() {
+    if (!token) {
+      body.innerHTML =
+        '<p>Keep your reading progress and Voight-Kampff scores in step on your phone, tablet and computer. They’re saved in a private gist in your own GitHub account, and nowhere else.</p>' +
+        '<ol class="sd-steps"><li><a href="' + TOKEN_URL + '" target="_blank" rel="noopener">Create a token on GitHub ↗</a><span>Leave only <b>gist</b> ticked, pick an expiry date, then tap <b>Generate token</b> and copy it.</span></li>' +
+        '<li><span>Paste the token here. On your other devices, paste a setup code from a device that’s already connected, or the same token.</span>' +
+        '<form class="sd-form"><input class="sd-in" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_… or BRSYNC1.…" aria-label="Token or setup code"><button type="submit" class="sd-go">Connect</button></form></li></ol>' +
+        (message ? '<p class="sd-err" role="alert">' + esc(message) + '</p>' : '') +
+        '<p class="sd-small">The token stays in this browser. With only “gist” ticked it can read and write your gists, and nothing else in your account. You can revoke it on GitHub at any time.</p>';
+      body.querySelector('.sd-form').addEventListener('submit', function (e) { e.preventDefault(); connect(body.querySelector('.sd-in').value.trim()); });
+      return;
+    }
+    body.innerHTML =
+      '<p class="sd-state" data-state="' + state + '"><span class="dot" aria-hidden="true"></span>' +
+      (state === 'busy' ? 'Syncing…' : state === 'error' ? esc(message) : last ? 'Synced at ' + time(last) + '. Changes sync a few seconds after you make them.' : 'Connected.') + '</p>' +
+      '<div class="sd-acts"><button type="button" class="sd-now">Sync now</button>' + (gist ? '<a href="https://gist.github.com/' + esc(gist) + '" target="_blank" rel="noopener">View the gist ↗</a>' : '') + '</div>' +
+      '<h3>Set up another device</h3><p>Open the archive there, tap <b>Sync</b>, and paste this setup code. Treat it like a password: it contains your token.</p>' +
+      '<div class="sd-code"><input class="sd-in" type="password" readonly value="' + esc(setupCode()) + '" aria-label="Setup code"><button type="button" class="sd-copy">Copy</button><button type="button" class="sd-reveal" aria-pressed="false">Show</button></div>' +
+      '<p class="sd-small">Reset progress on a synced device clears it on all of them.</p>' +
+      '<button type="button" class="sd-off">Disconnect this device</button>';
+    body.querySelector('.sd-now').addEventListener('click', function () { sync(); });
+    body.querySelector('.sd-copy').addEventListener('click', function (e) {
+      var b = e.currentTarget, done = function (ok) { b.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { b.textContent = 'Copy'; }, 2000); };
+      if (navigator.clipboard) navigator.clipboard.writeText(setupCode()).then(function () { done(true); }, function () { done(false); }); else done(false);
+    });
+    body.querySelector('.sd-reveal').addEventListener('click', function (e) {
+      var inp = body.querySelector('.sd-code .sd-in'), on = inp.type === 'password'; inp.type = on ? 'text' : 'password';
+      e.currentTarget.textContent = on ? 'Hide' : 'Show'; e.currentTarget.setAttribute('aria-pressed', on ? 'true' : 'false'); if (on) inp.select();
+    });
+    body.querySelector('.sd-off').addEventListener('click', function () {
+      token = null; gist = null; put(TK, null); put(GK, null); put(LK, null); last = 0; show('off'); paintDialog();
+    });
+  }
+  function connect(input) {
+    var tok = input, g = null;
+    if (/^BRSYNC1\./.test(input)) { try { var o = JSON.parse(atob(input.slice(8))); tok = o.t; g = o.g || null; } catch (e) { tok = ''; } }
+    if (!tok) { message = 'That doesn’t look like a token or a setup code.'; paintDialog(); return; }
+    var btn = body.querySelector('.sd-go'); if (btn) { btn.disabled = true; btn.textContent = 'Connecting…'; }
+    gist = g;
+    (g ? Promise.resolve(g) : findGist(tok)).then(function (id) {
+      gist = id; token = tok; put(TK, tok); put(GK, id); message = ''; return sync();
+    }).catch(function (e) {
+      gist = null; message = e.status === 401 ? 'GitHub didn’t accept that token. Check you copied all of it.' : e.status === 403 || e.status === 404 ? 'That token can’t use gists. Make a new one with “gist” ticked.' : 'Couldn’t reach GitHub. Check your connection and try again.';
+      paintDialog();
+    });
+  }
+  function openDialog() { opener = document.activeElement; dlg.hidden = false; document.documentElement.classList.add('searching'); paintDialog(); var f = dlg.querySelector('.sd-in, .sd-now'); if (f) f.focus(); }
+  function closeDialog() { dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
+  dlg.querySelector('.sd-x').addEventListener('click', closeDialog);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDialog(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlg.hidden) closeDialog(); });
+  show(state);
+})();
+
+/* GitHub Pages copy only: offline support and an "Install as an app" button where the browser offers it. */
 (function () {
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });

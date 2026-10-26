@@ -1,0 +1,32 @@
+/* ---------- progress sync (GitHub Pages copy) ---------- */
+.rb-sync { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--ink); border: 1px solid var(--line); padding: 8px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.rb-sync:hover { border-color: var(--cyan); }
+.rb-sync .dot, .sd-state .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dim); flex: none; display: inline-block; }
+.rb-sync[data-state="idle"] .dot, .sd-state[data-state="idle"] .dot { background: #3fe0a6; box-shadow: 0 0 6px #3fe0a6; }
+.rb-sync[data-state="busy"] .dot, .sd-state[data-state="busy"] .dot { background: var(--cyan); animation: syncpulse 1s ease-in-out infinite; }
+.rb-sync[data-state="error"] .dot, .sd-state[data-state="error"] .dot { background: var(--rust); box-shadow: 0 0 6px var(--rust); }
+@keyframes syncpulse { 50% { opacity: .3; } }
+.syncdlg { position: fixed; inset: 0; z-index: 85; background: rgba(2,5,8,.88); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+.sd-box { width: min(520px, 100%); background: var(--deep); border: 1px solid var(--line); box-shadow: 0 20px 60px -20px #000, 0 0 30px -14px var(--glow-cyan); padding: 18px 20px 22px; }
+.sd-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.sd-top h2 { font-size: 1.3rem; color: var(--cyan); letter-spacing: .04em; }
+.sd-x { background: none; border: 1px solid var(--line); color: var(--dim); width: 34px; height: 34px; cursor: pointer; flex: none; }
+.sd-body p { margin: 8px 0; }
+.sd-body h3 { font-size: 1rem; margin: 20px 0 4px; color: var(--amber); }
+.sd-steps { padding-left: 20px; display: grid; gap: 14px; margin: 14px 0; }
+.sd-steps li { display: grid; gap: 4px; }
+.sd-steps a { color: var(--cyan); font-weight: 600; }
+.sd-steps span { color: var(--dim); }
+.sd-form, .sd-code { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+.sd-in { flex: 1 1 200px; min-width: 0; font-family: var(--font-mono); font-size: .85rem; color: var(--ink); background: var(--night); border: 1px solid var(--line); padding: 10px 12px; }
+.sd-in:focus { outline: none; border-color: var(--cyan); }
+.sd-go, .sd-now { font-family: var(--font-mono); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; background: var(--cyan); color: var(--night); border: 0; padding: 10px 16px; cursor: pointer; }
+.sd-go:disabled { opacity: .6; cursor: default; }
+.sd-copy, .sd-reveal, .sd-off { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; background: none; color: var(--ink); border: 1px solid var(--line); padding: 9px 12px; cursor: pointer; }
+.sd-off { margin-top: 14px; color: var(--rust); border-color: rgba(255,90,77,.5); }
+.sd-acts { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin: 12px 0 4px; }
+.sd-acts a { color: var(--cyan); font-size: .9rem; }
+.sd-state { display: flex; gap: 10px; align-items: baseline; }
+.sd-err { color: var(--rust); }
+.sd-small { font-size: .84rem; color: var(--dim); }
+@media (prefers-reduced-motion: reduce) { .rb-sync[data-state="busy"] .dot, .sd-state[data-state="busy"] .dot { animation: none; } }

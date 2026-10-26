@@ -1,6 +1,6 @@
 /* Offline support for the GitHub Pages copy. The page is fetched from the network when online
    (so updates show straight away) and served from the cache when offline. Fonts are cached on first use. */
-const BUILD = '011';
+const BUILD = '012';
 const CACHE = 'br-archive-' + BUILD;
 const FONTS = 'br-fonts';
 const CORE = ['./', './manifest.webmanifest', './img/icon-192.png', './img/icon-512.png', './img/icon-180.png'];

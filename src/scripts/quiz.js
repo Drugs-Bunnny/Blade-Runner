@@ -4,7 +4,7 @@
   var L = window.BR_LORE, R = window.BRReader; if (!L || !L.quiz || !R) return;
   var Q = L.quiz, KEY = 'br-vk', best = {};
   try { best = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} window.dispatchEvent(new Event('br:scores')); }
   function sfx(n) { window.dispatchEvent(new CustomEvent('br:sfx', { detail: n })); }
   var ANCHOR = { i: '#origins', tn: '#tokyo', f: '#film82', gm: '#game97', b: '#br2019', bo: '#blackout', c: '#br2029', l: '#lotus',
     ll: '#ll1', lv: '#lv1', dawn: '#dawn', d: '#br2039', run: '#nowhere', g: '#film49' };
@@ -91,5 +91,15 @@
   dlg.querySelector('.vk-x').addEventListener('click', close);
   dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlg.hidden) close(); });
-  window.BRQuiz = { open: open };
+  window.BRQuiz = {
+    open: open,
+    scores: function () { return JSON.parse(JSON.stringify(best)); },
+    // keep the better of two scores for each story (used by sync)
+    merge: function (other) {
+      var changed = false;
+      Object.keys(other || {}).forEach(function (k) { var v = +other[k]; if (Q[k] && v >= 0 && v <= Q[k].length && (best[k] === undefined || v > best[k])) { best[k] = v; changed = true; } });
+      if (changed) { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} paintButtons(); }
+      return changed;
+    }
+  };
 })();

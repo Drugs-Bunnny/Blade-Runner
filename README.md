@@ -35,19 +35,20 @@ An unofficial fan archive of the Blade Runner saga from 2009 to 2099. It covers 
 | --- | --- | --- |
 | ![Black Lotus section with its poster](docs/img/screen-era.png) | ![Character dossiers](docs/img/screen-files.png) | ![An issue card on a phone](docs/img/screen-phone.png) |
 
+- **Sync across devices.** Tap *Sync* in the bar at the top of any page to keep reading progress and quiz scores in step on your phone, tablet and computer. Progress is saved to a private gist in your own GitHub account, using a token with only the *gist* permission that you paste in once. A connected device shows a setup code for adding the next one. Each change is timestamped, so devices merge rather than overwrite each other. Sync is in the GitHub Pages copy only.
 - **Install it and read offline.** On Android, open the site in Chrome and tap *Install as an app* at the foot of the front page, or choose *Add to Home screen* from the browser menu. It then opens full-screen from its own icon. After one visit, the whole archive works without a connection, music included.
 
 ![The Lore timeline](docs/img/screen-lore.png)
 
-Reading progress, quiz scores and the spoiler setting are saved in the visitor's own browser. Nothing is sent anywhere.
+Reading progress, quiz scores and the spoiler setting are saved in the visitor's own browser. Nothing is sent anywhere unless you turn on sync, which talks only to GitHub, using your own token.
 
 ## Layout
 
 | Path | What it is |
 | --- | --- |
 | `src/pages/` | The page content: `archive.html` (the hub), `era1.html`–`era3.html` (the synopses and their sources), `people.html` (character files) and `lore.html` (the Lore section's frame) |
-| `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield), `fx.css` (film touches), `lore.css` (Lore and the quizzes) |
-| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `search.js` (search), `fx.js` (ESPER, origami, start-up screen, neon flicker), `sfx.js` (interface sounds), `lore-data.js` (glossary, timeline, connections, places and quiz questions), `lore.js` (draws the Lore section and the underlined terms), `quiz.js` (Voight-Kampff tests), `router.js` (switching views) |
+| `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield), `fx.css` (film touches), `lore.css` (Lore and the quizzes), `sync.css` (the sync button and dialog) |
+| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `search.js` (search), `fx.js` (ESPER, origami, start-up screen, neon flicker), `sfx.js` (interface sounds), `lore-data.js` (glossary, timeline, connections, places and quiz questions), `lore.js` (draws the Lore section and the underlined terms), `quiz.js` (Voight-Kampff tests), `sync.js` (GitHub gist sync, Pages copy only), `router.js` (switching views) |
 | `src/shell/` | Page furniture: hero text, sub-navigation, the music player, the start-up and ESPER overlays, icon and social tags |
 | `src/pwa/` | The app manifest, the offline service worker and its registration, used by the GitHub Pages copy only |
 | `build.py` | Assembles everything into one page |

@@ -184,12 +184,19 @@
     });
   }
   paint();
-  // read-only view of the tracker, used by search
+  // the tracker's API, used by search, lore, quizzes and sync
   window.BRReader = {
     isRead: function (id) { return !!read[id]; },
     allRead: function (ids) { return ids.every(function (id) { return read[id]; }); },
     storyDone: function (key) { return !!storyDone(key); },
     shield: function () { return shield; },
-    onChange: function (fn) { listeners.push(fn); }
+    onChange: function (fn) { listeners.push(fn); },
+    // used by sync: every read entry id, and replacing the whole set at once
+    readIds: function () { return Object.keys(read); },
+    replace: function (ids) {
+      var known = {}; cards.forEach(function (a) { known[a.id] = true; });
+      read = {}; ids.forEach(function (id) { if (known[id]) read[id] = true; });
+      save(KEY, JSON.stringify(Object.keys(read))); paint();
+    }
   };
 })();
