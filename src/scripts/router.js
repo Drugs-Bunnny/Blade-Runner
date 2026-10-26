@@ -31,7 +31,11 @@
     if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey) return;
     var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
     var id = a.getAttribute('href').slice(1); e.preventDefault();
-    if (id && id !== location.hash.slice(1)) { remember(); try { history.pushState({}, '', '#' + id); } catch (er) {} }
+    var fromPopup = window.BROverlay && window.BROverlay.navigating();
+    try {
+      if (fromPopup) history.replaceState({}, '', '#' + id);   // a link inside a pop-up takes the pop-up's place in history
+      else if (id && id !== location.hash.slice(1)) { remember(); history.pushState({}, '', '#' + id); }
+    } catch (er) {}
     route(id, true);
   });
   window.addEventListener('popstate', function (e) {

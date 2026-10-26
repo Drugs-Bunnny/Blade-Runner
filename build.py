@@ -34,7 +34,7 @@ NAV = [("era1", 'Era I<span class="yrs"> · 2009–2019</span>'),
        ("lore", 'Lore')]
 
 STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css", "styles/fx.css", "styles/lore.css", "styles/sync.css"]
-SCRIPTS = ["scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/lore-data.js",
+SCRIPTS = ["scripts/overlay.js", "scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/lore-data.js",
            "scripts/lore.js", "scripts/quiz.js", "scripts/search.js", "scripts/fx.js", "scripts/sfx.js"]
 
 

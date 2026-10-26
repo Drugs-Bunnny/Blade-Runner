@@ -57,6 +57,7 @@
       matchers.push({ id: t.id, re: new RegExp('(^|[^A-Za-z0-9-])(' + ps + ')(' + src + ')(?![A-Za-z0-9])') });
     });
   });
+  function underline() {
   Array.prototype.forEach.call(document.querySelectorAll('article.issue'), function (art) {
     var used = {}, paras = art.querySelectorAll('.ib p, .ib .quote');
     Array.prototype.forEach.call(paras, function (p) {
@@ -82,10 +83,12 @@
       });
     });
   });
+  }
+  (window.requestIdleCallback || function (f) { setTimeout(f, 200); })(underline, { timeout: 1500 });
   // the definition pop-up
   var pop = document.createElement('div'); pop.className = 'termpop'; pop.hidden = true; pop.setAttribute('role', 'dialog'); document.body.appendChild(pop);
   var popFor = null;
-  function closePop() { if (popFor) popFor.setAttribute('aria-expanded', 'false'); pop.hidden = true; popFor = null; }
+  function closePop() { if (pop.hidden) return; if (window.BROverlay) window.BROverlay.pop('term'); if (popFor) popFor.setAttribute('aria-expanded', 'false'); pop.hidden = true; popFor = null; }
   function openPop(btn) {
     var t = TERMS[btn.getAttribute('data-term')]; if (!t) return;
     if (popFor === btn) { closePop(); return; }
@@ -100,6 +103,7 @@
     var below = r.bottom + 10, h = pop.offsetHeight;
     pop.style.top = (below + h > innerHeight - 90 && r.top - h - 10 > 50 ? r.top - h - 10 : below) + window.pageYOffset + 'px';
     pop.querySelector('.tp-x').focus({ preventScroll: true });
+    if (window.BROverlay) window.BROverlay.push('term', closePop);
   }
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('button.term');
@@ -205,6 +209,7 @@
     return P;
   }
   function paintConnections() {
+    if (view.hidden) return;   // laid out the first time Lore is opened
     var g = visibleGraph(), narrow = cxSvg.parentNode.clientWidth < 560, W = narrow ? 380 : 760, H = narrow ? 640 : 560;
     var key = g.nodes.map(function (n) { return n.id; }).join() + '|' + g.links.length + '|' + W;
     if (key !== layoutKey) { pos = layout(g.nodes, g.links, W, H); layoutKey = key; }
@@ -242,7 +247,7 @@
   var COAST = '45,0 40,40 58,70 82,118 108,170 136,224 160,262 196,276 232,306 252,330 272,362 296,400 312,436 330,480 340,530 362,580 384,620';
   function mapSvg(narrow) {
     var fs = narrow ? 26 : 14, fsBig = narrow ? 30 : 17, iw = narrow ? 220 : 150, ih = narrow ? 84 : 66;
-    var s = '<svg viewBox="0 0 700 620" class="mp-svg" role="img" aria-label="Map of California, Nevada and Baja, with insets for Tokyo and the off-world colonies">' +
+    var s = '<svg viewBox="0 0 700 620" class="mp-svg" role="group" aria-label="Map of California, Nevada and Baja, with insets for Tokyo and the off-world colonies">' +
       '<defs><pattern id="mpgrid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0V35" fill="none" class="mp-grid"/></pattern>' +
       '<radialGradient id="mpglow"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient></defs>' +
       '<rect width="700" height="620" class="mp-sea"/><rect width="700" height="620" fill="url(#mpgrid)"/>' +
@@ -277,7 +282,7 @@
     var all = L.places.concat(L.insets), p = null; all.forEach(function (x) { if (x.id === place) p = x; });
     if (!p) {
       mpPanel.innerHTML = '<p class="dimline">Tap a marker, or pick a place:</p><div class="mp-picks">' + all.map(function (x) { return '<button type="button" data-pick="' + x.id + '">' + esc(x.n) + '</button>'; }).join('') + '</div>' +
-        '<h4>Not on the map</h4><ul class="mp-un">' + L.unmapped.map(function (u, i) {
+        '<h3 class="mp-sub">Not on the map</h3><ul class="mp-un">' + L.unmapped.map(function (u, i) {
           var key = 'mp:u' + i; return '<li><strong>' + esc(u.n) + '</strong> ' + (locked(u.s, key) ? veil(u.s, key) : esc(u.d) + ' <span class="apps">' + links(u.go) + '</span>') + '</li>';
         }).join('') + '</ul>';
       return;

@@ -155,7 +155,7 @@
     var dpr = Math.min(window.devicePixelRatio || 1, 2), w = 300, h = 400; cv.width = w * dpr; cv.height = h * dpr;
     var g = cv.getContext('2d'); g.scale(dpr, dpr); var R = seeded(key);
     g.fillStyle = C.night; g.fillRect(0, 0, w, h); g.save(); g.beginPath(); g.rect(8, 8, w - 16, h - 16); g.clip(); a.draw(g, w, h, R); scan(g, w, h); g.restore(); frame(g, w, h, a.col, a.title, a.sub, a.year);
-    cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', 'Original poster art for ' + a.title.replace('\n', ' '));
+    cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', 'Original poster art for ' + a.title.replace('\n', ' ')); cv.setAttribute('data-painted', '1');
   }
   // put a poster beside each work's banner
   Object.keys(ART).forEach(function (id) {
@@ -165,6 +165,17 @@
     var cv = document.createElement('canvas'); cv.className = 'cover'; cv.setAttribute('data-art', id);
     b.classList.add('has-cover'); b.appendChild(text); b.appendChild(cv);
   });
-  function all() { Array.prototype.forEach.call(document.querySelectorAll('canvas[data-art]'), paint); }
-  all(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+  // paint each poster only when it comes near the screen; until then it is a blank canvas of the right size
+  var dpr = Math.min(window.devicePixelRatio || 1, 2), canvases = Array.prototype.slice.call(document.querySelectorAll('canvas[data-art]'));
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); paint(e.target); } });
+  }, { rootMargin: '600px 0px' }) : null;
+  canvases.forEach(function (cv) {
+    cv.width = 300 * dpr; cv.height = 400 * dpr;
+    var a = ART[cv.getAttribute('data-art')]; if (a) { cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', 'Original poster art for ' + a.title.replace('\n', ' ')); }
+    if (io) io.observe(cv); else paint(cv);
+  });
+  // repaint the ones already drawn once the web fonts arrive
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { canvases.forEach(function (cv) { if (cv.getAttribute('data-painted')) paint(cv); }); });
+  window.BRArt = { paint: function (cv) { if (!cv.getAttribute('data-painted')) paint(cv); } };
 })();

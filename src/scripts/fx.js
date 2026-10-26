@@ -138,12 +138,14 @@
   }
   function open(canvas, href, label) {
     if (!canvas || !canvas.width) return;
+    if (window.BRArt) window.BRArt.paint(canvas);
     src = canvas; opener = document.activeElement; steps = plan(); size();
     go.hidden = true; if (href) { go.setAttribute('href', href); go.textContent = 'Open ' + label + ' →'; } else go.removeAttribute('href');
     dlg.hidden = false; read.removeAttribute('data-step'); document.documentElement.classList.add('searching');
     shut.focus(); t0 = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(draw);
+    if (window.BROverlay) window.BROverlay.push('esper', close);
   }
-  function close() { cancelAnimationFrame(raf); dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
+  function close() { if (dlg.hidden) return; if (window.BROverlay) window.BROverlay.pop('esper'); cancelAnimationFrame(raf); dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
   document.addEventListener('click', function (e) {
     var t = e.target; if (!t.closest) return;
     var poster = t.closest('a.poster'), cover = t.closest('canvas.cover');

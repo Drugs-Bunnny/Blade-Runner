@@ -51,8 +51,9 @@
     qs = shuffle(Q[k]).map(function (q) { return { q: q[0], right: q[1], opts: shuffle(q.slice(1)) }; });
     title.textContent = 'V-K · ' + NAME[k].toUpperCase();
     dlg.hidden = false; document.documentElement.classList.add('searching'); ask();
+    if (window.BROverlay) window.BROverlay.push('vk', close);
   }
-  function close() { dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
+  function close() { if (dlg.hidden) return; if (window.BROverlay) window.BROverlay.pop('vk'); dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
   function ask() {
     var q = qs[at]; needle(20 + Math.random() * 20, 15 + Math.random() * 15);
     body.innerHTML = '<div class="vk-n">Question ' + (at + 1) + ' of ' + qs.length + '</div><p class="vk-q">' + q.q + '</p><div class="vk-opts">' +

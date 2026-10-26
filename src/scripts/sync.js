@@ -12,7 +12,7 @@
 
   var token = get(TK), gist = get(GK), last = +get(LK) || 0;
   var stamps = {}; try { stamps = JSON.parse(get(SK) || '{}') || {}; } catch (e) { stamps = {}; }
-  var applying = false, busy = false, again = false, timer = null, state = token ? 'idle' : 'off', message = '';
+  var applying = false, busy = false, again = false, timer = null, followUp = null, state = token ? 'idle' : 'off', message = '';
 
   // ---------- change log ----------
   function setOf(ids) { var o = {}; ids.forEach(function (id) { o[id] = true; }); return o; }
@@ -81,15 +81,19 @@
   function sync() {
     if (!token) return Promise.resolve();
     if (busy) { again = true; return Promise.resolve(); }
-    busy = true; clearTimeout(timer); show('busy');
+    busy = true; clearTimeout(timer); timer = null; clearTimeout(followUp); show('busy');
+    var pushed = false;
     return findGist().then(readGist).then(function (remote) {
       merge(remote);
       var mine = snapshot();
       if (!remote || JSON.stringify({ v: remote.v, read: sortKeys(remote.read), vk: sortKeys(remote.vk) }) !== JSON.stringify(mine)) {
-        return api('PATCH', '/gists/' + gist, { files: content(mine) });
+        pushed = true; return api('PATCH', '/gists/' + gist, { files: content(mine) });
       }
     }).then(function () {
       last = Date.now(); put(LK, String(last)); show('idle');
+      // if another device saved at the same moment, its upload may have replaced ours:
+      // look again shortly and put back anything that went missing
+      if (pushed) { clearTimeout(followUp); followUp = setTimeout(sync, 6000); }
     }).catch(function (e) {
       if (e.status === 404) { gist = null; put(GK, null); }   // gist deleted on GitHub: make a new one next time
       if (e.status === 401) show('error', 'GitHub didn’t accept the token. It may have expired or been revoked. Connect again with a new one.');
@@ -179,8 +183,8 @@
       paintDialog();
     });
   }
-  function openDialog() { opener = document.activeElement; dlg.hidden = false; document.documentElement.classList.add('searching'); paintDialog(); var f = dlg.querySelector('.sd-in, .sd-now'); if (f) f.focus(); }
-  function closeDialog() { dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
+  function openDialog() { opener = document.activeElement; dlg.hidden = false; document.documentElement.classList.add('searching'); paintDialog(); var f = dlg.querySelector('.sd-in, .sd-now'); if (f) f.focus(); if (window.BROverlay) window.BROverlay.push('sync', closeDialog); }
+  function closeDialog() { if (dlg.hidden) return; if (window.BROverlay) window.BROverlay.pop('sync'); dlg.hidden = true; document.documentElement.classList.remove('searching'); if (opener && opener.focus) opener.focus(); }
   dlg.querySelector('.sd-x').addEventListener('click', closeDialog);
   dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDialog(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlg.hidden) closeDialog(); });

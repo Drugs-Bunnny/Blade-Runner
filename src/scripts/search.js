@@ -96,8 +96,11 @@
   function open() {
     opener = document.activeElement; panel.hidden = false; btn.setAttribute('aria-expanded', 'true');
     document.documentElement.classList.add('searching'); input.focus(); input.select(); run();
+    if (window.BROverlay) window.BROverlay.push('search', function () { close(false); });
   }
   function close(restore) {
+    if (panel.hidden) return;
+    if (window.BROverlay) window.BROverlay.pop('search');
     panel.hidden = true; btn.setAttribute('aria-expanded', 'false'); document.documentElement.classList.remove('searching');
     if (restore && opener && opener.focus) opener.focus();
   }

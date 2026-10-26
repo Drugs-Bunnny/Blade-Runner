@@ -87,6 +87,7 @@
     if (moodName === 'archive' || !mood.flares) { /* keep the two classic stacks on the right */ }
     if (moodName === 'archive') stacks = [{ x: W * .88, y: H * .62, next: 3000, burst: -1 }, { x: W * .94, y: H * .7, next: 7000, burst: -1 }];
     patrol = { at: 4000, x: -200, y: H * .28, dir: 1, active: false };
+    towerTick = -1; eyeKey = '';
   }
   var patrol = null;
 
@@ -141,34 +142,57 @@
       }
     });
   }
-  function drawTowers(t) {
+  // the towers and their thousands of lit windows only change every 1.5 s (a few windows flicker),
+  // so they are drawn into a cached layer and copied each frame
+  var towerLayer = document.createElement('canvas'), tl = towerLayer.getContext('2d'), towerTick = -1;
+  function paintTowers(tick) {
+    towerLayer.width = W; towerLayer.height = H; tl.clearRect(0, 0, W, H);
     towers.forEach(function (b) {
       var y = H - b.h * (b.far ? 1.15 : 1);
-      cx.fillStyle = mood.dust ? (b.far ? 'rgba(120,60,25,.55)' : 'rgba(40,18,8,.92)') : (b.far ? '#141b2e' : '#0a0e1a');
-      cx.fillRect(b.x, y, b.w, H - y);
+      tl.fillStyle = mood.dust ? (b.far ? 'rgba(120,60,25,.55)' : 'rgba(40,18,8,.92)') : (b.far ? '#141b2e' : '#0a0e1a');
+      tl.fillRect(b.x, y, b.w, H - y);
       if (b.far) return;
       for (var r = 0; r * 11 + 10 < b.h; r++) for (var c = 0; c * 8 + 8 < b.w; c++) { var s = rnd(b.k * 131 + r * 17 + c * 7);
-        if (s > 1 - mood.lit) { var flick = reduce ? 1 : (rnd(s * 99 + Math.floor(t / 1500)) > .04 ? 1 : 0);
-          cx.fillStyle = mood.dust ? '#ffb070' : s > .95 ? C.cyan : s > .92 ? C.pink : C.amber; cx.globalAlpha = .55 * flick; cx.fillRect(b.x + 4 + c * 8, y + 6 + r * 11, 3, 5); } }
-      cx.globalAlpha = 1;
-      if (b.h > H * .5 && !mood.dust) { cx.fillStyle = 'rgba(255,60,60,' + (reduce ? .9 : (Math.sin(t / 400 + b.k) > 0 ? .95 : .25)) + ')'; cx.beginPath(); cx.arc(b.x + b.w / 2, y - 3, 2, 0, 7); cx.fill(); }
+        if (s > 1 - mood.lit) { var flick = reduce ? 1 : (rnd(s * 99 + tick) > .04 ? 1 : 0);
+          tl.fillStyle = mood.dust ? '#ffb070' : s > .95 ? C.cyan : s > .92 ? C.pink : C.amber; tl.globalAlpha = .55 * flick; tl.fillRect(b.x + 4 + c * 8, y + 6 + r * 11, 3, 5); } }
+      tl.globalAlpha = 1;
     });
   }
+  function drawTowers(t) {
+    var tick = reduce ? 0 : Math.floor(t / 1500);
+    if (tick !== towerTick || towerLayer.width !== W || towerLayer.height !== H) { paintTowers(tick); towerTick = tick; }
+    cx.drawImage(towerLayer, 0, 0);
+    if (mood.dust) return;
+    towers.forEach(function (b) {   // aircraft warning lights blink every frame
+      if (b.far || b.h <= H * .5) return;
+      cx.fillStyle = 'rgba(255,60,60,' + (reduce ? .9 : (Math.sin(t / 400 + b.k) > 0 ? .95 : .25)) + ')'; cx.beginPath(); cx.arc(b.x + b.w / 2, H - b.h - 3, 2, 0, 7); cx.fill();
+    });
+  }
+  // each billboard face (text, glow and scanlines) is drawn once per ad and size, then copied
+  var boardCache = {};
+  function boardImage(i, bw, bh) {
+    var key = i + ':' + Math.round(bw) + 'x' + Math.round(bh); if (boardCache[key]) return boardCache[key];
+    var c = document.createElement('canvas'); c.width = Math.ceil(bw) + 40; c.height = Math.ceil(bh) + 40;
+    var g = c.getContext('2d'), ad = ADS[i], bx = 20, by = 20;
+    g.fillStyle = ad.bg; g.fillRect(bx, by, bw, bh);
+    g.shadowColor = ad.bg; g.shadowBlur = 18; g.fillRect(bx, by, bw, 1); g.shadowBlur = 0;
+    g.fillStyle = ad.fg; g.textAlign = 'center';
+    var JP = '"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif', big = Math.min(bw * .55, bh * .42);
+    g.font = '700 ' + big + 'px ' + JP; var mw = g.measureText(ad.a).width; if (mw > bw * .86) { big *= bw * .86 / mw; g.font = '700 ' + big + 'px ' + JP; }
+    g.fillText(ad.a, bx + bw / 2, by + bh * .55);
+    var small = 11; g.font = '600 ' + small + 'px "Chakra Petch", sans-serif'; var sw2 = g.measureText(ad.b).width; if (sw2 > bw * .9) { small = Math.max(6, small * bw * .9 / sw2); g.font = '600 ' + small + 'px "Chakra Petch", sans-serif'; }
+    g.fillText(ad.b, bx + bw / 2, by + bh * .86);
+    g.fillStyle = 'rgba(0,0,0,.18)'; for (var sy = by; sy < by + bh; sy += 3) g.fillRect(bx, sy, bw, 1);
+    return (boardCache[key] = c);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { boardCache = {}; });
   function drawBoards(t) {
     boards.forEach(function (bd) {
       var tw = bd.t, y = H - tw.h, bw = tw.w - 10, bh = Math.min(tw.h * .45, bw * 1.25), bx = tw.x + 5, by = y + 12;
       if (!reduce && t - bd.last > bd.next) { bd.ad = (bd.ad + 1) % ADS.length; bd.last = t; bd.next = 3500 + Math.random() * 3000; bd.flick = t; }
       var ad = ADS[bd.ad], on = reduce || t - bd.flick > 260 || Math.floor((t - bd.flick) / 50) % 2;
       cx.save(); cx.globalAlpha = (on ? .85 : .25) * (W < 760 ? .5 : 1);
-      cx.fillStyle = ad.bg; cx.fillRect(bx, by, bw, bh);
-      cx.shadowColor = ad.bg; cx.shadowBlur = 18; cx.fillRect(bx, by, bw, 1); cx.shadowBlur = 0;
-      cx.fillStyle = ad.fg; cx.textAlign = 'center';
-      var JP = '"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif', big = Math.min(bw * .55, bh * .42);
-      cx.font = '700 ' + big + 'px ' + JP; var mw = cx.measureText(ad.a).width; if (mw > bw * .86) { big *= bw * .86 / mw; cx.font = '700 ' + big + 'px ' + JP; }
-      cx.fillText(ad.a, bx + bw / 2, by + bh * .55);
-      var small = 11; cx.font = '600 ' + small + 'px "Chakra Petch", sans-serif'; var sw2 = cx.measureText(ad.b).width; if (sw2 > bw * .9) { small = Math.max(6, small * bw * .9 / sw2); cx.font = '600 ' + small + 'px "Chakra Petch", sans-serif'; }
-      cx.fillText(ad.b, bx + bw / 2, by + bh * .86);
-      cx.fillStyle = 'rgba(0,0,0,.18)'; for (var sy = by; sy < by + bh; sy += 3) cx.fillRect(bx, sy, bw, 1);
+      cx.drawImage(boardImage(bd.ad, bw, bh), bx - 20, by - 20);
       cx.restore();
       // light spill onto the haze below the screen
       var sp = cx.createRadialGradient(bx + bw / 2, by + bh, 0, bx + bw / 2, by + bh, bw * 1.4); sp.addColorStop(0, ad.bg + '33'); sp.addColorStop(1, ad.bg + '00');
@@ -203,7 +227,30 @@
   }
 
   // ---------- the opening eye (front page) ----------
-  var blinkAt = 5000, blinkStart = -1;
+  var eyeFrame = document.createElement('canvas'), efx = eyeFrame.getContext('2d'), eyeDrawn = -1e9;
+  var blinkAt = 5000, blinkStart = -1, eyeLayer = document.createElement('canvas'), el2 = eyeLayer.getContext('2d'), eyeKey = '';
+  function paintEye(ex, ey, R, ix, iy, ir, hz) {   // the parts of the eye that never move, drawn once per layout
+    eyeLayer.width = Math.ceil(R * 2); eyeLayer.height = Math.ceil(R * 2);
+    var g = el2; g.setTransform(1, 0, 0, 1, R - ex, R - ey);
+    var scl = g.createRadialGradient(ex - R * .1, ey - R * .1, R * .1, ex, ey, R); scl.addColorStop(0, '#8d817a'); scl.addColorStop(.55, '#5a4a44'); scl.addColorStop(1, '#1e1210');
+    g.fillStyle = scl; g.fillRect(ex - R, ey - R, R * 2, R * 2);
+    g.strokeStyle = 'rgba(150,40,35,.35)'; g.lineWidth = 1;
+    for (var vv = 0; vv < 14; vv++) { var va = rnd(vv + 300) * 6.283, vr = R * (.55 + rnd(vv + 310) * .4);
+      g.beginPath(); g.moveTo(ex + Math.cos(va) * R, ey + Math.sin(va) * R * .6);
+      g.quadraticCurveTo(ex + Math.cos(va + .2) * vr * .8, ey + Math.sin(va - .2) * vr * .45, ex + Math.cos(va) * R * .5, ey + Math.sin(va) * R * .3); g.stroke(); }
+    var iris = g.createRadialGradient(ix, iy, ir * .25, ix, iy, ir); iris.addColorStop(0, '#3f8f86'); iris.addColorStop(.5, '#1f5560'); iris.addColorStop(.88, '#0e2a32'); iris.addColorStop(1, '#061218');
+    g.fillStyle = iris; g.beginPath(); g.arc(ix, iy, ir, 0, 7); g.fill();
+    g.strokeStyle = 'rgba(200,240,230,.09)';
+    for (var f = 0; f < 72; f++) { var a = f / 72 * 6.283; g.beginPath(); g.moveTo(ix + Math.cos(a) * ir * .3, iy + Math.sin(a) * ir * .3); g.lineTo(ix + Math.cos(a + .05) * ir * .95, iy + Math.sin(a + .05) * ir * .95); g.stroke(); }
+    // the city reflected in the eye: skyline curved across the iris
+    g.save(); g.beginPath(); g.arc(ix, iy, ir * .98, 0, 7); g.clip();
+    var refl = g.createLinearGradient(0, iy - ir, 0, iy + ir); refl.addColorStop(0, 'rgba(255,120,40,0)'); refl.addColorStop(.55, 'rgba(255,130,40,.55)'); refl.addColorStop(1, 'rgba(255,90,20,.1)');
+    g.globalAlpha = .75; g.fillStyle = refl; g.fillRect(ix - ir, iy - ir, ir * 2, ir * 2); g.globalAlpha = 1;
+    for (var q = 0; q < 26; q++) { var qx = ix - ir + q * (ir * 2 / 26), qh = ir * (.08 + rnd(q + 200) * .32);
+      g.fillStyle = 'rgba(10,6,4,.75)'; g.fillRect(qx, hz - qh, ir * 2 / 26 - 1, qh + ir);
+      if (rnd(q + 210) > .5) { g.fillStyle = 'rgba(255,190,110,.6)'; g.fillRect(qx + 2, hz - qh + 3, 2, 2); } }
+    g.restore(); g.setTransform(1, 0, 0, 1, 0, 0);
+  }
   function drawEye(t) {
     var narrow = W < 760, R = Math.min(narrow ? W * .62 : W * .27, H * (narrow ? .55 : .62)), ex = narrow ? W * .62 : W * .69, ey = H * (narrow ? .36 : .44);
     cx.save();
@@ -219,26 +266,14 @@
     var top = R * .62 * open, bot = R * .5 * open;
     cx.save(); cx.beginPath(); cx.moveTo(ex - R, ey); cx.bezierCurveTo(ex - R * .45, ey - top * 1.25, ex + R * .45, ey - top * 1.25, ex + R, ey);
     cx.bezierCurveTo(ex + R * .45, ey + bot * 1.25, ex - R * .45, ey + bot * 1.25, ex - R, ey); cx.closePath(); cx.clip();
-    var scl = cx.createRadialGradient(ex - R * .1, ey - R * .1, R * .1, ex, ey, R); scl.addColorStop(0, '#8d817a'); scl.addColorStop(.55, '#5a4a44'); scl.addColorStop(1, '#1e1210');
-    cx.fillStyle = scl; cx.fillRect(ex - R, ey - R, R * 2, R * 2);
-    cx.strokeStyle = 'rgba(150,40,35,.35)'; cx.lineWidth = 1;
-    for (var vv = 0; vv < 14; vv++) { var va = rnd(vv + 300) * 6.283, vr = R * (.55 + rnd(vv + 310) * .4);
-      cx.beginPath(); cx.moveTo(ex + Math.cos(va) * R, ey + Math.sin(va) * R * .6);
-      cx.quadraticCurveTo(ex + Math.cos(va + .2) * vr * .8, ey + Math.sin(va - .2) * vr * .45, ex + Math.cos(va) * R * .5, ey + Math.sin(va) * R * .3); cx.stroke(); }
-    var ir = R * .44, ix = ex - R * .03, iy = ey;
-    var iris = cx.createRadialGradient(ix, iy, ir * .25, ix, iy, ir); iris.addColorStop(0, '#3f8f86'); iris.addColorStop(.5, '#1f5560'); iris.addColorStop(.88, '#0e2a32'); iris.addColorStop(1, '#061218');
-    cx.fillStyle = iris; cx.beginPath(); cx.arc(ix, iy, ir, 0, 7); cx.fill();
-    cx.strokeStyle = 'rgba(200,240,230,.09)'; cx.lineWidth = 1;
-    for (var f = 0; f < 72; f++) { var a = f / 72 * 6.283; cx.beginPath(); cx.moveTo(ix + Math.cos(a) * ir * .3, iy + Math.sin(a) * ir * .3); cx.lineTo(ix + Math.cos(a + .05) * ir * .95, iy + Math.sin(a + .05) * ir * .95); cx.stroke(); }
-    // the city reflected in the eye: skyline and fire, curved across the iris
-    cx.save(); cx.beginPath(); cx.arc(ix, iy, ir * .98, 0, 7); cx.clip();
-    var hz = iy + ir * .15, fire = 0;
+    var ir = R * .44, ix = ex - R * .03, iy = ey, hz = iy + ir * .15, fire = 0;
     stacks.forEach(function (s) { if (s.burst >= 0) fire = Math.max(fire, 1 - (t - s.burst) / 1600); });
-    var refl = cx.createLinearGradient(0, iy - ir, 0, iy + ir); refl.addColorStop(0, 'rgba(255,120,40,0)'); refl.addColorStop(.55, 'rgba(255,130,40,' + (.55 + fire * .4) + ')'); refl.addColorStop(1, 'rgba(255,90,20,.1)');
-    cx.globalAlpha = .75; cx.fillStyle = refl; cx.fillRect(ix - ir, iy - ir, ir * 2, ir * 2); cx.globalAlpha = 1;
-    for (var q = 0; q < 26; q++) { var qx = ix - ir + q * (ir * 2 / 26), qh = ir * (.08 + rnd(q + 200) * .32);
-      cx.fillStyle = 'rgba(10,6,4,.75)'; cx.fillRect(qx, hz - qh, ir * 2 / 26 - 1, qh + ir);
-      if (rnd(q + 210) > .5) { cx.fillStyle = 'rgba(255,190,110,.6)'; cx.fillRect(qx + 2, hz - qh + 3, 2, 2); } }
+    var key = [W, H, Math.round(R), Math.round(ex), Math.round(ey)].join();
+    if (key !== eyeKey) { paintEye(ex, ey, R, ix, iy, ir, hz); eyeKey = key; }
+    cx.drawImage(eyeLayer, ex - R, ey - R);
+    // the fire reflected in the iris brightens when a stack bursts
+    cx.save(); cx.beginPath(); cx.arc(ix, iy, ir * .98, 0, 7); cx.clip();
+    if (fire > 0) { var refl = cx.createLinearGradient(0, iy - ir, 0, hz); refl.addColorStop(0, 'rgba(255,120,40,0)'); refl.addColorStop(1, 'rgba(255,130,40,' + fire * .3 + ')'); cx.fillStyle = refl; cx.fillRect(ix - ir, iy - ir, ir * 2, hz - iy + ir); }
     [.55, .78].forEach(function (p, n) { var fx = ix - ir + ir * 2 * p, fy = hz - ir * .25, fr = ir * (.1 + (reduce ? 0 : Math.sin(t / 150 + n) * .02) + fire * .25);
       var fg2 = cx.createRadialGradient(fx, fy, 0, fx, fy, fr); fg2.addColorStop(0, 'rgba(255,240,200,.95)'); fg2.addColorStop(.4, 'rgba(255,150,50,.7)'); fg2.addColorStop(1, 'rgba(255,80,20,0)');
       cx.fillStyle = fg2; cx.beginPath(); cx.arc(fx, fy, fr, 0, 7); cx.fill(); });
@@ -255,26 +290,39 @@
     cx.restore();
   }
 
-  function drawCity(t) {
-    cx.clearRect(0, 0, W, H);
-    sky(); drawHaze(t); drawBeams(t); drawStacks(t);
-    if (mood.eye) drawEye(t);
-    drawTowers(t); drawBoards(t); drawSpinners(t);
+  // the sky and the dark edge behind the hero text never move: drawn once per layout and copied
+  var skyLayer = document.createElement('canvas'), shadeLayer = document.createElement('canvas'), skyKey = '';
+  function paintStatic() {
+    skyLayer.width = shadeLayer.width = W; skyLayer.height = shadeLayer.height = H;
+    var real = cx; cx = skyLayer.getContext('2d'); sky(); cx = shadeLayer.getContext('2d');
     if (mood.dust) { cx.fillStyle = 'rgba(230,140,60,.12)'; cx.fillRect(0, 0, W, H); }
-    // keep the hero text readable: darken the left side
     var v = cx.createLinearGradient(0, 0, W * .7, 0); v.addColorStop(0, 'rgba(7,9,16,' + (mood.dust ? .62 : .42) + ')'); v.addColorStop(1, 'rgba(7,9,16,0)');
-    cx.fillStyle = v; cx.fillRect(0, 0, W, H);
+    cx.fillStyle = v; cx.fillRect(0, 0, W, H); cx = real;
+  }
+  function drawCity(t) {
+    var key = W + 'x' + H + moodName; if (key !== skyKey) { paintStatic(); skyKey = key; }
+    cx.clearRect(0, 0, W, H);
+    cx.drawImage(skyLayer, 0, 0); drawHaze(t); drawBeams(t); drawStacks(t);
+    if (mood.eye) {
+      // the eye is drawn into its own layer about ten times a second, and every frame only while it blinks or a fire flares
+      var busy = blinkStart >= 0 || stacks.some(function (s) { return s.burst >= 0; }) || t > blinkAt;
+      if (eyeFrame.width !== W || eyeFrame.height !== H) { eyeFrame.width = W; eyeFrame.height = H; eyeDrawn = -1e9; }
+      if (busy || t - eyeDrawn > 100 || reduce) { var real = cx; cx = efx; efx.clearRect(0, 0, W, H); drawEye(t); cx = real; eyeDrawn = t; }
+      cx.drawImage(eyeFrame, 0, 0);
+    }
+    drawTowers(t); drawBoards(t); drawSpinners(t);
+    cx.drawImage(shadeLayer, 0, 0);   // dust tint, and the darker left side that keeps the hero text readable
   }
 
   // ---------- loop ----------
   // Battery: draw the skyline only while the hero is on screen, cap at about
-  // 30 frames a second, and stop everything while the page is hidden.
+  // 24 frames a second, and stop everything while the page is hidden.
   var heroVisible = true, last = 0, running = false;
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { heroVisible = es[0].isIntersecting; }).observe(cc);
   function frame(t) {
     running = false;
     if (document.hidden) return;
-    if (!reduce && t && t - last < 32) { running = true; requestAnimationFrame(frame); return; }
+    if (!reduce && t && t - last < 40) { running = true; requestAnimationFrame(frame); return; }
     last = t || 0;
     drawRain(t || 0); if (heroVisible || reduce) drawCity(t || 0);
     if (!reduce) { running = true; requestAnimationFrame(frame); }

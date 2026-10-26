@@ -48,4 +48,4 @@ canvas.cover { cursor: zoom-in; }
 }
 
 /* ---------- build stamp ---------- */
-footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #5d6a8c; }
+footer .build { margin-top: 18px; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
