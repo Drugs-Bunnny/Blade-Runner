@@ -9,6 +9,7 @@ Usage: python3 build.py
 import datetime
 import json
 import pathlib
+import re
 import subprocess
 from zoneinfo import ZoneInfo
 
@@ -131,6 +132,10 @@ def build():
                   + '</head><body><canvas id="rain"' + rest + "\n</body></html>\n")
     # Pages copy only: progress sync, and the installable app (manifest, offline service worker and its registration)
     standalone = standalone.replace('<meta name="theme-color"', '<link rel="manifest" href="manifest.webmanifest">\n<meta name="theme-color"', 1)
+    standalone = re.sub(r'<link rel="icon" type="image/svg\+xml" href="data:[^"]*">',
+                        '<link rel="icon" type="image/svg+xml" href="img/favicon.svg">\n<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">', standalone, count=1)
+    (ROOT / "docs" / "img").mkdir(parents=True, exist_ok=True)
+    (ROOT / "docs" / "img" / "favicon.svg").write_text(read("shell/icon.svg"))
     standalone = standalone.replace("\n</body></html>", "\n<script>" + read("scripts/sync.js") + "\n" + read("pwa/register.js") + "</script>\n</body></html>", 1)
     (ROOT / "docs").mkdir(exist_ok=True)
     (ROOT / "docs" / "manifest.webmanifest").write_text(read("pwa/manifest.json").replace("__DESC__", DESCRIPTION))

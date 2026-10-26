@@ -3,7 +3,7 @@
 const BUILD = '__BUILD__';
 const CACHE = 'br-archive-' + BUILD;
 const FONTS = 'br-fonts';
-const CORE = ['./', './manifest.webmanifest', './img/icon-192.png', './img/icon-512.png', './img/icon-180.png'];
+const CORE = ['./', './manifest.webmanifest', './img/icon-192.png', './img/icon-512.png', './img/icon-180.png', './img/favicon.svg', './img/favicon-32.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));

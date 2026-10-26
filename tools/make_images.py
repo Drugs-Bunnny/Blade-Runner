@@ -64,11 +64,11 @@ def main():
         page.set_content(f"<style>html,body{{margin:0;background:#070910}}svg{{width:180px;height:180px;display:block}}</style>{icon}")
         page.screenshot(path=str(DOCS / "img/icon-180.png")); page.close(); print("wrote docs/img/icon-180.png")
         # app icons: plain at 192 and 512, and a maskable one with the eye inside the safe zone
-        for size, name, css in [(192, "icon-192.png", ""), (512, "icon-512.png", ""),
+        for size, name, css in [(32, "favicon-32.png", "html,body{background:transparent}"), (192, "icon-192.png", ""), (512, "icon-512.png", ""),
                                 (512, "icon-maskable-512.png", "svg{transform:scale(.72)} svg rect{rx:0}")]:
             page = b.new_page(viewport={"width": size, "height": size})
             page.set_content(f"<style>html,body{{margin:0;background:#070910;overflow:hidden}}svg{{width:{size}px;height:{size}px;display:block}}{css}</style>{icon}")
-            page.screenshot(path=str(DOCS / "img" / name)); page.close(); print(f"wrote docs/img/{name}")
+            page.screenshot(path=str(DOCS / "img" / name), omit_background=name.startswith("favicon")); page.close(); print(f"wrote docs/img/{name}")
         hide = "document.documentElement.style.scrollBehavior='auto';"
         shot(b, base, "/docs/index.html", DOCS / "img/screen-hub.png", 1280, 800)
         shot(b, base, "/docs/index.html#lotus", DOCS / "img/screen-era.png", 1280, 800, prep=hide, wait=2200)
