@@ -4,6 +4,7 @@
   var STORIES = {
     i:    { name: 'Origins',            anchor: '#origins',  verb: 'read' },
     tn:   { name: 'Tokyo Nexus',        anchor: '#tokyo',    verb: 'read' },
+    tw:   { name: 'To Lose Is to Win',  anchor: '#tokyo2',   verb: 'read' },
     f:    { name: 'Blade Runner',       anchor: '#film82',   verb: 'watched' },
     gm:   { name: 'Blade Runner (game)', anchor: '#game97',  verb: 'played' },
     b:    { name: 'Blade Runner 2019',  anchor: '#br2019',   verb: 'read' },
@@ -96,7 +97,7 @@
     var a = li.querySelector('h3 a'); if (!a) return;
     var target = a.getAttribute('href').slice(1), key = null;
     Object.keys(STORIES).forEach(function (k) { if (STORIES[k].anchor === '#' + target) key = k; });
-    if (!key || seen[key] || /To Lose/.test(a.textContent)) return; seen[key] = true;
+    if (!key || seen[key]) return; seen[key] = true;
     var tag = document.createElement('span'); tag.className = 'chip-prog'; li.querySelector('h3').appendChild(tag);
     meters.push({ el: tag, ids: (byStory[key] || []).map(function (x) { return x.id; }), chip: true });
   });

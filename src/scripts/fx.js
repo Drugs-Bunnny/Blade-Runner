@@ -58,7 +58,7 @@
     crane:   ['4,27 24,21 44,27 24,31', '24,21 13,5 27,23', '24,21 35,5 21,23', '40,27 46,13 42,28', '8,27 2,17 11,27'],
     lotus:   ['24,40 14,22 24,8 34,22', '24,40 4,24 18,24', '24,40 44,24 30,24', '24,40 10,36 38,36']
   };
-  var STORIES = { i: ['#origins', 'crane'], tn: ['#tokyo', 'crane'], f: ['#film82', 'unicorn'], gm: ['#game97', 'stick'], b: ['#br2019', 'chicken'],
+  var STORIES = { i: ['#origins', 'crane'], tn: ['#tokyo', 'crane'], tw: ['#tokyo2', 'crane'], f: ['#film82', 'unicorn'], gm: ['#game97', 'stick'], b: ['#br2019', 'chicken'],
     bo: ['#blackout', 'crane'], c: ['#br2029', 'stick'], l: ['#lotus', 'lotus'], ll: ['#ll1', 'lotus'], lv: ['#lv1', 'lotus'], dawn: ['#dawn', 'crane'],
     d: ['#br2039', 'frog'], run: ['#nowhere', 'crane'], g: ['#film49', 'horse'] };
   function svg(name) {

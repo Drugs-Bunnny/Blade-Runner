@@ -3,7 +3,7 @@
 (function () {
   var L = window.BR_LORE; if (!L) return;
   var R = window.BRReader;
-  var NAMES = { i: 'Origins', tn: 'Tokyo Nexus', f: 'Blade Runner', gm: 'the game', b: 'Blade Runner 2019', bo: 'Black Out 2022', c: 'Blade Runner 2029',
+  var NAMES = { i: 'Origins', tn: 'Tokyo Nexus', tw: 'To Lose Is to Win', f: 'Blade Runner', gm: 'the game', b: 'Blade Runner 2019', bo: 'Black Out 2022', c: 'Blade Runner 2029',
     l: 'Black Lotus', ll: 'Leaving L.A.', lv: 'Las Vegas', dawn: 'Nexus Dawn', d: 'Blade Runner 2039', run: 'Nowhere to Run', g: 'Blade Runner 2049' };
   var revealed = {};
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }

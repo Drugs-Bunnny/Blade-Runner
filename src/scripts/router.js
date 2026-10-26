@@ -25,9 +25,20 @@
     else { var nav = document.querySelector('nav.bar'), pt = el.tagName === 'SECTION' ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0, y = el.getBoundingClientRect().top + window.pageYOffset + pt - nav.offsetHeight - 16;
       window.scrollTo({ top: y, behavior: changed ? 'auto' : 'smooth' }); }
   }
+  // every jump inside the page becomes a history entry, so the phone's back button steps back through them
+  function remember() { try { history.replaceState({ y: window.pageYOffset }, '', location.href); } catch (e) {} }
   document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey) return;
     var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
-    var id = a.getAttribute('href').slice(1); e.preventDefault(); route(id, true);
+    var id = a.getAttribute('href').slice(1); e.preventDefault();
+    if (id && id !== location.hash.slice(1)) { remember(); try { history.pushState({}, '', '#' + id); } catch (er) {} }
+    route(id, true);
+  });
+  window.addEventListener('popstate', function (e) {
+    var id = location.hash.slice(1), y = e.state && typeof e.state.y === 'number' ? e.state.y : null;
+    if (y === null) { route(id, false); return; }
+    var el = id && document.getElementById(id), view = el && (el.classList.contains('view') ? el : el.closest('.view'));
+    show(view ? view.id : 'archive'); window.scrollTo(0, y);
   });
   // fade the edge of a sideways-scrolling sub-menu when there are more links that way
   function edges() {

@@ -43,6 +43,21 @@
       g.font = '700 15px "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif'; ['東', '京', '連', '結'].forEach(function (ch, i) { g.fillStyle = C.cyan; g.shadowColor = C.cyan; g.shadowBlur = 10; g.fillText(ch, w - 30, 60 + i * 18); }); g.shadowBlur = 0;
       for (var l = 0; l < 7; l++) { var lx = 24 + l * (w - 48) / 6, ly = h * 0.16 + Math.sin(l) * 6; g.fillStyle = C.rust; g.beginPath(); g.ellipse(lx, ly, 6, 8, 0, 0, 7); g.fill(); glow(g, lx, ly, 16, C.rust, 0.4); }
       rain(g, w, h, R, 120, 0.22); } },
+    tokyo2: { col: C.pink, title: 'TO LOSE\nIS TO WIN', sub: 'COMIC · 2026', year: '2015', draw: function (g, w, h, R) {
+      sky(g, w, h, '#0c0a16', '#2a1020'); glow(g, w * 0.5, h * 0.2, w * 0.55, C.pink, 0.22);
+      var vx = w / 2, ground = function (k) { return h * 0.4 + (h * 0.98 - h * 0.4) * k; };
+      g.fillStyle = rgba('#dfe6f5', 0.1); g.beginPath(); g.moveTo(vx - 6, h * 0.4); g.lineTo(vx + 6, h * 0.4); g.lineTo(w * 0.95, h); g.lineTo(w * 0.05, h); g.fill();
+      [0.08, 0.22, 0.42, 0.7].forEach(function (k) {   // far to near
+        var gy = ground(k), sc = 0.25 + k, half = w * 0.36 * sc, tall = h * 0.34 * sc, top = gy - tall, post = Math.max(2, 7 * sc), a = 0.35 + k * 0.8;
+        g.fillStyle = rgba(C.rust, Math.min(1, a));
+        g.fillRect(vx - half * 0.66, top, post, tall); g.fillRect(vx + half * 0.66 - post, top, post, tall);
+        g.fillRect(vx - half * 0.8, top + tall * 0.2, half * 1.6, Math.max(1.5, 4 * sc));
+        g.beginPath(); g.moveTo(vx - half, top - 3 * sc); g.quadraticCurveTo(vx, top + 4 * sc, vx + half, top - 3 * sc); g.lineTo(vx + half * 0.95, top + 5 * sc); g.quadraticCurveTo(vx, top + 11 * sc, vx - half * 0.95, top + 5 * sc); g.fill();
+        if (k > 0.3) glow(g, vx, top, half, C.rust, 0.12);
+      });
+      g.strokeStyle = rgba(C.cyan, 0.9); g.lineWidth = 2; g.shadowColor = C.cyan; g.shadowBlur = 12; g.beginPath(); g.moveTo(w * 0.22, h * 0.9); g.lineTo(w * 0.78, h * 0.62); g.stroke(); g.shadowBlur = 0;
+      g.font = '700 15px "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif'; ['負', 'け', 'る', 'が', '勝', 'ち'].forEach(function (ch, i) { g.fillStyle = C.pink; g.shadowColor = C.pink; g.shadowBlur = 10; g.fillText(ch, w - 30, 52 + i * 18); }); g.shadowBlur = 0;
+      for (var n = 0; n < 160; n++) { g.fillStyle = rgba('#ffffff', 0.25 + R() * 0.5); g.beginPath(); g.arc(R() * w, R() * h, R() * 1.6 + 0.4, 0, 7); g.fill(); } } },
     film82: { col: C.amber, title: 'BLADE\nRUNNER', sub: 'FILM · 1982', year: '2019', draw: function (g, w, h, R) {
       sky(g, w, h, '#06070e', '#3a1a08'); var base = h * 0.78;
       for (var y = base; y < h; y += 6) { g.fillStyle = rgba(C.amber, 0.06 + (y - base) / (h - base) * 0.2); g.fillRect(0, y, w, 1); }

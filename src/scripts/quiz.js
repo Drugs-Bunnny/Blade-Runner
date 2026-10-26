@@ -6,9 +6,9 @@
   try { best = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} window.dispatchEvent(new Event('br:scores')); }
   function sfx(n) { window.dispatchEvent(new CustomEvent('br:sfx', { detail: n })); }
-  var ANCHOR = { i: '#origins', tn: '#tokyo', f: '#film82', gm: '#game97', b: '#br2019', bo: '#blackout', c: '#br2029', l: '#lotus',
+  var ANCHOR = { i: '#origins', tn: '#tokyo', tw: '#tokyo2', f: '#film82', gm: '#game97', b: '#br2019', bo: '#blackout', c: '#br2029', l: '#lotus',
     ll: '#ll1', lv: '#lv1', dawn: '#dawn', d: '#br2039', run: '#nowhere', g: '#film49' };
-  var NAME = { i: 'Origins', tn: 'Tokyo Nexus', f: 'Blade Runner', gm: 'Blade Runner (game)', b: 'Blade Runner 2019', bo: 'Black Out 2022', c: 'Blade Runner 2029',
+  var NAME = { i: 'Origins', tn: 'Tokyo Nexus', tw: 'To Lose Is to Win', f: 'Blade Runner', gm: 'Blade Runner (game)', b: 'Blade Runner 2019', bo: 'Black Out 2022', c: 'Blade Runner 2029',
     l: 'Black Lotus', ll: 'Leaving L.A.', lv: 'Las Vegas', dawn: 'Nexus Dawn', d: 'Blade Runner 2039', run: 'Nowhere to Run', g: 'Blade Runner 2049' };
   var VERB = { f: 'watching', bo: 'watching', l: 'watching', dawn: 'watching', run: 'watching', g: 'watching', gm: 'playing' };
 
