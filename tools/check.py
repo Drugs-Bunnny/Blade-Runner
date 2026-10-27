@@ -6,7 +6,7 @@
 
 Checks
   ids      every id on a page is unique, and every in-page link (#something) lands on a real id or view
-  stories  the story keys used by the tracker, search, glossary, timeline, connections and quizzes all exist
+  stories  the story list in reader.js agrees with the copies in search, lore, quiz, fx and make_files.py, and every anchor exists
   lore     the Lore data refers only to things that exist: people, character files, entries, quiz answers
   built    docs/ matches what build.py produces from the sources (build number and date are ignored)
 
@@ -130,13 +130,38 @@ def check_stories(ids, views):
         for m in re.finditer(r'<article class="issue"[^>]*\bid="([a-z]+)\d+"', (SRC / "pages" / f"{v}.html").read_text()):
             if m.group(1) not in stories:
                 fail("stories", f"entries with id prefix '{m.group(1)}' in {v}.html have no story in reader.js")
-    search = (SRC / "scripts/search.js").read_text()
-    labelled = set(re.findall(r"\b([a-z]+): '", re.search(r"var STORY = \{(.*?)\};", search, re.S).group(1)))
-    for key in stories:
-        if key not in labelled:
-            fail("stories", f"story '{key}' is in reader.js but has no label in search.js, so its results would show no story name")
-    for key in labelled - set(stories):
-        fail("stories", f"search.js labels story '{key}', which reader.js doesn't have")
+    # The same list of stories is kept in several files. They must agree, or a story gets no search label,
+    # no quiz name, no origami figure or no character-file tag. (MAINTAINING.md: "Adding a story")
+    def table(path, name, closer="};", key_re=r"(\w+):", anchor_re=None):
+        text = (ROOT / path).read_text()
+        m = re.search(rf"{name}\s*=\s*\{{(.*?)\n?\s*{re.escape(closer)}" if closer != "}" else rf"{name}\s*=\s*\{{(.*?)\n\}}", text, re.S)
+        if not m:
+            fail("stories", f"could not find {name} in {path}")
+            return {}
+        body = m.group(1)
+        if anchor_re:
+            return {k: a for k, a in re.findall(anchor_re, body)}
+        return {k: None for k in re.findall(key_re, body)}
+
+    tables = {
+        "reader.js STORIES": table("src/scripts/reader.js", "var STORIES", anchor_re=r"(\w+):\s*\{[^}]*anchor: '(#[^']+)'"),
+        "search.js STORY": table("src/scripts/search.js", "var STORY", key_re=r"\b([a-z]+): '"),
+        "lore.js NAMES": table("src/scripts/lore.js", "var NAMES", key_re=r"\b([a-z]+): '"),
+        "quiz.js ANCHOR": table("src/scripts/quiz.js", "var ANCHOR", anchor_re=r"\b([a-z]+): '(#[^']+)'"),
+        "quiz.js NAME": table("src/scripts/quiz.js", "var NAME", key_re=r"\b([a-z]+): '"),
+        "fx.js STORIES": table("src/scripts/fx.js", "var STORIES", anchor_re=r"\b([a-z]+): \['(#[^']+)'"),
+        "tools/make_files.py STORY": table("tools/make_files.py", "STORY", closer="}", key_re=r"'([a-z]+)': \("),
+    }
+    for name, t in tables.items():
+        if not t:
+            continue
+        for key in stories.keys() - t.keys():
+            fail("stories", f"story '{key}' is in reader.js but missing from {name}")
+        for key in t.keys() - stories.keys():
+            fail("stories", f"{name} has story '{key}', which reader.js doesn't have")
+        for key, anchor in t.items():
+            if anchor and key in stories and anchor != "#" + stories[key]:
+                fail("stories", f"{name}: '{key}' points at {anchor}, but reader.js says #{stories[key]}")
     return stories
 
 

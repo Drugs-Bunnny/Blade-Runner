@@ -79,7 +79,7 @@ Each build is stamped with a build number and date, shown at the foot of every p
 python3 tools/check.py
 ```
 
-This needs Python 3, Node (to read the Lore data) and a full git clone. It checks that every id is unique and every in-page link, sub-menu entry and poster lands on something real; that the story keys in the tracker, search, glossary, timeline, connections and quizzes all exist; that each quiz question has four distinct answers; and that `docs/` matches a fresh build of the sources (build number and date are ignored). GitHub runs the same script on every push and pull request, so a forgotten `python3 build.py` or a mistyped link shows up as a red cross. Add `--no-build` to skip the last check.
+This needs Python 3, Node (to read the Lore data) and a full git clone. It checks that every id is unique and every in-page link, sub-menu entry and poster lands on something real; that the story keys in the tracker, search, glossary, timeline, connections and quizzes all exist, and that the six places that list the stories (tracker, search, Lore, quizzes, origami and character files) agree with each other; that each quiz question has four distinct answers; and that `docs/` matches a fresh build of the sources (build number and date are ignored). GitHub runs the same script on every push and pull request, so a forgotten `python3 build.py` or a mistyped link shows up as a red cross. Add `--no-build` to skip the last check.
 
 To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 

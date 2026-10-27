@@ -26,7 +26,7 @@ Notes for whoever works on this next, including Claude in a new chat. Read this 
 
 ## Adding a story (checklist)
 
-Each story has a short key (`i` Origins, `tn` Tokyo Nexus, `tw` To Lose Is to Win, `f` the 1982 film, `gm` the game, `b` 2019, `bo` Black Out, `c` 2029, `l` Black Lotus, `ll` Leaving L.A., `lv` Las Vegas, `dawn` Nexus Dawn, `d` 2039, `run` Nowhere to Run, `g` 2049). Entries use the key plus a number as their id (`tw1`, `g3`). A new story needs:
+Each story has a short key (`i` Origins, `tn` Tokyo Nexus, `tw` To Lose Is to Win, `f` the 1982 film, `gm` the game, `b` 2019, `bo` Black Out, `c` 2029, `l` Black Lotus, `ll` Leaving L.A., `lv` Las Vegas, `dawn` Nexus Dawn, `d` 2039, `run` Nowhere to Run, `g` 2049). Entries use the key plus a number as their id (`tw1`, `g3`). A new story needs the following. `python3 tools/check.py` compares the story lists in `reader.js`, `search.js`, `lore.js`, `quiz.js`, `fx.js` and `make_files.py` and fails if one is missing a story or points at a different anchor, so run it before committing.
 
 - a `<section id="...">` with a `.vol-banner` and `article.issue` entries in the right `src/pages/eraN.html`, plus sources in that page's footer;
 - `STORIES` in `src/scripts/reader.js` (name, anchor, verb read/watched/played);
