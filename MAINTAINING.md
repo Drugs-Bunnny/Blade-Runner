@@ -44,7 +44,7 @@ Neil's choices worth keeping: rain is "option D" without drips or traffic swoosh
 
 ## Open items
 
-- **Blade Runner 2099** premieres on Prime Video on 25 November 2026. A scheduled task adds the eight episodes on 28 November (ids `tv1` to `tv8`, key `tv`, verb watched, in the `#br2099` section of `era3.html`).
+- **Blade Runner 2099** premieres on Prime Video on 25 November 2026. A scheduled task adds the eight episodes on 28 November on a branch called `add-br2099-episodes`, not on main; check the Actions result, fast-forward merge it, then republish the Claude copy (ids `tv1` to `tv8`, key `tv`, verb watched, in the `#br2099` section of `era3.html`).
 - **To Lose Is to Win #2 to #4** are written from Titan's descriptions only. Upgrade them when reviews with plot details appear, or when Neil says what happens, and add quiz questions.
 - **Ideas Neil hasn't taken up yet:** personal notes and star ratings per issue (synced), a monthly check for new releases with a "Coming soon" panel, a list of all Voight-Kampff tests, and letting a test be taken before finishing a story.
 - **Declined:** a "where to get it in Norway" guide.
