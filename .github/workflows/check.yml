@@ -25,9 +25,9 @@ jobs:
       - name: Check the archive
         run: python3 tools/check.py
 
-  keyboard:
-    # Drives the built site with the keyboard in Chromium: dialogs must trap Tab, Escape must close them
-    # and give focus back, and every control must show a visible focus style.
+  browser:
+    # Drives the built site in Chromium: keyboard use of the pop-ups, copy-link buttons, working offline,
+    # and two defensive checks on stored scores and sync setup codes.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,3 +42,7 @@ jobs:
         run: python3 tools/test_keyboard.py
       - name: Share-link tests
         run: python3 tools/test_share.py
+      - name: Offline tests
+        run: python3 tools/test_offline.py
+      - name: Hardening tests
+        run: python3 tools/test_hardening.py

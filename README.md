@@ -57,7 +57,7 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | `build.py` | Assembles everything into one page |
 | `docs/` | The built site, served by GitHub Pages, plus its images and fonts |
 | `tools/check.py` | The checks that run on every push (see Checking) |
-| `tools/test_keyboard.py`, `tools/test_share.py` | The browser tests that run beside them: keyboard use of the pop-ups, and the copy-link buttons |
+| `tools/test_keyboard.py`, `test_share.py`, `test_offline.py`, `test_hardening.py` | The browser tests that run beside them: keyboard use of the pop-ups, the copy-link buttons, working offline, and two defensive checks (stored scores, sync setup codes) |
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
 | `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
 
@@ -87,9 +87,13 @@ This needs Python 3, Node (to read the Lore data) and a full git clone. It check
 pip install playwright && playwright install chromium
 python3 tools/test_keyboard.py
 python3 tools/test_share.py
+python3 tools/test_offline.py
+python3 tools/test_hardening.py
 ```
 
 The first one drives the built site (`docs/`) with the keyboard alone, in Chromium. The four pop-ups that cover the page (search, sync, the ESPER image and the Voight-Kampff test) must keep Tab inside themselves, close on Escape and hand focus back to the control that opened them, and every control on the Lore and Character files pages must show a visible change when it has focus. It takes about a minute and runs in GitHub as a second job.
+
+The others work the same way. `test_share.py` checks the copy-link buttons. `test_offline.py` visits once, switches the network off and checks that every view and font still works and that nothing is fetched from another site. `test_hardening.py` checks that a damaged stored score or a made-up sync setup code can't do anything.
 
 To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 

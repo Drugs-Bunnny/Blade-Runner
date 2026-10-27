@@ -156,7 +156,8 @@
       '<h3>Set up another device</h3><p>Open the archive there, tap <b>Sync</b>, and paste this setup code. Treat it like a password: it contains your token.</p>' +
       '<div class="sd-code"><input class="sd-in" type="password" readonly value="' + esc(setupCode()) + '" aria-label="Setup code"><button type="button" class="sd-copy">Copy</button><button type="button" class="sd-reveal" aria-pressed="false">Show</button></div>' +
       '<p class="sd-small">Reset progress on a synced device clears it on all of them.</p>' +
-      '<button type="button" class="sd-off">Disconnect this device</button>';
+      '<button type="button" class="sd-off">Disconnect this device</button>' +
+      '<p class="sd-small">Disconnecting removes the token from this browser only. To stop it working everywhere, including on devices you set up from a code, <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">revoke it on GitHub ↗</a>.</p>';
     body.querySelector('.sd-now').addEventListener('click', function () { sync(); });
     body.querySelector('.sd-copy').addEventListener('click', function (e) {
       var b = e.currentTarget, done = function (ok) { b.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { b.textContent = 'Copy'; }, 2000); };
@@ -173,6 +174,7 @@
   function connect(input) {
     var tok = input, g = null;
     if (/^BRSYNC1\./.test(input)) { try { var o = JSON.parse(atob(input.slice(8))); tok = o.t; g = o.g || null; } catch (e) { tok = ''; } }
+    if (g && !/^[0-9a-f]{8,64}$/i.test(g)) tok = '';   // a gist id is plain hex; anything else is a damaged or made-up setup code
     if (!tok) { message = 'That doesn’t look like a token or a setup code.'; paintDialog(); return; }
     var btn = body.querySelector('.sd-go'); if (btn) { btn.disabled = true; btn.textContent = 'Connecting…'; }
     gist = g;

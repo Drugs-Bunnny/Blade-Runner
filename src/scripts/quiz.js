@@ -3,7 +3,11 @@
 (function () {
   var L = window.BR_LORE, R = window.BRReader; if (!L || !L.quiz || !R) return;
   var Q = L.quiz, KEY = 'br-vk', best = {};
-  try { best = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  // stored scores are used in the button text, so keep only real numbers for real stories
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {};
+    Object.keys(saved).forEach(function (k) { var v = +saved[k]; if (Q[k] && isFinite(v) && v >= 0 && v <= Q[k].length) best[k] = v; });
+  } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} window.dispatchEvent(new Event('br:scores')); }
   function sfx(n) { window.dispatchEvent(new CustomEvent('br:sfx', { detail: n })); }
   var ANCHOR = { i: '#origins', tn: '#tokyo', tw: '#tokyo2', f: '#film82', gm: '#game97', b: '#br2019', bo: '#blackout', c: '#br2029', l: '#lotus',
