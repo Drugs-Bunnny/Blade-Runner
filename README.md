@@ -56,6 +56,8 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
 | `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
 
+For how to build, publish and add stories, and what's still open, see [MAINTAINING.md](MAINTAINING.md).
+
 ## Building
 
 Requires Python 3 and nothing else.
