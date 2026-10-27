@@ -55,7 +55,6 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | `docs/` | The built site, served by GitHub Pages, plus its images |
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
 | `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
-| `tools/rain-sampler.html` | A page for auditioning rain styles |
 
 ## Building
 
