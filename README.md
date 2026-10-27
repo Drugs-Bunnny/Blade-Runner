@@ -56,6 +56,7 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | `build.py` | Assembles everything into one page |
 | `docs/` | The built site, served by GitHub Pages, plus its images and fonts |
 | `tools/check.py` | The checks that run on every push (see Checking) |
+| `tools/test_keyboard.py` | The keyboard test that runs beside them |
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
 | `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
 
@@ -80,6 +81,13 @@ python3 tools/check.py
 ```
 
 This needs Python 3, Node (to read the Lore data) and a full git clone. It checks that every id is unique and every in-page link, sub-menu entry and poster lands on something real; that the story keys in the tracker, search, glossary, timeline, connections and quizzes all exist, and that the six places that list the stories (tracker, search, Lore, quizzes, origami and character files) agree with each other; that each quiz question has four distinct answers; and that `docs/` matches a fresh build of the sources (build number and date are ignored). GitHub runs the same script on every push and pull request, so a forgotten `python3 build.py` or a mistyped link shows up as a red cross. Add `--no-build` to skip the last check.
+
+```sh
+pip install playwright && playwright install chromium
+python3 tools/test_keyboard.py
+```
+
+This one drives the built site (`docs/`) with the keyboard alone, in Chromium. The four pop-ups that cover the page (search, sync, the ESPER image and the Voight-Kampff test) must keep Tab inside themselves, close on Escape and hand focus back to the control that opened them, and every control on the Lore and Character files pages must show a visible change when it has focus. It takes about a minute and runs in GitHub as a second job.
 
 To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 

@@ -24,3 +24,19 @@ jobs:
           node-version: 22
       - name: Check the archive
         run: python3 tools/check.py
+
+  keyboard:
+    # Drives the built site with the keyboard in Chromium: dialogs must trap Tab, Escape must close them
+    # and give focus back, and every control must show a visible focus style.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright and Chromium
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+      - name: Keyboard tests
+        run: python3 tools/test_keyboard.py
