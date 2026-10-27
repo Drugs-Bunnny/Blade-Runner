@@ -1,0 +1,17 @@
+/* ---------- reduced motion, by choice ----------
+   The same calm as the (prefers-reduced-motion: reduce) rules elsewhere, for when the reader switches on
+   the "Calm" chip: motion.js puts data-motion="reduced" on <html>, for the chip and for the device setting.
+   Every selector inside a reduced-motion media query must be repeated here; tools/check.py checks that. */
+html[data-motion="reduced"] { scroll-behavior: auto; }
+html[data-motion="reduced"] .flicker, html[data-motion="reduced"] .spoiler::before, html[data-motion="reduced"] .broadcast .live::before, html[data-motion="reduced"] .eye .pupil { animation: none; }
+html[data-motion="reduced"] .buzz, html[data-motion="reduced"] .origami.fold svg, html[data-motion="reduced"] .origami.fold span, html[data-motion="reduced"] .boot-lines div::after { animation: none; }
+
+html[data-motion="reduced"] .vk-iris i { animation: none; }
+html[data-motion="reduced"] .vk-meters b i, html[data-motion="reduced"] .vk-iris { transition: none; }
+html[data-motion="reduced"] #score .eq i { animation: none; height: 70%; }
+html[data-motion="reduced"] .hit { animation: none; outline: 2px solid var(--amber); }
+html[data-motion="reduced"] .rb-sync[data-state="busy"] .dot, html[data-motion="reduced"] .sd-state[data-state="busy"] .dot { animation: none; }
+/* and nothing else should ease or slide */
+html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after { transition-duration: .01ms !important; }
+/* the chip when the device itself asks for reduced motion */
+#score .chip:disabled { opacity: .75; cursor: default; }

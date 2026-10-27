@@ -8,6 +8,7 @@ Checks
   ids      every id on a page is unique, and every in-page link (#something) lands on a real id or view
   stories  the story list in reader.js agrees with the copies in search, lore, quiz, fx and make_files.py, and every anchor exists
   lore     the Lore data refers only to things that exist: people, character files, entries, quiz answers
+  motion   every reduced-motion rule in the stylesheets is repeated for the Calm chip in motion.css
   built    docs/ matches what build.py produces from the sources (build number and date are ignored)
 
 Needs Python 3 and Node (Node only to read src/scripts/lore-data.js). Run it from a full git clone,
@@ -236,6 +237,26 @@ def check_lore(ids, stories):
                     fail("lore", f"character file {fid}: data-spoils lists '{k}', which isn't an entry")
 
 
+# ---------- reduced motion ----------
+def check_motion():
+    """Rules inside @media (prefers-reduced-motion: reduce) must be repeated for the Calm chip (motion.css)."""
+    mirror = (SRC / "styles/motion.css").read_text()
+    for css in sorted((SRC / "styles").glob("*.css")):
+        if css.name == "motion.css":
+            continue
+        text = css.read_text()
+        for m in re.finditer(r"@media \(prefers-reduced-motion: reduce\)\s*\{", text):
+            depth, i = 1, m.end()
+            while depth and i < len(text):
+                depth += {"{": 1, "}": -1}.get(text[i], 0)
+                i += 1
+            for sel_block in re.finditer(r"([^{}]+)\{[^{}]*\}", text[m.end():i - 1]):
+                for sel in [x.strip() for x in sel_block.group(1).split(",") if x.strip()]:
+                    wanted = 'html[data-motion="reduced"] ' + (sel if sel != "html" else "{")
+                    if wanted not in mirror:
+                        fail("motion", f"{css.name}: '{sel}' is stilled for reduced-motion devices but not for the Calm chip; add it to motion.css")
+
+
 # ---------- is docs/ up to date? ----------
 STAMP = re.compile(r"Build \d+ · \d{1,2} \w{3} \d{4}")
 BUILD_NO = re.compile(r"(BUILD = ')\d+(')|(br-archive-)\d+|(name=\"build\" content=\")[^\"]*")
@@ -291,6 +312,7 @@ def main():
     ids = check_ids(views)
     stories = check_stories(ids, views)
     check_lore(ids, stories)
+    check_motion()
     if "--no-build" not in sys.argv:
         check_built()
     if problems:

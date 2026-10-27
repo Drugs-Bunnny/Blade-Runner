@@ -5,7 +5,8 @@
    - Neon: headings now and then buzz like a failing tube
    Interface sounds are requested with a "br:sfx" event; sfx.js plays them if switched on. */
 (function () {
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.BRMotion.reduced();
+  window.BRMotion.onChange(function (r) { reduce = r; });
   function sfx(name) { window.dispatchEvent(new CustomEvent('br:sfx', { detail: name })); }
   function store(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
 
@@ -34,10 +35,10 @@
   })();
 
   /* ---------------- neon buzz ---------------- */
-  if (!reduce) {
+  {
     (function buzz() {
       setTimeout(function () {
-        if (!document.hidden) {
+        if (!document.hidden && !reduce) {
           var pool = Array.prototype.filter.call(document.querySelectorAll('.hero h1, .view:not([hidden]) .vol-banner .num, .view:not([hidden]) .arc, .sign'), function (e) {
             var r = e.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight;
           });

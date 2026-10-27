@@ -110,7 +110,7 @@ button.term:hover, button.term[aria-expanded="true"] { color: var(--cyan); }
 .mp-pin.big text { font-weight: 700; fill: var(--amber); }
 .mp-pin:hover .ring, .mp-pin:focus-visible .ring, .mp-pin.sel .ring { stroke-width: 3; filter: drop-shadow(0 0 6px var(--pink)); }
 .mp-pin.sel text { fill: #fff; }
-@media (prefers-reduced-motion: no-preference) { .mp-pin .ring { animation: mppulse 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; } }
+@media (prefers-reduced-motion: no-preference) { html:not([data-motion="reduced"]) .mp-pin .ring { animation: mppulse 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; } }
 @keyframes mppulse { 50% { transform: scale(1.25); opacity: .6; } }
 .mp-inset rect { fill: rgba(12,17,30,.92); stroke: var(--line); }
 .mp-inset:hover rect, .mp-inset:focus-visible rect, .mp-inset.sel rect { stroke: var(--cyan); }

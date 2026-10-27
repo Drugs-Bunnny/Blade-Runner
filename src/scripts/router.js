@@ -17,13 +17,15 @@
     window.dispatchEvent(new CustomEvent('br:view', { detail: { view: v, changed: prev !== v && prev !== null } }));
     window.dispatchEvent(new Event('resize'));
   }
+  // smooth scrolling is motion too: skip it when motion is reduced
+  function motion() { return !!(window.BRMotion && window.BRMotion.reduced()); }
   function route(id, smooth) {
     var el = id && document.getElementById(id), view = el && (el.classList.contains('view') ? el : el.closest('.view'));
     if (!view) { view = document.getElementById('archive'); el = view; }
     var changed = view.hidden; show(view.id);
-    if (el === view) { if (changed || !smooth) window.scrollTo(0, 0); else window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    if (el === view) { if (changed || !smooth) window.scrollTo(0, 0); else window.scrollTo({ top: 0, behavior: motion() ? 'auto' : 'smooth' }); }
     else { var nav = document.querySelector('nav.bar'), pt = el.tagName === 'SECTION' ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0, y = el.getBoundingClientRect().top + window.pageYOffset + pt - nav.offsetHeight - 16;
-      window.scrollTo({ top: y, behavior: changed ? 'auto' : 'smooth' }); }
+      window.scrollTo({ top: y, behavior: changed || motion() ? 'auto' : 'smooth' }); }
   }
   // every jump inside the page becomes a history entry, so the phone's back button steps back through them
   function remember() { try { history.replaceState({ y: window.pageYOffset }, '', location.href); } catch (e) {} }

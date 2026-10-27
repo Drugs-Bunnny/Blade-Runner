@@ -8,7 +8,7 @@
      lore     violet dusk over the archive
    Everything is drawn on canvas; nothing is loaded. */
 (function () {
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.BRMotion.reduced();
   var css = getComputedStyle(document.documentElement);
   var C = { cyan: css.getPropertyValue('--cyan').trim(), pink: css.getPropertyValue('--pink').trim(), amber: css.getPropertyValue('--amber').trim(), rust: css.getPropertyValue('--rust').trim() };
 
@@ -335,4 +335,6 @@
   });
   addEventListener('resize', resize); resize(); frame(0);
   document.addEventListener('visibilitychange', kick);
+  // the Calm chip (or the device setting) changed: still the scene at once, or set it moving again
+  window.BRMotion.onChange(function (r) { reduce = r; if (r) frame(0); else kick(); });
 })();
