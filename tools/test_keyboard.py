@@ -94,6 +94,8 @@ def focus_visible(pg, base, view, limit=500):
     """Tab through a view; each control's pixels must change when it takes focus."""
     pg.goto(base + "#" + view)
     pg.wait_for_timeout(600)
+    # forget what an earlier walk marked, or its stale marks end this one early
+    pg.evaluate("document.querySelectorAll('[data-kb-seen]').forEach(e => delete e.dataset.kbSeen)")
     pg.evaluate("window.scrollTo(0, 0); document.activeElement.blur()")
     pg.keyboard.press("Tab")
     bad, count = {}, 0

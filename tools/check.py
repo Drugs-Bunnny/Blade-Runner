@@ -110,7 +110,8 @@ def check_ids(views):
     for view, items in json.loads((SRC / "shell/subnav.json").read_text()).items():
         if view not in views:
             fail("ids", f"subnav.json has a menu for '{view}', which isn't a view")
-        for anchor, _ in items:
+        for item in items:
+            anchor = item[0]
             if anchor not in known:
                 fail("ids", f"subnav.json ({view}) links to #{anchor}, which doesn't exist")
     heroes = json.loads((SRC / "shell/heroes.json").read_text())

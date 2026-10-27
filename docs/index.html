@@ -21,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Blade Runner Archive</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="build" content="Build 031 · 27 Oct 2026">
+<meta name="build" content="Build 032 · 27 Oct 2026">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -399,6 +399,43 @@ html.searching { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) { .hit { animation: none; outline: 2px solid var(--amber); } }
 
+/* ---------- finding your way ---------- */
+nav.bar .sub { position: relative; align-items: center; }
+nav.bar .sub .sep { flex: none; width: 1px; height: 14px; background: var(--line); align-self: center; }
+nav.bar .sub a[aria-current="location"] { color: var(--amber); box-shadow: 0 2px 0 var(--amber); text-shadow: 0 0 10px var(--glow-amber); }
+.strip { position: sticky; top: var(--navh, 90px); z-index: 4; display: flex; gap: 6px; align-items: center; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; padding: 8px 2px; margin: -12px 0 26px; background: rgba(7,9,16,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.strip::-webkit-scrollbar { display: none; }
+.strip.more-r { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent); }
+.strip.more-l { -webkit-mask-image: linear-gradient(90deg, transparent, #000 32px); mask-image: linear-gradient(90deg, transparent, #000 32px); }
+.strip.more-l.more-r { -webkit-mask-image: linear-gradient(90deg, transparent, #000 32px, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(90deg, transparent, #000 32px, #000 calc(100% - 32px), transparent); }
+.strip a { flex: none; min-width: 38px; text-align: center; font-family: var(--font-mono); font-size: .76rem; letter-spacing: .06em; text-decoration: none; color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padding: 5px 9px; position: relative; scroll-margin-inline: 40px; }
+.strip a:hover { color: var(--amber); border-color: var(--amber); }
+.strip a.done { color: var(--ink); }
+.strip a.done::after { content: ""; position: absolute; right: 3px; top: 3px; width: 4px; height: 4px; border-radius: 50%; background: var(--cyan); }
+.strip a[aria-current="location"] { color: var(--night); background: var(--amber); border-color: var(--amber); }
+.strip a[aria-current="location"].done::after { background: var(--night); }
+#totop { position: fixed; z-index: 19; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(96px + env(safe-area-inset-bottom, 0px)); width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: rgba(7,9,16,.92); color: var(--ink); cursor: pointer; backdrop-filter: blur(8px); box-shadow: 0 6px 24px rgba(0,0,0,.5); padding: 0; }
+#totop[hidden] { display: none; }
+#totop svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#totop:hover { color: var(--amber); border-color: var(--amber); }
+#scoremin { order: 9; margin-left: 4px; width: 30px; height: 30px; }
+#scoremin svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#score.min { left: auto; width: auto; max-width: none; padding: 6px; gap: 4px; }
+#score.min #scoreprev, #score.min #scorenext, #score.min .meta { display: none; }
+#score.min #scoremin svg { transform: rotate(180deg); }
+@media (max-width: 700px) {
+  #totop { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); right: calc(10px + env(safe-area-inset-right, 0px)); }
+  #score.min ~ #totop, body:has(#score.min) #totop { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  footer { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  canvas.cover { width: 40%; max-width: 150px; }
+  .chips { gap: 6px; margin-top: 10px; }
+  .chips span { padding: 2px 7px; }
+  .vol-banner.has-cover { gap: 12px; }
+}
+
+article.issue { scroll-margin-top: calc(var(--navh, 90px) + 76px); }
+.strip .sep { flex: none; width: 1px; height: 18px; background: var(--line); margin: 0 4px; }
+
 /* ---------- reading tracker ---------- */
 .readerbar { padding-block: 22px 0; }
 .readerbar .rb { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; padding: 14px 16px; border: 1px solid var(--line); background: rgba(12,17,30,.92); }
@@ -761,10 +798,10 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} img{max-width:100%} [hidden]{display:none!important}</style>
 </head><body><canvas id="rain" aria-hidden="true"></canvas>
 <div class="scan" aria-hidden="true"></div>
-<div id="score" role="region" aria-label="Ambient score player"><button id="scoreprev" class="sb" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="2" height="10"/><polygon points="14,3 5,8 14,13"/></svg></button><button id="scorebtn" class="sb main" type="button" aria-pressed="false" aria-label="Play score"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">▶</span></button><button id="scorenext" class="sb" type="button" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="12" y="3" width="2" height="10"/><polygon points="2,3 11,8 2,13"/></svg></button><div class="meta"><span id="scoretitle">01 / 05</span><div class="row"><input id="scorevol" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Volume"><button id="scorerain" class="chip" type="button" aria-pressed="true">Rain</button><button id="scorefx" class="chip" type="button" aria-pressed="false" title="Interface sounds off">Sounds</button><button id="scoremotion" class="chip" type="button" aria-pressed="false" aria-label="Reduce motion" title="Reduce motion">Calm</button></div><span id="scorehint">Original score</span></div></div>
-<div id="boot" class="boot" data-build="031" hidden aria-hidden="true"><div class="boot-in"><div class="boot-lines"></div><div class="boot-skip">Tap to skip</div></div></div>
+<div id="score" role="region" aria-label="Ambient score player"><button id="scoreprev" class="sb" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="2" height="10"/><polygon points="14,3 5,8 14,13"/></svg></button><button id="scorebtn" class="sb main" type="button" aria-pressed="false" aria-label="Play score"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="t">▶</span></button><button id="scorenext" class="sb" type="button" aria-label="Next track"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="12" y="3" width="2" height="10"/><polygon points="2,3 11,8 2,13"/></svg></button><div class="meta"><span id="scoretitle">01 / 05</span><div class="row"><input id="scorevol" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Volume"><button id="scorerain" class="chip" type="button" aria-pressed="true">Rain</button><button id="scorefx" class="chip" type="button" aria-pressed="false" title="Interface sounds off">Sounds</button><button id="scoremotion" class="chip" type="button" aria-pressed="false" aria-label="Reduce motion" title="Reduce motion">Calm</button></div><span id="scorehint">Original score</span></div><button id="scoremin" class="sb" type="button" aria-expanded="true" aria-label="Hide player controls"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6 L8 11 L13 6"/></svg></button></div>
+<div id="boot" class="boot" data-build="032" hidden aria-hidden="true"><div class="boot-in"><div class="boot-lines"></div><div class="boot-skip">Tap to skip</div></div></div>
 <div id="esper" class="esper" hidden role="dialog" aria-modal="true" aria-label="ESPER image enhancement"><div class="esper-box"><div class="esper-head"><span>ESPER · 34-B</span><button class="esper-close" type="button" aria-label="Close">✕</button></div><canvas></canvas><div class="esper-read" aria-live="polite"></div><a class="esper-go" hidden>Open story →</a></div></div>
-<nav class="bar" aria-label="Archive"><div class="wrap"><a class="brand" href="#archive">BR<span class="yrs"> · ARCHIVE</span></a><a href="#era1" data-nav="era1">Era I<span class="yrs"> · 2009–2019</span></a><a href="#era2" data-nav="era2">Era II<span class="yrs"> · 2022–2039</span></a><a href="#era3" data-nav="era3">Era III<span class="yrs"> · 2048–2099</span></a><a href="#people" data-nav="people">Files</a><a href="#lore" data-nav="lore">Lore</a><button id="searchbtn" class="searchbtn" type="button" aria-label="Search the archive" aria-expanded="false" aria-controls="searchpanel" title="Search (/)"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.6 12.6 L17 17"/></svg></button></div><div class="wrap sub" data-for="era1" hidden><a href="#origins">Origins · 2009</a><a href="#board">Origins case board</a><a href="#files">Origins case files</a><a href="#empathy">Origins themes</a><a href="#tokyo">Tokyo Nexus · 2015</a><a href="#tokyo2">To Lose Is to Win</a><a href="#film82">Blade Runner · 1982</a><a href="#game97">Game · 1997</a><a href="#br2019">2019 · comic</a></div><div class="wrap sub" data-for="era2" hidden><a href="#blackout">Black Out · 2022</a><a href="#br2029">2029 · comic</a><a href="#lotus">Black Lotus · anime</a><a href="#ll1">Leaving L.A.</a><a href="#lv1">Las Vegas</a><a href="#dawn">Nexus Dawn · 2036</a><a href="#br2039">2039 · comic</a></div><div class="wrap sub" data-for="era3" hidden><a href="#nowhere">Nowhere to Run · 2048</a><a href="#film49">Blade Runner 2049</a><a href="#br2099">Blade Runner 2099</a></div><div class="wrap sub" data-for="people" hidden><a href="#p-tyrell">Eldon Tyrell</a><a href="#p-cal">Cal Moreaux</a><a href="#p-mead">Mead</a><a href="#p-stix">Stix</a><a href="#p-rumika">Rumika</a><a href="#p-alura">Alura</a><a href="#p-deckard">Rick Deckard</a><a href="#p-rachael">Rachael</a><a href="#p-gaff">Gaff</a><a href="#p-ash">Ash</a><a href="#p-wojciech">Lydia Wojciech</a><a href="#p-cleo">Cleo Selwyn</a><a href="#p-isobel">Isobel Selwyn</a><a href="#p-hythe">Hythe</a><a href="#p-freysa">Freysa</a><a href="#p-yotun">Yotun</a><a href="#p-elle">Elle</a><a href="#p-davis">Alani Davis</a><a href="#p-wallace">Niander Wallace</a><a href="#p-luv">Luv</a><a href="#p-sapper">Sapper Morton</a><a href="#p-k">K</a></div><div class="wrap sub" data-for="lore" hidden><a href="#timeline">Timeline</a><a href="#glossary">Glossary</a><a href="#connections">Connections</a><a href="#map">Locations</a></div></nav><div id="searchpanel" class="searchpanel" hidden role="dialog" aria-modal="true" aria-label="Search the archive">
+<nav class="bar" aria-label="Archive"><div class="wrap"><a class="brand" href="#archive">BR<span class="yrs"> · ARCHIVE</span></a><a href="#era1" data-nav="era1">Era I<span class="yrs"> · 2009–2019</span></a><a href="#era2" data-nav="era2">Era II<span class="yrs"> · 2022–2039</span></a><a href="#era3" data-nav="era3">Era III<span class="yrs"> · 2048–2099</span></a><a href="#people" data-nav="people">Files</a><a href="#lore" data-nav="lore">Lore</a><button id="searchbtn" class="searchbtn" type="button" aria-label="Search the archive" aria-expanded="false" aria-controls="searchpanel" title="Search (/)"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.6 12.6 L17 17"/></svg></button></div><div class="wrap sub" data-for="era1" hidden><a href="#origins">Origins</a><a href="#board">Case board</a><a href="#files">Case files</a><a href="#vol1">Vol. 1 · Products</a><a href="#vol2">Vol. 2 · Scrap</a><a href="#vol3">Vol. 3 · Burning</a><a href="#empathy">Themes</a><i class="sep" aria-hidden="true"></i><a href="#tokyo">Tokyo Nexus</a><a href="#tokyo2">To Lose Is to Win</a><i class="sep" aria-hidden="true"></i><a href="#film82">Film 1982</a><a href="#game97">Game 1997</a><a href="#br2019">2019 comic</a></div><div class="wrap sub" data-for="era2" hidden><a href="#blackout">Black Out 2022</a><a href="#br2029">2029 comic</a><a href="#lotus">Black Lotus</a><a href="#ll1">Leaving L.A.</a><a href="#lv1">Las Vegas</a><i class="sep" aria-hidden="true"></i><a href="#dawn">Nexus Dawn 2036</a><a href="#br2039">2039 comic</a></div><div class="wrap sub" data-for="era3" hidden><a href="#nowhere">Nowhere to Run</a><a href="#film49">2049 film</a><a href="#br2099">2099 series</a></div><div class="wrap sub" data-for="people" hidden><a href="#p-tyrell">Eldon Tyrell</a><a href="#p-cal">Cal Moreaux</a><a href="#p-mead">Mead</a><a href="#p-stix">Stix</a><a href="#p-rumika">Rumika</a><a href="#p-alura">Alura</a><a href="#p-deckard">Rick Deckard</a><a href="#p-rachael">Rachael</a><a href="#p-gaff">Gaff</a><a href="#p-ash">Ash</a><a href="#p-wojciech">Lydia Wojciech</a><a href="#p-cleo">Cleo Selwyn</a><a href="#p-isobel">Isobel Selwyn</a><a href="#p-hythe">Hythe</a><a href="#p-freysa">Freysa</a><a href="#p-yotun">Yotun</a><a href="#p-elle">Elle</a><a href="#p-davis">Alani Davis</a><a href="#p-wallace">Niander Wallace</a><a href="#p-luv">Luv</a><a href="#p-sapper">Sapper Morton</a><a href="#p-k">K</a></div><div class="wrap sub" data-for="lore" hidden><a href="#timeline">Timeline</a><a href="#glossary">Glossary</a><a href="#connections">Connections</a><a href="#map">Locations</a></div></nav><div id="searchpanel" class="searchpanel" hidden role="dialog" aria-modal="true" aria-label="Search the archive">
   <div class="sp-box">
     <div class="sp-row">
       <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.6 12.6 L17 17"/></svg>
@@ -867,7 +904,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
     <p class="prose" style="color:var(--dim);font-size:.9rem;margin-top:16px">Do Androids Dream of Electric Sheep? and K. W. Jeter's sequel novels follow their own separate timeline.</p>
   </div>
 </section>
-<footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.avpcentral.com/blade-runner-timeline" target="_blank" rel="noopener">AvP Central: Blade Runner timeline 2009–2099</a></li><li><a href="https://www.howtolovecomics.com/2025/06/04/blade-runner-comics-universe-chronological-reading-order/" target="_blank" rel="noopener">How to Love Comics: comics reading order</a></li><li><a href="https://titan-comics.com/c/2085-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><button type="button" class="install-btn" hidden>Install as an app</button><p class="build">Build 031 · 27 Oct 2026</p></div></footer>
+<footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://www.avpcentral.com/blade-runner-timeline" target="_blank" rel="noopener">AvP Central: Blade Runner timeline 2009–2099</a></li><li><a href="https://www.howtolovecomics.com/2025/06/04/blade-runner-comics-universe-chronological-reading-order/" target="_blank" rel="noopener">How to Love Comics: comics reading order</a></li><li><a href="https://titan-comics.com/c/2085-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><button type="button" class="install-btn" hidden>Install as an app</button><p class="build">Build 032 · 27 Oct 2026</p></div></footer>
 </div><div class="view" id="era1" data-view="era1" hidden><section id="origins" style="padding-block-end:0">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--amber);--g:var(--glow-amber)"><span class="jp" aria-hidden="true">起源</span><div class="num">2009</div><h2>Blade Runner: Origins</h2>
@@ -1289,7 +1326,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
       <li><a href="https://www.nerdly.co.uk/2022/04/22/blade-runner-origins-11-review/" target="_blank" rel="noopener">Nerdly: #11 review</a></li>
       <li><a href="https://www.nerdly.co.uk/2022/06/01/blade-runner-origins-12-review-titan-comics/" target="_blank" rel="noopener">Nerdly: #12 review</a></li>
       <li><a href="https://scifibulletin.com/comics/blade-runner-review-blade-runner-origins-8/" target="_blank" rel="noopener">SciFi Bulletin: #8 review</a></li>
-    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner" target="_blank" rel="noopener">Wikipedia: Blade Runner (1982), plot</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Wikipedia: Blade Runner (1997 video game)</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Off-world Wiki: Blade Runner (1997 video game)</a></li><li><a href="https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BladeRunner" target="_blank" rel="noopener">TV Tropes: Blade Runner (video game)</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li><li><a href="https://titan-comics.com/c/2435-blade-runner-tokyo-nexus-to-lose-is-to-win/" target="_blank" rel="noopener">Titan Comics: To Lose Is to Win #1</a></li><li><a href="https://titan-comics.com/c/2483-blade-runner-tokyo-nexus-to-lose-is-to-win/" target="_blank" rel="noopener">Titan Comics: To Lose Is to Win #3</a></li><li><a href="https://titan-comics.com/comics/2516-blade-runner-tokyo-nexus-to-lose-is-to-win/" target="_blank" rel="noopener">Titan Comics: To Lose Is to Win #4</a></li><li><a href="https://forum.sanctuary.fr/t/blade-runner-tokyo-nexus-to-lose-is-to-win-1-3-nancy-a-collins-mariano-taibo/199209" target="_blank" rel="noopener">Sanctuary: Titan descriptions for #1 to #4</a></li><li><a href="https://dragoncache.blogspot.com/2026/05/blade-runner-tokyo-nexus-to-lose-is-to.html" target="_blank" rel="noopener">The Dragon's Cache: To Lose Is to Win #1 review</a></li><li><a href="https://kabooooom.com/2026/05/07/blade-runner-tokyo-nexus-to-lose-is-to-win-1-review/" target="_blank" rel="noopener">Kabooooom: To Lose Is to Win #1 review</a></li><li><a href="https://comicbookaddicts.com/2026/04/blade-runner-tokyo-nexus-to-lose-is-to-win-1-preview/" target="_blank" rel="noopener">Comic Book Addicts: To Lose Is to Win #1 review</a></li><li><a href="https://www.penguinrandomhouse.com/books/841221/blade-runner-tokyo-nexus-to-lose-is-to-win-vol2-by-written-by-nancy-a-collins/" target="_blank" rel="noopener">Penguin Random House: To Lose Is to Win collected edition</a></li><li><a href="https://titan-comics.com/comics/series/578-blade-runner-origins/" target="_blank" rel="noopener">Titan Comics: Origins issue dates</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins" target="_blank" rel="noopener">Off-world Wiki: Origins</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019" target="_blank" rel="noopener">Off-world Wiki: 2019 series and dates</a></li><li><a href="https://titan-comics.com/c/1574-blade-runner-2019-off-world/" target="_blank" rel="noopener">Titan Comics: 2019 Off-World</a></li><li><a href="https://titan-comics.com/c/2149-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus, Die in Peace</a></li><li><a href="https://bladerunner.fandom.com/wiki/Mead" target="_blank" rel="noopener">Off-world Wiki: Mead</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-2-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #2 review</a></li><li><a href="https://www.grimdarkmagazine.com/review-blade-runner-2019-volume-3/" target="_blank" rel="noopener">Grimdark Magazine: 2019 Vol. 3 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 031 · 27 Oct 2026</p></div></footer>
+    <li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_1" target="_blank" rel="noopener">Off-world Wiki: 2019 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_3" target="_blank" rel="noopener">Off-world Wiki: 2019 #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_4" target="_blank" rel="noopener">Off-world Wiki: 2019 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_8" target="_blank" rel="noopener">Off-world Wiki: 2019 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019_12" target="_blank" rel="noopener">Off-world Wiki: 2019 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_3" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #3</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner:_Tokyo_Nexus_4" target="_blank" rel="noopener">Off-world Wiki: Tokyo Nexus #4</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner" target="_blank" rel="noopener">Wikipedia: Blade Runner (1982), plot</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Wikipedia: Blade Runner (1997 video game)</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_(1997_video_game)" target="_blank" rel="noopener">Off-world Wiki: Blade Runner (1997 video game)</a></li><li><a href="https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BladeRunner" target="_blank" rel="noopener">TV Tropes: Blade Runner (video game)</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #1 review</a></li><li><a href="https://www.thepopverse.com/comics-blade-runner-tokyo-nexus-to-lose-is-to-win-may-2026-release-announcement/" target="_blank" rel="noopener">Popverse: To Lose Is to Win announced</a></li><li><a href="https://titan-comics.com/c/2435-blade-runner-tokyo-nexus-to-lose-is-to-win/" target="_blank" rel="noopener">Titan Comics: To Lose Is to Win #1</a></li><li><a href="https://titan-comics.com/c/2483-blade-runner-tokyo-nexus-to-lose-is-to-win/" target="_blank" rel="noopener">Titan Comics: To Lose Is to Win #3</a></li><li><a href="https://titan-comics.com/comics/2516-blade-runner-tokyo-nexus-to-lose-is-to-win/" target="_blank" rel="noopener">Titan Comics: To Lose Is to Win #4</a></li><li><a href="https://forum.sanctuary.fr/t/blade-runner-tokyo-nexus-to-lose-is-to-win-1-3-nancy-a-collins-mariano-taibo/199209" target="_blank" rel="noopener">Sanctuary: Titan descriptions for #1 to #4</a></li><li><a href="https://dragoncache.blogspot.com/2026/05/blade-runner-tokyo-nexus-to-lose-is-to.html" target="_blank" rel="noopener">The Dragon's Cache: To Lose Is to Win #1 review</a></li><li><a href="https://kabooooom.com/2026/05/07/blade-runner-tokyo-nexus-to-lose-is-to-win-1-review/" target="_blank" rel="noopener">Kabooooom: To Lose Is to Win #1 review</a></li><li><a href="https://comicbookaddicts.com/2026/04/blade-runner-tokyo-nexus-to-lose-is-to-win-1-preview/" target="_blank" rel="noopener">Comic Book Addicts: To Lose Is to Win #1 review</a></li><li><a href="https://www.penguinrandomhouse.com/books/841221/blade-runner-tokyo-nexus-to-lose-is-to-win-vol2-by-written-by-nancy-a-collins/" target="_blank" rel="noopener">Penguin Random House: To Lose Is to Win collected edition</a></li><li><a href="https://titan-comics.com/comics/series/578-blade-runner-origins/" target="_blank" rel="noopener">Titan Comics: Origins issue dates</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Origins" target="_blank" rel="noopener">Off-world Wiki: Origins</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2019" target="_blank" rel="noopener">Off-world Wiki: 2019 series and dates</a></li><li><a href="https://titan-comics.com/c/1574-blade-runner-2019-off-world/" target="_blank" rel="noopener">Titan Comics: 2019 Off-World</a></li><li><a href="https://titan-comics.com/c/2149-blade-runner-tokyo-nexus/" target="_blank" rel="noopener">Titan Comics: Tokyo Nexus, Die in Peace</a></li><li><a href="https://bladerunner.fandom.com/wiki/Mead" target="_blank" rel="noopener">Off-world Wiki: Mead</a></li><li><a href="https://comicalopinions.com/blade-runner-tokyo-nexus-2-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Tokyo Nexus #2 review</a></li><li><a href="https://www.grimdarkmagazine.com/review-blade-runner-2019-volume-3/" target="_blank" rel="noopener">Grimdark Magazine: 2019 Vol. 3 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 032 · 27 Oct 2026</p></div></footer>
 </div><div class="view" id="era2" data-view="era2" hidden><section id="blackout">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">停電</span><div class="num">2022</div><h2>Black Out 2022</h2>
@@ -1570,7 +1607,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Wikipedia: Blade Runner Black Out 2022</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Off-world Wiki: Black Out 2022</a></li><li><a href="https://en.wikipedia.org/wiki/2036:_Nexus_Dawn" target="_blank" rel="noopener">Wikipedia: 2036: Nexus Dawn</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li><li><a href="https://titan-comics.com/c/1631-blade-runner/" target="_blank" rel="noopener">Titan Comics: 2029 issue dates</a></li><li><a href="https://titan-comics.com/comics/series/595-blade-runner-2039/" target="_blank" rel="noopener">Titan Comics: 2039 issue dates</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039" target="_blank" rel="noopener">Off-world Wiki: 2039</a></li><li><a href="https://bladerunner.fandom.com/wiki/Trixie?oldid=6888" target="_blank" rel="noopener">Off-world Wiki: Trixie (Black Out)</a></li><li><a href="https://tvobsessive.com/2022/05/09/blade-runner-black-lotus-s1e12-artificial-souls/" target="_blank" rel="noopener">TV Obsessive: Black Lotus E12 recap</a></li><li><a href="https://www.bubbleblabber.com/2022/02/english-dub-review-blade-runner-black-lotus-time-to-die" target="_blank" rel="noopener">Bubble Blabber: Black Lotus E13 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 031 · 27 Oct 2026</p></div></footer>
+<div class="wrap pager"><a href="#era1">← Era I</a><a href="#era3">Era III →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Wikipedia: Blade Runner Black Out 2022</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_Black_Out_2022" target="_blank" rel="noopener">Off-world Wiki: Black Out 2022</a></li><li><a href="https://en.wikipedia.org/wiki/2036:_Nexus_Dawn" target="_blank" rel="noopener">Wikipedia: 2036: Nexus Dawn</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_1" target="_blank" rel="noopener">Off-world Wiki: 2029 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_4" target="_blank" rel="noopener">Off-world Wiki: 2029 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_8" target="_blank" rel="noopener">Off-world Wiki: 2029 #8</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2029_12" target="_blank" rel="noopener">Off-world Wiki: 2029 #12</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_1" target="_blank" rel="noopener">Off-world Wiki: 2039 #1</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_4" target="_blank" rel="noopener">Off-world Wiki: 2039 #4</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_9" target="_blank" rel="noopener">Off-world Wiki: 2039 #9</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039_12" target="_blank" rel="noopener">Off-world Wiki: 2039 #12</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner:_Black_Lotus" target="_blank" rel="noopener">Wikipedia: Blade Runner: Black Lotus</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-1-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-2-review/" target="_blank" rel="noopener">Comical Opinions: Black Lotus #2 review</a></li><li><a href="https://setthetape.com/2022/11/04/blade-runner-black-lotus-4/" target="_blank" rel="noopener">Set The Tape: Black Lotus #4 review</a></li><li><a href="https://www.comicsbeat.com/trade-rating-blade-runner-black-lotus-leaving-la-review" target="_blank" rel="noopener">The Beat: Leaving L.A. review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-1-new-comic-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #1 review</a></li><li><a href="https://comicalopinions.com/blade-runner-black-lotus-las-vegas-4-review/" target="_blank" rel="noopener">Comical Opinions: Las Vegas #4 review</a></li><li><a href="https://titan-comics.com/c/1631-blade-runner/" target="_blank" rel="noopener">Titan Comics: 2029 issue dates</a></li><li><a href="https://titan-comics.com/comics/series/595-blade-runner-2039/" target="_blank" rel="noopener">Titan Comics: 2039 issue dates</a></li><li><a href="https://bladerunner.fandom.com/wiki/Blade_Runner_2039" target="_blank" rel="noopener">Off-world Wiki: 2039</a></li><li><a href="https://bladerunner.fandom.com/wiki/Trixie?oldid=6888" target="_blank" rel="noopener">Off-world Wiki: Trixie (Black Out)</a></li><li><a href="https://tvobsessive.com/2022/05/09/blade-runner-black-lotus-s1e12-artificial-souls/" target="_blank" rel="noopener">TV Obsessive: Black Lotus E12 recap</a></li><li><a href="https://www.bubbleblabber.com/2022/02/english-dub-review-blade-runner-black-lotus-time-to-die" target="_blank" rel="noopener">Bubble Blabber: Black Lotus E13 review</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 032 · 27 Oct 2026</p></div></footer>
 </div><div class="view" id="era3" data-view="era3" hidden><section id="nowhere">
   <div class="wrap">
     <div class="vol-banner" style="--c:var(--dim);--g:rgba(149,162,196,.35)"><span class="jp" aria-hidden="true">逃げ場なし</span><div class="num">2048</div><h2>2048: Nowhere to Run</h2>
@@ -1627,7 +1664,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
     </div>
   </div>
 </section>
-<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run" target="_blank" rel="noopener">Wikipedia: 2048: Nowhere to Run</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_2049" target="_blank" rel="noopener">Wikipedia: Blade Runner 2049, plot</a></li><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 031 · 27 Oct 2026</p></div></footer>
+<div class="wrap pager"><a href="#era2">← Era II</a><a href="#archive">Archive →</a></div><footer><div class="wrap"><div class="label">Sources</div><ul><li><a href="https://en.wikipedia.org/wiki/2048:_Nowhere_to_Run" target="_blank" rel="noopener">Wikipedia: 2048: Nowhere to Run</a></li><li><a href="https://en.wikipedia.org/wiki/Blade_Runner_2049" target="_blank" rel="noopener">Wikipedia: Blade Runner 2049, plot</a></li><li><a href="https://www.broadwayworld.com/article/BLADE-RUNNER-2099-to-Make-Debut-on-Prime-Video-With-New-Teaser-Trailer-20260724" target="_blank" rel="noopener">BroadwayWorld: Blade Runner 2099 premiere date and cast</a></li><li><a href="https://www.thepopverse.com/tv-blade-runner-2099-prime-video-release-date/" target="_blank" rel="noopener">Popverse: Blade Runner 2099 release date</a></li></ul><p>An unofficial fan synopsis. Blade Runner is owned by Alcon Entertainment; the comics are published by Titan Comics.</p><p class="build">Build 032 · 27 Oct 2026</p></div></footer>
 </div><div class="view" id="people" data-view="people" hidden><section id="files-index">
   <div class="wrap">
     <div class="sec-head"><div class="label">LAPD records · cross-referenced</div><h2>Character files</h2><p class="prose" style="color:var(--dim);margin:0">The people who turn up in more than one story, in order of first appearance. Each file links to every entry they appear in. With the spoiler shield on, a file stays blurred until you’ve read all of its appearances.</p></div>
@@ -1724,7 +1761,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   </div>
 </section>
 <div class="wrap pager"><a href="#era3">← Era III</a><a href="#lore">Lore →</a></div>
-<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era.</p><p class="build">Build 031 · 27 Oct 2026</p></div></footer>
+<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era.</p><p class="build">Build 032 · 27 Oct 2026</p></div></footer>
 </div><div class="view" id="lore" data-view="lore" hidden><section id="timeline">
   <div class="wrap">
     <div class="sec-head"><div class="label">2007 – 2099 · ninety years in one line</div><h2>Timeline</h2><p class="prose lore-intro">What the world looks like at each point in the saga, and where every story sits in it. Tap a year on the scale to jump there; tap an event to open its story.</p></div>
@@ -1768,7 +1805,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   </div>
 </section>
 <div class="wrap pager"><a href="#people">← Files</a><a href="#archive">Archive →</a></div>
-<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era. That Kalanthia was an off-world mission comes from Titan's description of the <a href="https://www.penguinrandomhouse.com/books/841221/blade-runner-tokyo-nexus-to-lose-is-to-win-vol2-by-written-by-nancy-a-collins/" target="_blank" rel="noopener">To Lose Is to Win collected edition</a>. The date on the tree in Blade Runner 2049 is from the film's <a href="https://m.imdb.com/title/tt1856101/plotsummary" target="_blank" rel="noopener">IMDb plot summary</a>.</p><p class="build">Build 031 · 27 Oct 2026</p></div></footer>
+<footer><div class="wrap"><div class="label">Sources</div><p>Compiled from the synopses in this archive. See the source lists at the foot of each era. That Kalanthia was an off-world mission comes from Titan's description of the <a href="https://www.penguinrandomhouse.com/books/841221/blade-runner-tokyo-nexus-to-lose-is-to-win-vol2-by-written-by-nancy-a-collins/" target="_blank" rel="noopener">To Lose Is to Win collected edition</a>. The date on the tree in Blade Runner 2049 is from the film's <a href="https://m.imdb.com/title/tt1856101/plotsummary" target="_blank" rel="noopener">IMDb plot summary</a>.</p><p class="build">Build 032 · 27 Oct 2026</p></div></footer>
 </div></main>
 <script>/* Pop-ups (search, ESPER, quiz, sync, term definitions) each get a history entry while open,
    so the phone's back button closes the pop-up instead of leaving the page.
@@ -2863,6 +2900,124 @@ window.BRMotion = (function () {
       save(KEY, JSON.stringify(Object.keys(read))); paint();
     }
   };
+})();
+
+/* Finding your way around a long page: a "you are here" marker in the sub-menu, a sticky strip of entry
+   numbers inside each story, a back-to-top button, and a player that can shrink out of the way. */
+(function () {
+  var root = document.documentElement, nav = document.querySelector('nav.bar');
+  function reduced() { return !!(window.BRMotion && window.BRMotion.reduced()); }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: keep going */ } }
+
+  // the height of the sticky top bar, so the strips can sit just under it
+  function navH() { root.style.setProperty('--navh', (nav ? nav.offsetHeight : 0) + 'px'); }
+  navH(); window.addEventListener('resize', navH); window.addEventListener('br:view', function () { setTimeout(navH, 0); });
+  if (window.ResizeObserver && nav) new ResizeObserver(navH).observe(nav);
+
+  // fade the edge of a sideways-scrolling row when more links lie that way
+  function fade(el) {
+    el.classList.toggle('more-l', el.scrollLeft > 4);
+    el.classList.toggle('more-r', el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }
+
+  // ---- a strip of entry numbers at the top of every story with three or more entries
+  var strips = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.view section'), function (sec) {
+    var entries = sec.querySelectorAll('article.issue[id]'), host = sec.querySelector('.issues');
+    if (entries.length < 3 || !host) return;
+    var s = document.createElement('nav'); s.className = 'strip'; s.setAttribute('aria-label', 'Jump to an entry');
+    var links = [], lastGroup = null;
+    Array.prototype.forEach.call(entries, function (a, i) {
+      var no = a.querySelector('.no'), h = a.querySelector('h3'), label = no && no.firstChild ? no.firstChild.nodeValue.trim() : '';
+      if (!label || label === '—') label = String(i + 1);
+      // entries gathered under their own heading (the comics inside Black Lotus) are a separate run
+      var group = a.parentNode, head = group.previousElementSibling;
+      while (head && !head.classList.contains('arc') && head.classList.contains('prog')) head = head.previousElementSibling;   // the progress bar sits between
+      var arc = head && head.classList.contains('arc') ? (head.textContent.split('·')[1] || '').trim() : '';
+      if (lastGroup && group !== lastGroup) { var sep = document.createElement('i'); sep.className = 'sep'; sep.setAttribute('aria-hidden', 'true'); s.appendChild(sep); }
+      lastGroup = group;
+      var l = document.createElement('a'); l.href = '#' + a.id; l.textContent = label;
+      var name = (arc ? arc + ': ' : '') + (h ? h.textContent : label);
+      l.title = name; l.setAttribute('aria-label', arc ? arc + ' ' + label + ', ' + (h ? h.textContent : '') : label + (h ? ', ' + h.textContent : ''));
+      s.appendChild(l); links.push({ el: l, target: a, id: a.id });
+    });
+    host.parentNode.insertBefore(s, host);
+    s.addEventListener('scroll', function () { fade(s); }, { passive: true });
+    strips.push({ el: s, links: links });
+  });
+  function visible(el) { return !!(el.offsetParent || el.getClientRects().length) && !el.closest('[hidden]'); }
+  function paintStrips() {
+    if (!window.BRReader) return;
+    strips.forEach(function (s) { s.links.forEach(function (l) { l.el.classList.toggle('done', window.BRReader.isRead(l.id)); }); });
+  }
+  if (window.BRReader) { window.BRReader.onChange(paintStrips); paintStrips(); }
+
+  // ---- "you are here": mark the sub-menu link and the strip entry nearest the top of the screen
+  function mark(links, line, scroller) {
+    var cur = null;
+    links.forEach(function (l) {
+      var t = l.target; if (!t || !visible(t)) return;
+      var box = t.getBoundingClientRect(), sec = t.tagName === 'SECTION', top = box.top + (sec ? parseFloat(getComputedStyle(t).paddingTop) || 0 : 0);
+      // a whole section only counts while it is still on screen; a single entry counts until the next one is reached
+      if (top <= line && (!sec || box.bottom > line)) cur = l;
+    });
+    links.forEach(function (l) {
+      var on = l === cur, was = l.el.getAttribute('aria-current') === 'location';
+      if (on === was) return;
+      if (on) {
+        l.el.setAttribute('aria-current', 'location');
+        if (scroller && scroller.scrollWidth > scroller.clientWidth + 4)
+          scroller.scrollTo({ left: l.el.offsetLeft - (scroller.clientWidth - l.el.offsetWidth) / 2, behavior: reduced() ? 'auto' : 'smooth' });
+      } else l.el.removeAttribute('aria-current');
+    });
+  }
+  var subLinks = new WeakMap();
+  function linksOf(el) {
+    var cached = subLinks.get(el); if (cached) return cached;
+    var out = Array.prototype.map.call(el.querySelectorAll('a[href^="#"]'), function (a) { return { el: a, target: document.getElementById(a.getAttribute('href').slice(1)) }; });
+    subLinks.set(el, out); return out;
+  }
+  var pending = false;
+  function spy() {
+    pending = false;
+    var nb = nav ? nav.getBoundingClientRect().bottom : 0, sub = nav && nav.querySelector('.sub:not([hidden])');
+    if (sub) mark(linksOf(sub), nb + 40, sub);
+    strips.forEach(function (s) {
+      if (!visible(s.el)) return;
+      mark(s.links, nb + s.el.offsetHeight + 40, s.el);
+    });
+    toTop.hidden = window.pageYOffset < 900;
+  }
+  function queue() { if (!pending) { pending = true; requestAnimationFrame(spy); } }
+
+  // ---- back to top
+  var toTop = document.createElement('button'); toTop.id = 'totop'; toTop.type = 'button'; toTop.hidden = true; toTop.setAttribute('aria-label', 'Back to top');
+  toTop.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 10 L8 5 L13 10"/></svg>';
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
+    var brand = nav && nav.querySelector('.brand'); if (brand) brand.focus({ preventScroll: true });
+  });
+  document.body.appendChild(toTop);
+
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue); window.addEventListener('br:view', function () { setTimeout(queue, 0); });
+  window.addEventListener('load', function () { strips.forEach(function (s) { fade(s.el); }); queue(); });
+  queue();
+
+  // ---- a player that can shrink to a single button (small screens start that way)
+  var score = document.getElementById('score'), mb = document.getElementById('scoremin');
+  if (score && mb) {
+    var setMin = function (m, remember) {
+      score.classList.toggle('min', m);
+      mb.setAttribute('aria-expanded', m ? 'false' : 'true');
+      mb.setAttribute('aria-label', m ? 'Show player controls' : 'Hide player controls');
+      if (remember) save('br-player', m ? 'min' : 'open');
+    };
+    var pref = load('br-player');
+    setMin(pref ? pref === 'min' : window.matchMedia('(max-width: 700px)').matches, false);
+    mb.addEventListener('click', function () { setMin(!score.classList.contains('min'), true); });
+  }
 })();
 
 /* "Copy link" buttons on every story banner and every entry, so a single issue or episode can be shared.
@@ -4035,7 +4190,7 @@ window.BR_LORE = {
     if (!view) { view = document.getElementById('archive'); el = view; }
     var changed = view.hidden; show(view.id);
     if (el === view) { if (changed || !smooth) window.scrollTo(0, 0); else window.scrollTo({ top: 0, behavior: motion() ? 'auto' : 'smooth' }); }
-    else { var nav = document.querySelector('nav.bar'), pt = el.tagName === 'SECTION' ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0, y = el.getBoundingClientRect().top + window.pageYOffset + pt - nav.offsetHeight - 16;
+    else { var nav = document.querySelector('nav.bar'), pt = el.tagName === 'SECTION' ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0, strip = el.matches('article.issue') && el.closest('section') && el.closest('section').querySelector('.strip'), y = el.getBoundingClientRect().top + window.pageYOffset + pt - nav.offsetHeight - (strip ? strip.offsetHeight : 0) - 16;
       window.scrollTo({ top: y, behavior: changed || motion() ? 'auto' : 'smooth' }); }
   }
   // every jump inside the page becomes a history entry, so the phone's back button steps back through them

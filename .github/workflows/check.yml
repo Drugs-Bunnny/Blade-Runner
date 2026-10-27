@@ -27,7 +27,7 @@ jobs:
 
   browser:
     # Drives the built site in Chromium: keyboard use of the pop-ups, copy-link buttons, working offline,
-    # the Calm (reduce motion) chip, and two defensive checks on stored scores and sync setup codes.
+    # the Calm (reduce motion) chip, the sub-menu, entry strips and shrinking player, and two defensive checks on stored scores and sync setup codes.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,3 +48,5 @@ jobs:
         run: python3 tools/test_hardening.py
       - name: Motion tests
         run: python3 tools/test_motion.py
+      - name: Navigation tests
+        run: python3 tools/test_nav.py

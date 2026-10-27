@@ -60,7 +60,7 @@ NAV = [("era1", 'Era I<span class="yrs"> · 2009–2019</span>'),
        ("lore", 'Lore')]
 
 STYLES = ["styles/base.css", "styles/site.css", "styles/reader.css", "styles/fx.css", "styles/lore.css", "styles/sync.css", "styles/motion.css"]
-SCRIPTS = ["scripts/overlay.js", "scripts/motion.js", "scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/share.js", "scripts/lore-data.js",
+SCRIPTS = ["scripts/overlay.js", "scripts/motion.js", "scripts/city.js", "scripts/score.js", "scripts/art.js", "scripts/reader.js", "scripts/wayfind.js", "scripts/share.js", "scripts/lore-data.js",
            "scripts/lore.js", "scripts/quiz.js", "scripts/search.js", "scripts/fx.js", "scripts/sfx.js"]
 
 
@@ -84,7 +84,7 @@ def nav_html(subnav):
     links = "".join(f'<a href="#{v}" data-nav="{v}">{label}</a>' for v, label in NAV)
     subs = "".join(
         f'<div class="wrap sub" data-for="{view}" hidden>'
-        + "".join(f'<a href="#{anchor}">{text}</a>' for anchor, text in items)
+        + "".join(('<i class="sep" aria-hidden="true"></i>' if len(item) > 2 else "") + f'<a href="#{item[0]}">{item[1]}</a>' for item in items)
         + "</div>"
         for view, items in subnav.items())
     search = ('<button id="searchbtn" class="searchbtn" type="button" aria-label="Search the archive" aria-expanded="false" '

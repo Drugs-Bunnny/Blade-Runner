@@ -24,7 +24,7 @@
     if (!view) { view = document.getElementById('archive'); el = view; }
     var changed = view.hidden; show(view.id);
     if (el === view) { if (changed || !smooth) window.scrollTo(0, 0); else window.scrollTo({ top: 0, behavior: motion() ? 'auto' : 'smooth' }); }
-    else { var nav = document.querySelector('nav.bar'), pt = el.tagName === 'SECTION' ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0, y = el.getBoundingClientRect().top + window.pageYOffset + pt - nav.offsetHeight - 16;
+    else { var nav = document.querySelector('nav.bar'), pt = el.tagName === 'SECTION' ? parseFloat(getComputedStyle(el).paddingTop) || 0 : 0, strip = el.matches('article.issue') && el.closest('section') && el.closest('section').querySelector('.strip'), y = el.getBoundingClientRect().top + window.pageYOffset + pt - nav.offsetHeight - (strip ? strip.offsetHeight : 0) - 16;
       window.scrollTo({ top: y, behavior: changed || motion() ? 'auto' : 'smooth' }); }
   }
   // every jump inside the page becomes a history entry, so the phone's back button steps back through them
