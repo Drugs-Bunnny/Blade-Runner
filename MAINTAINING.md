@@ -18,11 +18,11 @@ Notes for whoever works on this next, including Claude in a new chat. Read this 
 ## Building and publishing
 
 1. Edit files under `src/` (and `tools/make_files.py` for character files, then run `python3 tools/make_files.py`).
-2. Run `python3 build.py`. It writes `docs/index.html`, `docs/sw.js`, `docs/manifest.webmanifest` and `build/archive.html`. The build number is the commit count plus one when sources are uncommitted, so build, then commit, and the footer matches the commit.
-3. Test in Playwright at 390 px and 1280 px wide: no page errors, no horizontal overflow, no duplicate ids, no broken `#` links. Serve `docs/` with `python3 -m http.server` (the service worker and sync need http, not file://).
+2. Run `python3 build.py`. It writes `docs/index.html`, `docs/sw.js`, `docs/manifest.webmanifest`, `docs/fonts/` and `build/archive.html`. The build number is the commit count plus one when sources are uncommitted, so build, then commit, and the footer matches the commit.
+3. Run `python3 tools/check.py` (duplicate ids, broken `#` links, story keys, Lore data, and whether `docs/` is up to date; GitHub runs it on every push too). Then test in Playwright at 390 px and 1280 px wide: no page errors, no horizontal overflow. Serve `docs/` with `python3 -m http.server` (the service worker and sync need http, not file://).
 4. Commit as Neil (`git -c user.name="Neil" -c user.email="drugsbunny83@gmail.com" commit`), then `git fetch origin main && git push origin main`. The `gh` CLI token hasn't worked in this setup; plain git through the proxy does.
 5. Republish the artifact from `build/archive.html` to the URL above.
-6. Optional: `python3 tools/make_images.py <path to @fontsource node_modules>` refreshes the README screenshots, icons and favicon PNG. Install `@fontsource/chakra-petch @fontsource/barlow @fontsource/share-tech-mono` from npm for real fonts.
+6. Optional: `python3 tools/make_images.py <path to @fontsource node_modules>` refreshes the README screenshots, icons and favicon PNG. Install `@fontsource/chakra-petch @fontsource/barlow @fontsource/share-tech-mono` from npm for real fonts. The site's own copies of those fonts are in `src/fonts/` (the Pages build serves them itself; the Claude copy still loads Google Fonts).
 
 ## Adding a story (checklist)
 

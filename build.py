@@ -10,6 +10,7 @@ import datetime
 import json
 import pathlib
 import re
+import shutil
 import subprocess
 from zoneinfo import ZoneInfo
 
@@ -25,6 +26,30 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700'
          '&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap">')
+
+# Self-hosted fonts for the GitHub Pages copy (Latin subset, SIL Open Font License; see src/fonts/LICENSE.txt).
+# The Claude artifact copy keeps the Google Fonts link above, since it is a single page with no files beside it.
+FONT_FACES = [("Chakra Petch", 400, "normal", "chakra-petch-latin-400-normal"),
+              ("Chakra Petch", 600, "normal", "chakra-petch-latin-600-normal"),
+              ("Chakra Petch", 700, "normal", "chakra-petch-latin-700-normal"),
+              ("Barlow", 400, "normal", "barlow-latin-400-normal"),
+              ("Barlow", 400, "italic", "barlow-latin-400-italic"),
+              ("Barlow", 500, "normal", "barlow-latin-500-normal"),
+              ("Barlow", 500, "italic", "barlow-latin-500-italic"),
+              ("Barlow", 600, "normal", "barlow-latin-600-normal"),
+              ("Barlow", 600, "italic", "barlow-latin-600-italic"),
+              ("Share Tech Mono", 400, "normal", "share-tech-mono-latin-400-normal")]
+# Faces used on first paint; preloaded so the title doesn't swap fonts
+FONT_PRELOAD = ["chakra-petch-latin-700-normal", "barlow-latin-400-normal", "share-tech-mono-latin-400-normal"]
+LATIN = ("U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,"
+         "U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD")
+
+
+def font_css():
+    return "".join(f'@font-face{{font-family:"{fam}";font-style:{style};font-weight:{wt};font-display:swap;'
+                   f'src:url(fonts/{name}.woff2) format("woff2");unicode-range:{LATIN}}}\n'
+                   for fam, wt, style, name in FONT_FACES)
+
 
 # Views, in order. The first one is shown on load.
 VIEWS = ["archive", "era1", "era2", "era3", "people", "lore"]
@@ -123,12 +148,15 @@ def build():
 
     # GitHub Pages: a complete document.
     head, rest = page.split('<canvas id="rain"', 1)
+    # Pages copy: serve the fonts from this site instead of Google Fonts
+    head = head.replace(FONTS + "\n", "".join(f'<link rel="preload" href="fonts/{n}.woff2" as="font" type="font/woff2" crossorigin>\n' for n in FONT_PRELOAD))
+    assert "fonts.googleapis.com" not in head, "Google Fonts link was not replaced in the Pages build"
     standalone = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
                   f'<meta name="description" content="{DESCRIPTION}">\n'
                   f'{read("shell/social.html").replace("__SITE__", SITE_URL).replace("__DESC__", DESCRIPTION).replace("__TITLE__", TITLE)}'
                   '<style>:root{color-scheme:dark}html,body{background:#070910}body{font-family:system-ui,sans-serif}</style>\n'
                   '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-                  + head.replace("</style>\n", "\n" + read("shell/standalone.css") + "</style>\n", 1)
+                  + head.replace("</style>\n", "\n" + font_css() + read("shell/standalone.css") + "</style>\n", 1)
                   + '</head><body><canvas id="rain"' + rest + "\n</body></html>\n")
     # Pages copy only: progress sync, and the installable app (manifest, offline service worker and its registration)
     standalone = standalone.replace('<meta name="theme-color"', '<link rel="manifest" href="manifest.webmanifest">\n<meta name="theme-color"', 1)
@@ -136,10 +164,15 @@ def build():
                         '<link rel="icon" type="image/svg+xml" href="img/favicon.svg">\n<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">', standalone, count=1)
     (ROOT / "docs" / "img").mkdir(parents=True, exist_ok=True)
     (ROOT / "docs" / "img" / "favicon.svg").write_text(read("shell/icon.svg"))
+    fonts_out = ROOT / "docs" / "fonts"
+    fonts_out.mkdir(parents=True, exist_ok=True)
+    for _, _, _, name in FONT_FACES:
+        shutil.copyfile(SRC / "fonts" / f"{name}.woff2", fonts_out / f"{name}.woff2")
     standalone = standalone.replace("\n</body></html>", "\n<script>" + read("scripts/sync.js") + "\n" + read("pwa/register.js") + "</script>\n</body></html>", 1)
     (ROOT / "docs").mkdir(exist_ok=True)
     (ROOT / "docs" / "manifest.webmanifest").write_text(read("pwa/manifest.json").replace("__DESC__", DESCRIPTION))
-    (ROOT / "docs" / "sw.js").write_text(read("pwa/sw.js").replace("__BUILD__", f"{number:03d}"))
+    (ROOT / "docs" / "sw.js").write_text(read("pwa/sw.js").replace("__BUILD__", f"{number:03d}")
+                                                  .replace("__FONTS__", json.dumps([f"./fonts/{n}.woff2" for _, _, _, n in FONT_FACES])))
     (ROOT / "docs" / "index.html").write_text(standalone)
     (ROOT / "docs" / ".nojekyll").write_text("")
     print(build_label)

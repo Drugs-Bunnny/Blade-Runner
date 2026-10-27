@@ -1,0 +1,26 @@
+name: Check
+
+# Runs on every push and pull request: rebuilds the site and checks that links, story keys and
+# Lore data all point at real things, and that docs/ matches what the sources build to.
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the build number is the commit count, so the full history is needed
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the archive
+        run: python3 tools/check.py

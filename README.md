@@ -40,7 +40,7 @@ An unofficial fan archive of the Blade Runner saga from 2009 to 2099. It covers 
 
 ![The Lore timeline](docs/img/screen-lore.png)
 
-Reading progress, quiz scores and the spoiler setting are saved in the visitor's own browser. Nothing is sent anywhere unless you turn on sync, which talks only to GitHub, using your own token.
+Reading progress, quiz scores and the spoiler setting are saved in the visitor's own browser. Nothing is sent anywhere unless you turn on sync, which talks only to GitHub, using your own token. The fonts come from the site itself, so loading the page makes no requests to other sites.
 
 ## Layout
 
@@ -50,9 +50,12 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield), `fx.css` (film touches), `lore.css` (Lore and the quizzes), `sync.css` (the sync button and dialog) |
 | `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `search.js` (search), `fx.js` (ESPER, origami, start-up screen, neon flicker), `sfx.js` (interface sounds), `lore-data.js` (glossary, timeline, connections, places and quiz questions), `lore.js` (draws the Lore section and the underlined terms), `quiz.js` (Voight-Kampff tests), `sync.js` (GitHub gist sync, Pages copy only), `router.js` (switching views) |
 | `src/shell/` | Page furniture: hero text, sub-navigation, the music player, the start-up and ESPER overlays, icon and social tags |
+| `src/fonts/` | The three typefaces (Chakra Petch, Barlow, Share Tech Mono) as Latin-subset WOFF2 files, with their licence. The GitHub Pages copy serves them itself; nothing is fetched from Google Fonts |
 | `src/pwa/` | The app manifest, the offline service worker and its registration, used by the GitHub Pages copy only |
+| `.github/workflows/` | `check.yml`, which runs `tools/check.py` on every push and pull request |
 | `build.py` | Assembles everything into one page |
-| `docs/` | The built site, served by GitHub Pages, plus its images |
+| `docs/` | The built site, served by GitHub Pages, plus its images and fonts |
+| `tools/check.py` | The checks that run on every push (see Checking) |
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
 | `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
 
@@ -66,9 +69,17 @@ Requires Python 3 and nothing else.
 python3 build.py
 ```
 
-This writes `docs/index.html`, `docs/manifest.webmanifest` and `docs/sw.js` for GitHub Pages, and `build/archive.html` for the Claude artifact copy. Commit `docs/` along with your source changes.
+This writes `docs/index.html`, `docs/manifest.webmanifest`, `docs/sw.js` and `docs/fonts/` for GitHub Pages, and `build/archive.html` for the Claude artifact copy. Commit `docs/` along with your source changes.
 
 Each build is stamped with a build number and date, shown at the foot of every page and on the start-up screen. The number is the commit the build belongs to: the commit count so far, plus one if there are uncommitted source changes. So build and commit together, and the number on the live site matches the commit that published it.
+
+## Checking
+
+```sh
+python3 tools/check.py
+```
+
+This needs Python 3, Node (to read the Lore data) and a full git clone. It checks that every id is unique and every in-page link, sub-menu entry and poster lands on something real; that the story keys in the tracker, search, glossary, timeline, connections and quizzes all exist; that each quiz question has four distinct answers; and that `docs/` matches a fresh build of the sources (build number and date are ignored). GitHub runs the same script on every push and pull request, so a forgotten `python3 build.py` or a mistyped link shows up as a red cross. Add `--no-build` to skip the last check.
 
 To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 
@@ -78,4 +89,4 @@ python3 tools/make_images.py
 
 ## Credits
 
-This is an unofficial fan project. Blade Runner is owned by Alcon Entertainment, and the comics are published by Titan Comics. The synopses are original summaries; the sources are listed at the foot of each era. All artwork and music on the site are original and generated in the browser. No official images or audio are used.
+This is an unofficial fan project. Blade Runner is owned by Alcon Entertainment, and the comics are published by Titan Comics. The synopses are original summaries; the sources are listed at the foot of each era. All artwork and music on the site are original and generated in the browser. No official images or audio are used. The typefaces (Chakra Petch, Barlow and Share Tech Mono) are used under the SIL Open Font License; see `src/fonts/LICENSE.txt`.
