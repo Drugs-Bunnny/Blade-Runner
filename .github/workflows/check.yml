@@ -40,3 +40,5 @@ jobs:
           playwright install --with-deps chromium
       - name: Keyboard tests
         run: python3 tools/test_keyboard.py
+      - name: Share-link tests
+        run: python3 tools/test_share.py

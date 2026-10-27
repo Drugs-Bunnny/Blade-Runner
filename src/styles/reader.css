@@ -48,3 +48,11 @@
 }
 .dossier.veiled .dzb { filter: blur(8px); opacity: .5; user-select: none; pointer-events: none; }
 .dossier.veiled > .rd-reveal { top: 62%; }
+/* ---------- copy-link buttons ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.share-btn { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--dim); border: 1px solid var(--line); padding: 6px 10px; cursor: pointer; min-height: 32px; }
+.share-btn:hover { color: var(--ink); border-color: var(--dim); }
+.vol-banner .share-row { position: relative; z-index: 1; margin-top: 16px; }
+.vol-banner .share-btn { border-color: var(--c); color: var(--c); }
+.vol-banner .share-btn:hover { background: var(--c); color: var(--night); }
+@media print { .share-btn, .share-row { display: none; } }

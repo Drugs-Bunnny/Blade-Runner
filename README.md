@@ -21,6 +21,7 @@ An unofficial fan archive of the Blade Runner saga from 2009 to 2099. It covers 
 - **Voight-Kampff tests.** Finishing a story unlocks a short quiz on it. Get four in five right to pass as human. Your best score is kept.
 - **Reading tracker.** Mark each issue or episode as read, watched or played, see your progress for each story, era and the whole archive, and use Continue to jump to the next unread entry.
 - **Search.** Search every synopsis, character file and story intro from the top bar, or press `/` or Ctrl+K. With the spoiler shield on, matches in unread entries are counted but not shown.
+- **Share links.** Every story banner and every issue or episode has a *Copy link* button. The link opens the archive at that spot, so you can point a friend at one issue. The buttons are hidden in the Claude copy, which has no address of its own.
 - **Spoiler shield.** An optional mode that blurs everything you haven't marked yet. Tap any entry to reveal it.
 - **Original art and sound.** A neon poster for every story, five generative ambient tracks, and city-street rain. Everything is drawn and played live in the browser. The music keeps playing as you move around the page, and phones show lock-screen controls.
 - **Film touches.**
@@ -48,7 +49,7 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | --- | --- |
 | `src/pages/` | The page content: `archive.html` (the hub), `era1.html`–`era3.html` (the synopses and their sources), `people.html` (character files) and `lore.html` (the Lore section's frame) |
 | `src/styles/` | `base.css` (palette, type, layout), `site.css` (shared components), `reader.css` (tracker and spoiler shield), `fx.css` (film touches), `lore.css` (Lore and the quizzes), `sync.css` (the sync button and dialog) |
-| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `search.js` (search), `fx.js` (ESPER, origami, start-up screen, neon flicker), `sfx.js` (interface sounds), `lore-data.js` (glossary, timeline, connections, places and quiz questions), `lore.js` (draws the Lore section and the underlined terms), `quiz.js` (Voight-Kampff tests), `sync.js` (GitHub gist sync, Pages copy only), `router.js` (switching views) |
+| `src/scripts/` | `city.js` (skyline and rain animation), `score.js` (music and rain sound), `art.js` (posters), `reader.js` (tracker and shield), `share.js` (copy-link buttons), `search.js` (search), `fx.js` (ESPER, origami, start-up screen, neon flicker), `sfx.js` (interface sounds), `lore-data.js` (glossary, timeline, connections, places and quiz questions), `lore.js` (draws the Lore section and the underlined terms), `quiz.js` (Voight-Kampff tests), `sync.js` (GitHub gist sync, Pages copy only), `router.js` (switching views) |
 | `src/shell/` | Page furniture: hero text, sub-navigation, the music player, the start-up and ESPER overlays, icon and social tags |
 | `src/fonts/` | The three typefaces (Chakra Petch, Barlow, Share Tech Mono) as Latin-subset WOFF2 files, with their licence. The GitHub Pages copy serves them itself; nothing is fetched from Google Fonts |
 | `src/pwa/` | The app manifest, the offline service worker and its registration, used by the GitHub Pages copy only |
@@ -56,7 +57,7 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | `build.py` | Assembles everything into one page |
 | `docs/` | The built site, served by GitHub Pages, plus its images and fonts |
 | `tools/check.py` | The checks that run on every push (see Checking) |
-| `tools/test_keyboard.py` | The keyboard test that runs beside them |
+| `tools/test_keyboard.py`, `tools/test_share.py` | The browser tests that run beside them: keyboard use of the pop-ups, and the copy-link buttons |
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
 | `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
 
@@ -85,9 +86,10 @@ This needs Python 3, Node (to read the Lore data) and a full git clone. It check
 ```sh
 pip install playwright && playwright install chromium
 python3 tools/test_keyboard.py
+python3 tools/test_share.py
 ```
 
-This one drives the built site (`docs/`) with the keyboard alone, in Chromium. The four pop-ups that cover the page (search, sync, the ESPER image and the Voight-Kampff test) must keep Tab inside themselves, close on Escape and hand focus back to the control that opened them, and every control on the Lore and Character files pages must show a visible change when it has focus. It takes about a minute and runs in GitHub as a second job.
+The first one drives the built site (`docs/`) with the keyboard alone, in Chromium. The four pop-ups that cover the page (search, sync, the ESPER image and the Voight-Kampff test) must keep Tab inside themselves, close on Escape and hand focus back to the control that opened them, and every control on the Lore and Character files pages must show a visible change when it has focus. It takes about a minute and runs in GitHub as a second job.
 
 To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 
