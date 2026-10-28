@@ -1,19 +1,21 @@
 /* Layout: a rainy night-city scroll — skyline hero, case board, dossiers, three volumes of issue "case reports", a broadcast climax, then the empathy thread. Single committed dark look. */
 :root {
   --night: #070910;
-  --deep: #0c111e;
-  --panel: #10172a;
-  --line: #243050;
-  --ink: #e6eaf4;
-  --dim: #95a2c4;
-  --amber: #ffb347;
-  --cyan: #22e5ff;
-  --pink: #ff2e88;
+  --deep: #0b1117;
+  --panel: #0f1a21;
+  --line: #22343c;
+  --ink: #e3e8e6;
+  --dim: #8fa6ab;
+  --amber: #f2a93b;
+  --cyan: #2fd8e8;
+  --pink: #ff3d6e;
   --rust: #ff5a4d;
   --glow-amber: rgba(255, 179, 71, .45);
   --glow-cyan: rgba(34, 229, 255, .4);
   --glow-pink: rgba(255, 46, 136, .45);
-  --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Jost", "Futura", "Century Gothic", "Segoe UI", system-ui, sans-serif;
+  --font-label: "Michroma", "Eurostile", "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Sorts Mill Goudy", "Goudy Old Style", Georgia, "Times New Roman", serif;
   --font-body: "Barlow", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "Share Tech Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-jp: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", "Noto Sans CJK JP", sans-serif;
@@ -40,7 +42,7 @@ main, header.hero, nav.bar, footer { position: relative; z-index: 2; }
 a { color: var(--cyan); }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
 h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.15; margin: 0; }
-.label { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+.label { font-family: var(--font-label); font-size: .64rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
 
 /* HERO */
 .hero { overflow: hidden; border-bottom: 1px solid var(--line); background: linear-gradient(to bottom, #0a0e1c 0%, #120f1f 55%, #2a1410 100%); }
@@ -67,7 +69,7 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 
 /* NAV */
 nav.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(7,9,16,.88); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
 nav.bar .wrap { display: flex; gap: 6px 22px; flex-wrap: wrap; padding-block: 10px; align-items: center; }
-nav.bar a { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); text-decoration: none; }
+nav.bar a { font-family: var(--font-label); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); text-decoration: none; }
 nav.bar a:hover { color: var(--amber); }
 nav.bar .brand { color: var(--amber); margin-right: auto; }
 
@@ -121,11 +123,11 @@ section { padding-block: clamp(56px, 8vw, 96px); }
 .vol-banner p { max-width: 60ch; color: var(--dim); margin: 14px 0 0; }
 .vol-banner .jp { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-family: var(--font-jp); font-size: clamp(2.4rem, 8vw, 5.5rem); font-weight: 700; color: var(--c); opacity: .14; white-space: nowrap; pointer-events: none; }
 .issues { display: grid; gap: 22px; }
-.issue { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 26px clamp(16px, 3vw, 30px); background: rgba(12,17,30,.88); border: 1px solid var(--line); border-left: 2px solid var(--c); scroll-margin-top: 70px; }
+.issue { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 26px clamp(16px, 3vw, 30px); background: rgba(11,17,23,.88); border: 1px solid var(--line); border-left: 2px solid var(--c); scroll-margin-top: 70px; }
 .issue .no { font-family: var(--font-display); font-weight: 700; font-size: 3.2rem; line-height: 1; color: var(--c); opacity: .9; }
 .issue .no small { display: block; font-family: var(--font-mono); font-size: .7rem; font-weight: 400; letter-spacing: .16em; color: var(--dim); margin-top: 8px; }
 .issue h3 { font-size: 1.5rem; margin-bottom: 10px; }
-.issue p { margin: 0 0 12px; max-width: 68ch; }
+.issue p { margin: 0 0 12px; max-width: 64ch; font-family: var(--font-serif); font-size: 1.14em; line-height: 1.6; }
 .issue p:last-child { margin-bottom: 0; }
 .issue strong { color: var(--amber); font-weight: 600; }
 .issue.key { box-shadow: 0 0 0 1px var(--c), 0 0 26px -8px var(--c); }
@@ -169,7 +171,7 @@ section { padding-block: clamp(56px, 8vw, 96px); }
 .chrono li::after { content: ""; position: absolute; left: 66px; top: 12px; width: 13px; height: 13px; border-radius: 50%; background: var(--night); border: 2px solid var(--c); }
 .chrono li.here::after { background: var(--c); box-shadow: 0 0 14px var(--c); }
 .chrono b { grid-column: 1; font-family: var(--font-display); font-size: 1.05rem; color: var(--c); font-variant-numeric: tabular-nums; padding-top: 6px; }
-.chrono li > div { grid-column: 3; padding: 8px 14px; border: 1px solid var(--line); border-left: 2px solid var(--c); background: rgba(12,17,30,.88); }
+.chrono li > div { grid-column: 3; padding: 8px 14px; border: 1px solid var(--line); border-left: 2px solid var(--c); background: rgba(11,17,23,.88); }
 .chrono li.here > div { box-shadow: 0 0 22px -8px var(--c); border-color: var(--c); }
 .chrono h3 { font-size: 1.05rem; letter-spacing: .02em; }
 .chrono p { margin: 2px 0 0; font-size: .92rem; color: var(--dim); }

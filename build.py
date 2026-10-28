@@ -24,14 +24,17 @@ SITE_URL = "https://drugs-bunnny.github.io/Blade-Runner/"
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700'
-         '&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap">')
+         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700'
+         '&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&family=Michroma&family=Sorts+Mill+Goudy:ital@0;1&display=swap">')
 
 # Self-hosted fonts for the GitHub Pages copy (Latin subset, SIL Open Font License; see src/fonts/LICENSE.txt).
 # The Claude artifact copy keeps the Google Fonts link above, since it is a single page with no files beside it.
-FONT_FACES = [("Chakra Petch", 400, "normal", "chakra-petch-latin-400-normal"),
-              ("Chakra Petch", 600, "normal", "chakra-petch-latin-600-normal"),
-              ("Chakra Petch", 700, "normal", "chakra-petch-latin-700-normal"),
+FONT_FACES = [("Jost", 500, "normal", "jost-latin-500-normal"),
+              ("Jost", 600, "normal", "jost-latin-600-normal"),
+              ("Jost", 700, "normal", "jost-latin-700-normal"),
+              ("Michroma", 400, "normal", "michroma-latin-400-normal"),
+              ("Sorts Mill Goudy", 400, "normal", "sorts-mill-goudy-latin-400-normal"),
+              ("Sorts Mill Goudy", 400, "italic", "sorts-mill-goudy-latin-400-italic"),
               ("Barlow", 400, "normal", "barlow-latin-400-normal"),
               ("Barlow", 400, "italic", "barlow-latin-400-italic"),
               ("Barlow", 500, "normal", "barlow-latin-500-normal"),
@@ -40,7 +43,7 @@ FONT_FACES = [("Chakra Petch", 400, "normal", "chakra-petch-latin-400-normal"),
               ("Barlow", 600, "italic", "barlow-latin-600-italic"),
               ("Share Tech Mono", 400, "normal", "share-tech-mono-latin-400-normal")]
 # Faces used on first paint; preloaded so the title doesn't swap fonts
-FONT_PRELOAD = ["chakra-petch-latin-700-normal", "barlow-latin-400-normal", "share-tech-mono-latin-400-normal"]
+FONT_PRELOAD = ["jost-latin-700-normal", "barlow-latin-400-normal", "share-tech-mono-latin-400-normal"]
 LATIN = ("U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,"
          "U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD")
 

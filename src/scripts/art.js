@@ -22,7 +22,7 @@
     g.fillStyle = col; g.font = '400 11px "Share Tech Mono", monospace'; g.textAlign = 'left'; g.fillText(year, 18, 28);
     g.textAlign = 'right'; g.fillStyle = C.ink; g.globalAlpha = 0.7; g.fillText('BLADE RUNNER', w - 18, 28); g.globalAlpha = 1;
     g.textAlign = 'left'; g.shadowColor = col; g.shadowBlur = 16; g.fillStyle = col;
-    var size = title.length > 13 ? 22 : 28; g.font = '700 ' + size + 'px "Chakra Petch", sans-serif';
+    var size = title.length > 13 ? 22 : 28; g.font = '700 ' + size + 'px "Jost", sans-serif';
     var lines = title.split('\n'); for (var i = 0; i < lines.length; i++) g.fillText(lines[i], 18, h - 40 - (lines.length - 1 - i) * (size + 2));
     g.shadowBlur = 0; g.fillStyle = C.dim; g.font = '400 11px "Share Tech Mono", monospace'; g.fillText(sub, 18, h - 20);
   }

@@ -2,7 +2,7 @@
 
 Needs Python Playwright with Chromium. Run after `python3 build.py`:
     python3 tools/make_images.py [path/to/fontsource/node_modules/@fontsource]
-With the optional fonts folder (npm i @fontsource/chakra-petch @fontsource/barlow
+With the optional fonts folder (npm i @fontsource/jost @fontsource/sorts-mill-goudy @fontsource/michroma @fontsource/barlow
 @fontsource/share-tech-mono), images render in the site's real typefaces even
 without access to Google Fonts.
 """
@@ -12,9 +12,9 @@ from playwright.sync_api import sync_playwright
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 FONTS = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else None
-FACES = [("Chakra Petch", 400, "chakra-petch/files/chakra-petch-latin-400-normal.woff2"),
-         ("Chakra Petch", 600, "chakra-petch/files/chakra-petch-latin-600-normal.woff2"),
-         ("Chakra Petch", 700, "chakra-petch/files/chakra-petch-latin-700-normal.woff2"),
+FACES = [("Jost", 500, "jost/files/jost-latin-500-normal.woff2"),
+         ("Jost", 600, "jost/files/jost-latin-600-normal.woff2"),
+         ("Jost", 700, "jost/files/jost-latin-700-normal.woff2"),
          ("Barlow", 400, "barlow/files/barlow-latin-400-normal.woff2"),
          ("Barlow", 500, "barlow/files/barlow-latin-500-normal.woff2"),
          ("Barlow", 600, "barlow/files/barlow-latin-600-normal.woff2"),

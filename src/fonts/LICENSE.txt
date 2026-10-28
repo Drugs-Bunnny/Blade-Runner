@@ -1,8 +1,10 @@
-Chakra Petch, Barlow and Share Tech Mono are licensed under the SIL Open Font License, Version 1.1
+Jost, Sorts Mill Goudy, Michroma, Barlow and Share Tech Mono are licensed under the SIL Open Font License, Version 1.1
 (https://openfontlicense.org). The files here are the Latin subsets as packaged by Fontsource
-(https://fontsource.org), from the @fontsource/chakra-petch, @fontsource/barlow and
+(https://fontsource.org), from the @fontsource/jost, @fontsource/sorts-mill-goudy, @fontsource/michroma, @fontsource/barlow and
 @fontsource/share-tech-mono npm packages.
 
-Chakra Petch: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)
+Jost: Copyright 2020 The Jost Project Authors (https://github.com/indestructible-type/Jost)
+Sorts Mill Goudy: Copyright (c) 2010, Barry Schwartz (http://www.theleagueofmoveabletype.com), with Reserved Font Name "Sorts Mill Goudy"
+Michroma: Copyright 2011 The Michroma Project Authors (https://github.com/googlefonts/Michroma)
 Barlow: Copyright 2017 The Barlow Project Authors (https://github.com/jpt/barlow)
 Share Tech Mono: Copyright (c) 2012, Carrois Type Design, Ralph du Carrois (www.carrois.com), with Reserved Font Name "Share"

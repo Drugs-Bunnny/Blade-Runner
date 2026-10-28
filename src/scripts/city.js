@@ -180,7 +180,7 @@
     var JP = '"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif', big = Math.min(bw * .55, bh * .42);
     g.font = '700 ' + big + 'px ' + JP; var mw = g.measureText(ad.a).width; if (mw > bw * .86) { big *= bw * .86 / mw; g.font = '700 ' + big + 'px ' + JP; }
     g.fillText(ad.a, bx + bw / 2, by + bh * .55);
-    var small = 11; g.font = '600 ' + small + 'px "Chakra Petch", sans-serif'; var sw2 = g.measureText(ad.b).width; if (sw2 > bw * .9) { small = Math.max(6, small * bw * .9 / sw2); g.font = '600 ' + small + 'px "Chakra Petch", sans-serif'; }
+    var small = 11; g.font = '600 ' + small + 'px "Jost", sans-serif'; var sw2 = g.measureText(ad.b).width; if (sw2 > bw * .9) { small = Math.max(6, small * bw * .9 / sw2); g.font = '600 ' + small + 'px "Jost", sans-serif'; }
     g.fillText(ad.b, bx + bw / 2, by + bh * .86);
     g.fillStyle = 'rgba(0,0,0,.18)'; for (var sy = by; sy < by + bh; sy += 3) g.fillRect(bx, sy, bw, 1);
     return (boardCache[key] = c);
