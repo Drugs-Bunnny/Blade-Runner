@@ -12,6 +12,9 @@
     br2029:  { titan: '576-blade-runner-2029', name: 'Blade Runner 2029' },
     br2039:  { titan: '595-blade-runner-2039', name: 'Blade Runner 2039' },
     lotus:   { titan: '577-blade-runner-black-lotus', name: 'Blade Runner: Black Lotus', video: 'ahNgjVcq4sA', by: 'Adult Swim' },
+    blackout: { video: 'rrZk9sSgRyQ', by: 'Warner Bros.', what: 'The short film' },
+    dawn:    { video: 'UgsS3nhRRzQ', by: 'Warner Bros.', what: 'The short film' },
+    nowhere: { video: 'aZ9Os8cP_gg', by: 'Warner Bros.', what: 'The short film' },
     film82:  { video: 'qoEyZoOTtss', by: 'Warner Bros. Entertainment', what: 'The Final Cut trailer' },
     film49:  { video: 'gCcx85zbxz4', by: 'Warner Bros.', what: 'Official trailer' }
   };

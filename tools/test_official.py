@@ -48,7 +48,7 @@ def main():
             tag = f"{w}px"
 
             links = pg.eval_on_selector_all(".official a.off-link", "els => els.map(e => [e.href, e.target, e.rel, e.getAttribute('aria-label')])")
-            expect(len(links) >= 8, f"{tag}: expected at least 8 official links, found {len(links)}")
+            expect(len(links) >= 11, f"{tag}: expected at least 11 official links, found {len(links)}")
             for href, target, rel, label in links:
                 ok_host = href.startswith("https://titan-comics.com/comics/series/") or href.startswith("https://www.youtube.com/watch?v=")
                 expect(ok_host, f"{tag}: unexpected official link {href}")
@@ -67,6 +67,14 @@ def main():
             btn.click(); pg.wait_for_timeout(200)
             expect(pg.locator("#film82 .off-frame iframe").count() == 0, f"{tag}: second click should remove the frame")
 
+            for sec, vid, view in (("blackout", "rrZk9sSgRyQ", "era2"), ("dawn", "UgsS3nhRRzQ", "era2"), ("nowhere", "aZ9Os8cP_gg", "era3")):
+                pg.goto(base + "#" + view); pg.wait_for_timeout(400)
+                b2 = pg.locator(f"#{sec} .off-watch")
+                expect(b2.count() == 1, f"{tag}: no short-film button on #{sec}")
+                if b2.count() == 1:
+                    b2.scroll_into_view_if_needed(); b2.click(); pg.wait_for_timeout(200)
+                    s2 = pg.eval_on_selector_all(f"#{sec} .off-frame iframe", "els => els.map(e => e.src)")
+                    expect(len(s2) == 1 and vid in s2[0], f"{tag}: bad short-film frame on #{sec}: {s2}")
             expect(not pg.evaluate("document.documentElement.scrollWidth > innerWidth"), f"{tag}: sideways scroll")
             expect(not errors, f"{tag}: page errors {errors}")
             pg.context.close()
