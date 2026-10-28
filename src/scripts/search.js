@@ -5,7 +5,7 @@
   if (!btn) return;
 
   // story prefix -> label used in results (issue ids look like "b12", "l3", "gm2")
-  var STORY = { i: 'Origins', tn: 'Tokyo Nexus', tw: 'To Lose Is to Win', f: 'Blade Runner', gm: 'The game', b: '2019', bo: 'Black Out 2022',
+  var STORY = { i: 'Origins', tn: 'Tokyo Nexus', tw: 'To Lose Is to Win', dh: 'Die With Honor', f: 'Blade Runner', gm: 'The game', b: '2019', bo: 'Black Out 2022',
     c: '2029', l: 'Black Lotus', ll: 'Leaving L.A.', lv: 'Las Vegas', dawn: 'Nexus Dawn', d: '2039', run: 'Nowhere to Run', g: '2049' };
   var ERA = { era1: 'Era I', era2: 'Era II', era3: 'Era III', people: 'Files', archive: 'Archive', lore: 'Lore' };
 

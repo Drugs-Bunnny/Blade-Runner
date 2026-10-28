@@ -43,6 +43,18 @@
       g.font = '700 15px "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif'; ['東', '京', '連', '結'].forEach(function (ch, i) { g.fillStyle = C.cyan; g.shadowColor = C.cyan; g.shadowBlur = 10; g.fillText(ch, w - 30, 60 + i * 18); }); g.shadowBlur = 0;
       for (var l = 0; l < 7; l++) { var lx = 24 + l * (w - 48) / 6, ly = h * 0.16 + Math.sin(l) * 6; g.fillStyle = C.rust; g.beginPath(); g.ellipse(lx, ly, 6, 8, 0, 0, 7); g.fill(); glow(g, lx, ly, 16, C.rust, 0.4); }
       rain(g, w, h, R, 120, 0.22); } },
+    tokyo3: { col: C.pink, title: 'DIE WITH\nHONOR', sub: 'COMIC · 2026', year: '2015', draw: function (g, w, h, R) {
+      sky(g, w, h, '#0c0a16', '#2c0f14'); glow(g, w * 0.5, h * 0.3, w * 0.6, C.rust, 0.2);
+      g.fillStyle = rgba(C.rust, 0.5); g.beginPath(); g.arc(w * 0.5, h * 0.3, w * 0.2, 0, 7); g.fill();   // the low sun
+      g.strokeStyle = rgba(C.pink, 0.9); g.lineWidth = 2; g.shadowColor = C.pink; g.shadowBlur = 12;
+      g.beginPath(); g.moveTo(w * 0.78, h * 0.12); g.lineTo(w * 0.3, h * 0.78); g.stroke(); g.shadowBlur = 0;   // one clean cut
+      [0.3, 0.5, 0.7].forEach(function (k) {   // three identical figures: the Borealis Team
+        var x = w * k, gy = h * 0.9; g.fillStyle = '#05060b';
+        g.beginPath(); g.arc(x, gy - 62, 9, 0, 7); g.fill(); g.fillRect(x - 9, gy - 52, 18, 40); g.fillRect(x - 14, gy - 12, 10, 14); g.fillRect(x + 4, gy - 12, 10, 14);
+        g.fillStyle = rgba(C.cyan, 0.9); g.fillRect(x - 5, gy - 64, 10, 2);
+      });
+      g.font = '700 15px "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif'; ['名', '誉'].forEach(function (ch, i) { g.fillStyle = C.pink; g.shadowColor = C.pink; g.shadowBlur = 10; g.fillText(ch, w - 30, 52 + i * 20); }); g.shadowBlur = 0;
+      for (var n = 0; n < 140; n++) { g.fillStyle = rgba('#ffffff', 0.2 + R() * 0.45); g.beginPath(); g.arc(R() * w, R() * h, R() * 1.5 + 0.4, 0, 7); g.fill(); } } },
     tokyo2: { col: C.pink, title: 'TO LOSE\nIS TO WIN', sub: 'COMIC · 2026', year: '2015', draw: function (g, w, h, R) {
       sky(g, w, h, '#0c0a16', '#2a1020'); glow(g, w * 0.5, h * 0.2, w * 0.55, C.pink, 0.22);
       var vx = w / 2, ground = function (k) { return h * 0.4 + (h * 0.98 - h * 0.4) * k; };

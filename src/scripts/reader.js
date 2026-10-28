@@ -5,6 +5,7 @@
     i:    { name: 'Origins',            anchor: '#origins',  verb: 'read' },
     tn:   { name: 'Tokyo Nexus',        anchor: '#tokyo',    verb: 'read' },
     tw:   { name: 'To Lose Is to Win',  anchor: '#tokyo2',   verb: 'read' },
+    dh:   { name: 'Die With Honor',     anchor: '#tokyo3',   verb: 'read' },
     f:    { name: 'Blade Runner',       anchor: '#film82',   verb: 'watched' },
     gm:   { name: 'Blade Runner (game)', anchor: '#game97',  verb: 'played' },
     b:    { name: 'Blade Runner 2019',  anchor: '#br2019',   verb: 'read' },

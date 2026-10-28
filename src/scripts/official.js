@@ -8,6 +8,8 @@
   var OFFICIAL = {
     origins: { titan: '578-blade-runner-origins', name: 'Blade Runner: Origins' },
     tokyo:   { titan: '579-blade-runner-tokyo-nexus', name: 'Blade Runner: Tokyo Nexus' },
+    tokyo2:  { titan: '579-blade-runner-tokyo-nexus', name: 'Blade Runner: Tokyo Nexus' },
+    tokyo3:  { titan: '579-blade-runner-tokyo-nexus', name: 'Blade Runner: Tokyo Nexus' },
     br2019:  { titan: '575-blade-runner-2019', name: 'Blade Runner 2019' },
     br2029:  { titan: '576-blade-runner-2029', name: 'Blade Runner 2029' },
     br2039:  { titan: '595-blade-runner-2039', name: 'Blade Runner 2039' },
