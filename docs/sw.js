@@ -1,6 +1,6 @@
 /* Offline support for the GitHub Pages copy. The page is fetched from the network when online
    (so updates show straight away) and served from the cache when offline. The fonts ship with the site and are cached on install. */
-const BUILD = '034';
+const BUILD = '035';
 const CACHE = 'br-archive-' + BUILD;
 const CORE = ['./', './manifest.webmanifest', './img/icon-192.png', './img/icon-512.png', './img/icon-180.png', './img/favicon.svg', './img/favicon-32.png'].concat(["./fonts/jost-latin-500-normal.woff2", "./fonts/jost-latin-600-normal.woff2", "./fonts/jost-latin-700-normal.woff2", "./fonts/michroma-latin-400-normal.woff2", "./fonts/sorts-mill-goudy-latin-400-normal.woff2", "./fonts/sorts-mill-goudy-latin-400-italic.woff2", "./fonts/barlow-latin-400-normal.woff2", "./fonts/barlow-latin-400-italic.woff2", "./fonts/barlow-latin-500-normal.woff2", "./fonts/barlow-latin-500-italic.woff2", "./fonts/barlow-latin-600-normal.woff2", "./fonts/barlow-latin-600-italic.woff2", "./fonts/share-tech-mono-latin-400-normal.woff2"]);
 

@@ -50,3 +50,5 @@ jobs:
         run: python3 tools/test_motion.py
       - name: Navigation tests
         run: python3 tools/test_nav.py
+      - name: Official-link tests
+        run: python3 tools/test_official.py

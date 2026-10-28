@@ -308,12 +308,31 @@ def check_built():
             shutil.rmtree(out, ignore_errors=True)
 
 
+def check_official(ids):
+    """official.js may only point at Titan Comics series pages and YouTube video ids, and only at real sections."""
+    src = (SRC / "scripts" / "official.js").read_text()
+    body = src[src.index("var OFFICIAL"):src.index("};", src.index("var OFFICIAL"))]
+    for m in re.finditer(r"^\s*(\w+):\s*\{(.*)\}", body, re.M):
+        sec, fields = m.group(1), m.group(2)
+        if sec not in ids:
+            fail("official", f"official.js has links for #{sec}, which doesn't exist")
+        for key, val in re.findall(r"(\w+):\s*'([^']*)'", fields):
+            if key == "titan" and not re.fullmatch(r"\d+-[a-z0-9-]+", val):
+                fail("official", f"#{sec}: '{val}' is not a Titan Comics series slug (e.g. 578-blade-runner-origins)")
+            if key == "video" and not re.fullmatch(r"[A-Za-z0-9_-]{11}", val):
+                fail("official", f"#{sec}: '{val}' is not a YouTube video id")
+    for host in re.findall(r"https?://([^/'\"]+)", src):
+        if host not in ("titan-comics.com", "www.youtube-nocookie.com", "www.youtube.com"):
+            fail("official", f"official.js links to {host}; only titan-comics.com and YouTube are allowed")
+
+
 def main():
     views, _ = load_views()
     ids = check_ids(views)
     stories = check_stories(ids, views)
     check_lore(ids, stories)
     check_motion()
+    check_official(ids)
     if "--no-build" not in sys.argv:
         check_built()
     if problems:

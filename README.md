@@ -58,7 +58,7 @@ Reading progress, quiz scores and the spoiler setting are saved in the visitor's
 | `build.py` | Assembles everything into one page |
 | `docs/` | The built site, served by GitHub Pages, plus its images and fonts |
 | `tools/check.py` | The checks that run on every push (see Checking) |
-| `tools/test_keyboard.py`, `test_share.py`, `test_offline.py`, `test_hardening.py`, `test_motion.py`, `test_nav.py` | The browser tests that run beside them: keyboard use of the pop-ups, the copy-link buttons, working offline, the Calm chip, and two defensive checks (stored scores, sync setup codes) |
+| `tools/test_keyboard.py`, `test_share.py`, `test_offline.py`, `test_hardening.py`, `test_motion.py`, `test_nav.py`, `test_official.py` | The browser tests that run beside them: keyboard use of the pop-ups, the copy-link buttons, working offline, the Calm chip, the official links and trailer buttons, and two defensive checks (stored scores, sync setup codes) |
 | `tools/make_files.py` | Regenerates `src/pages/people.html` from the character data |
 | `tools/make_images.py` | Renders the link preview card, icons and the screenshots above |
 
@@ -92,11 +92,12 @@ python3 tools/test_offline.py
 python3 tools/test_hardening.py
 python3 tools/test_motion.py
 python3 tools/test_nav.py
+python3 tools/test_official.py
 ```
 
 The first one drives the built site (`docs/`) with the keyboard alone, in Chromium. The four pop-ups that cover the page (search, sync, the ESPER image and the Voight-Kampff test) must keep Tab inside themselves, close on Escape and hand focus back to the control that opened them, and every control on the Lore and Character files pages must show a visible change when it has focus. It takes about a minute and runs in GitHub as a second job.
 
-The others work the same way. `test_share.py` checks the copy-link buttons. `test_offline.py` visits once, switches the network off and checks that every view and font still works and that nothing is fetched from another site. `test_hardening.py` checks that a damaged stored score or a made-up sync setup code can't do anything. `test_motion.py` checks the Calm chip. `test_nav.py` checks the sub-menu marker, the sticky entry strips (that a jumped-to entry lands clear of them), back to top, and that the player shrinks and remembers it.
+The others work the same way. `test_share.py` checks the copy-link buttons. `test_offline.py` visits once, switches the network off and checks that every view and font still works and that nothing is fetched from another site. `test_hardening.py` checks that a damaged stored score or a made-up sync setup code can't do anything. `test_motion.py` checks the Calm chip. `test_nav.py` checks the sub-menu marker, the sticky entry strips (that a jumped-to entry lands clear of them), back to top, and that the player shrinks and remembers it. `test_official.py` checks that the official links are safe, that a trailer is only a button until clicked (nothing is requested from YouTube first) and that it plays and closes.
 
 To refresh the images, you also need [Playwright for Python](https://playwright.dev/python/) with Chromium:
 
