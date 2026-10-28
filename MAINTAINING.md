@@ -7,7 +7,6 @@ Notes for whoever works on this next, including Claude in a new chat. Read this 
 - **Live site:** https://drugs-bunnny.github.io/Blade-Runner/ (GitHub Pages, serves `docs/` on `main`).
 - **Repo:** https://github.com/Drugs-Bunnny/Blade-Runner. Owner: Neil (Stavanger, Norway).
 - **Claude copy:** the artifact at https://claude.ai/artifact/XjsYR8yiFfd5RzPz5aGpXj, republished from `build/archive.html` after every change. It has no sync and can't be installed; everything else matches the site.
-- **Origins long-form synopsis:** a separate Claude doc (artifact `FyEZ7gsTrU1HEYH7vSxG2o`), where the project started.
 
 ## Rules that must not change
 
