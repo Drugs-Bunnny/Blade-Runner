@@ -129,7 +129,7 @@ window.BR_LORE = {
     { y: 2048, k: 'story', t: 'Nowhere to Run', d: 'An old Nexus-8 farming outside the city gives himself away at the market.', go: '#nowhere' },
     { y: 2049, k: 'story', t: 'Blade Runner 2049', d: 'A replicant Blade Runner finds bones under a dead tree.', go: '#film49' },
     { y: 2049, k: 'world', t: 'The miracle', d: 'K finds Deckard in Las Vegas and brings him to meet his daughter, Dr. Ana Stelline.', go: '#g4', s: ['g'] },
-    { y: 2099, k: 'story', t: 'Blade Runner 2099', d: 'Humans have become second-class citizens to replicants. A Blade Runner near the end of her life takes on one more case.', go: '#br2099' }
+    { y: 2099, k: 'story', t: 'Blade Runner 2099', d: 'Replicants have won and humans are second-class citizens. A human fugitive posing as a Blade Runner partners with a dying replicant Blade Runner.', go: '#br2099' }
   ],
 
   // ---------- connections ----------
